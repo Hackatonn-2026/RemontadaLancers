@@ -1,9 +1,16 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
+  <main class="home-view">
+    <h2>Bem-vindo</h2>
+    <p>Conteúdo da página inicial</p>
   </main>
 </template>
+
+<style scoped>
+.home-view {
+  margin-top: 80px;
+  padding: 2rem;
+}
+</style>

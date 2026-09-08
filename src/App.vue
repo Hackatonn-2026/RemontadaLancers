@@ -1,27 +1,31 @@
+
+<script setup>
+import AppHeader from './components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
+</script>
+
 <template>
-  <main class="app-shell">
-    <h1>Remontada Lancers</h1>
-    <p>Seu projeto começou do zero.</p>
-  </main>
+  <div class="app-container">
+    <AppHeader />
+    <main class="conteudo-principal">
+      <router-view />
+    </main>
+    <AppFooter />
+  </div>
 </template>
 
 <style scoped>
-.app-shell {
+.app-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  background: #0f172a;
-  color: #f8fafc;
 }
 
-h1 {
-  font-size: clamp(2rem, 4vw, 4rem);
-  margin-bottom: 0.5rem;
-}
-
-p {
-  font-size: 1.1rem;
-  opacity: 0.85;
+.conteudo-principal {
+  flex: 1;
+  padding-top: 150px;
+  padding-bottom: 200px;
+  padding-left: 60px;
+  padding-right: 60px;
 }
 </style>
