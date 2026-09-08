@@ -6,15 +6,7 @@
       <span class="texto-logo">Remontada<br />Lancers</span>
     </RouterLink>
 
-
-    <div class="envoltorio-busca">
-      <input
-        type="text"
-        placeholder="Buscar profissionais/serviços"
-        class="entrada-busca"
-      />
-    </div>
-
+    <SearchBar @buscar="executarBusca" />
 
     <nav class="links-nav">
       <RouterLink to="/" class="link-nav">Home</RouterLink>
@@ -29,6 +21,8 @@
 </template>
 
 <script setup>
+import SearchBar from './SearchBar.vue';
+
 </script>
 
 <style scoped>
@@ -71,34 +65,6 @@
   color: #000;
   line-height: 1.2;
 }
-
-.envoltorio-busca {
-  flex: 1;
-  max-width: 600px;
-
-}
-.envoltorio-busca input {
-  width: 100%;
-  padding: 10px 16px;
-  background: #ffffff;
-  border: 1px solid #888;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.entrada-busca {
-  width: 100%;
-  padding: 10px 16px;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
 
 .links-nav {
   display: flex;
