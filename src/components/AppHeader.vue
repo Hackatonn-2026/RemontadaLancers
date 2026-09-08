@@ -20,11 +20,8 @@
       <RouterLink to="/" class="link-nav">Home</RouterLink>
       <RouterLink to="/como-funciona" class="link-nav">Como funciona</RouterLink>
       <RouterLink to="/categorias" class="link-nav">Categorias</RouterLink>
-
     </nav>
-
-
-    <button class="botao-cadastrar">Login</button>
+    <RouterLink to="/login" class="botao-login">Login</RouterLink>
   </header>
 </template>
 
@@ -117,7 +114,7 @@
   color: #2563eb;
 }
 
-.botao-cadastrar {
+.botao-login {
   background: #2563eb;
   color: #fff;
   border: none;
@@ -128,13 +125,14 @@
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
-.botao-cadastrar:hover {
+.botao-login:hover {
   background: #1d4ed8;
 }
 
-.botao-cadastrar:active {
+.botao-login:active {
   transform: scale(0.96);
 }
 </style>
