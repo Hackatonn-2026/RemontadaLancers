@@ -14,6 +14,7 @@ defineProps({
         default: 'text'
     }
 })
+
 const model = defineModel()
 </script>
 
