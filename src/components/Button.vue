@@ -41,7 +41,7 @@ const emit = defineEmits(['click'])
 </script>
 
 <template>
-  <!-- se existir "to", mostra um link de rota -->
+  <!-- se existir "to", mostra um RouterLink -->
   <RouterLink
     v-if="to"
     :to="to"
@@ -51,7 +51,7 @@ const emit = defineEmits(['click'])
     <slot />
   </RouterLink>
 
-   <!--se não existir "to", mostra um botão normal -->
+   <!--se não existir "to", mostra um botão -->
   <button
     v-else
     :type="type"
