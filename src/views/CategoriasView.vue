@@ -8,7 +8,8 @@ import CategoriasComp from '@/components/CategoriasComp.vue'
       <p class="destaque">Onde você precisa</p>
       <h1>Encontre profissionais por área de atuação</h1>
       <p class="intro">
-        Explore as categorias e escolha alguém com a experiência certa para o seu projeto, serviço ou necessidade.
+        Explore as categorias e escolha alguém com a experiência certa para o seu projeto, serviço
+        ou necessidade.
       </p>
     </section>
 
