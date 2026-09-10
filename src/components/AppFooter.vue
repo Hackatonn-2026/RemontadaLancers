@@ -55,10 +55,6 @@
 <style scoped>
 
 .rodape {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: #153885;
   color: #ffffff;
   padding: 40px 60px 30px;
