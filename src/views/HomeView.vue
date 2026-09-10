@@ -1,5 +1,6 @@
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
+import BaseButton from '@/components/Button.vue'
 import SearchBar from '@/components/SearchBar.vue'
 
 const categoriasHome = [
@@ -82,9 +83,12 @@ const categoriasHome = [
       </div>
 
       <div class="areaBotao">
-        <RouterLink to="/categorias" class="botao">Ver todas as categorias</RouterLink>
+        <BaseButton to="/categorias" variant="secondary">
+          Ver todas as categorias
+        </BaseButton>
       </div>
     </section>
+
   </main>
 </template>
 
@@ -208,16 +212,5 @@ const categoriasHome = [
 .areaBotao {
   margin-top: 28px;
   text-align: center;
-}
-
-.botao {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: #f8fafc;
-  border: 1px solid #dbeafe;
-  color: #1d4ed8;
-  font-weight: 600;
-  text-decoration: none;
 }
 </style>
