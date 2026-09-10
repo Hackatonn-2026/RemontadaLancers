@@ -16,7 +16,9 @@
     </nav>
 
 
-    <button class="botao-cadastrar">Login</button>
+    <RouterLink to="/login" class="botao-login">
+  Login
+</RouterLink>
   </header>
 </template>
 
@@ -83,7 +85,7 @@ import SearchBar from './SearchBar.vue';
   color: #2563eb;
 }
 
-.botao-cadastrar {
+.botao-login {
   background: #2563eb;
   color: #fff;
   border: none;
