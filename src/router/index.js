@@ -5,6 +5,7 @@ import ComoFuncionaView from '../views/ComoFuncionaView.vue'
 import CategoriasView from '../views/CategoriasView.vue'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
+import PerfilFreelancerView from '@/views/PerfilFreelancerView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       name: 'cadastro',
       component: CadastroView,
     },
+    {
+      path: '/perfil-freelancer',
+      name: 'perfil-freelancer',
+      component: PerfilFreelancerView,
+    }
   ],
 })
 
