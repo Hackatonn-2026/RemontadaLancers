@@ -28,6 +28,45 @@ const categoriasHome = [
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>',
   },
 ]
+
+
+// const para a section "Como Funciona"
+   const etapas = [
+  {
+    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h9a4 4 0 0 1 4 4v12l-3.5-1.5L10 20l-3.5-1.5L3 20V8a4 4 0 0 1 1-2.6" />
+      <path d="M8 9h5M8 13h5" />
+    </svg>`,
+    titulo: '1. Descreva seu projeto',
+    descricao: 'Conte-nos o que você precisa de forma simples e rápida'
+  },
+  {
+    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="7" r="3.5" />
+      <path d="M2.5 21v-1.5a6.5 6.5 0 0 1 13 0V21" />
+      <circle cx="18.5" cy="8" r="2.8" />
+      <path d="M16 21v-1a4.5 4.5 0 0 1 6.5-4" />
+    </svg>`,
+    titulo: '2. Receba propostas',
+    descricao: 'Profissionais qualificados enviarão orçamentos para você'
+  },
+  {
+    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.1V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9.5" />
+      <path d="M8 12l3 3 8-9" />
+    </svg>`,
+    titulo: '3. Escolha o melhor',
+    descricao: 'Compare avaliações, preços e portfólios'
+  },
+  {
+    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2l8 3.5v6c0 5.5-3.4 9.5-8 11-4.6-1.5-8-5.5-8-11v-6L12 2z" />
+      <path d="M9 12l2.2 2.2L15.5 9.5" />
+    </svg>`,
+    titulo: '4. Pague com segurança',
+    descricao: 'Seu dinheiro fica protegido até a conclusão do trabalho'
+  }
+]
 </script>
 
 <template>
@@ -83,6 +122,44 @@ const categoriasHome = [
 
       <div class="areaBotao">
         <RouterLink to="/categorias" class="botao">Ver todas as categorias</RouterLink>
+      </div>
+    </section>
+
+
+    // espaço para seção profissionais em destaque
+
+    <section class="comoFunciona">
+      <div class="cabecalhoCategorias">
+        <h2>Como Funciona</h2>
+        <p class="destaque">Contrate profissionais em 4 passos simples</p>
+      </div>
+      <div class="passos">
+        <div class="passo" v-for="(etapa, indice) in etapas" :key="indice">
+          <div class="iconeWrapper">
+            <span class="iconePasso" v-html="etapa.icone"></span>
+          </div>
+          <h3>{{ etapa.titulo }}</h3>
+          <p>{{ etapa.descricao }}</p>
+        </div>
+      </div>
+    </section>
+    <section class="oqueDizem">
+      <div class="titulo">
+        <h2>O que dizem nossos usuários</h2>
+      </div>
+      <div class="depoimentos">
+        <div class="depoimento">
+          <p>"A plataforma me ajudou a encontrar um profissional incrível para meu projeto. Recomendo!"</p>
+          <span>- João Silva</span>
+        </div>
+        <div class="depoimento">
+          <p>"Fiquei impressionado com a qualidade dos freelancers disponíveis. Excelente experiência!"</p>
+          <span>- Maria Oliveira</span>
+        </div>
+        <div class="depoimento">
+          <p>"O processo foi rápido e seguro. Consegui contratar alguém confiável em pouco tempo."</p>
+          <span>- Carlos Souza</span>
+        </div>
       </div>
     </section>
   </main>
@@ -220,4 +297,59 @@ const categoriasHome = [
   font-weight: 600;
   text-decoration: none;
 }
+
+.comoFunciona {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.destaque {
+  color: #6b7280;
+  margin-bottom: 40px;
+}
+
+.passos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.iconeWrapper {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconePasso {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconePasso :deep(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.passo h3 {
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.passo p {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
 </style>
