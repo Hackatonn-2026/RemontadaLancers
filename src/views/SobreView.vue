@@ -1,4 +1,5 @@
 <script setup>
+import SecaoEquipe from '../components/SecaoEquipe.vue';
 import teamImage from '../assets/team.jpg';
 import personImage from '../assets/person.jpg';
 import maosIcon from '../assets/icons/maos.png';
@@ -12,7 +13,7 @@ import ouvidoriaIcon from '../assets/icons/ouvidoria.png';
 
 <template>
   <div class="sobre">
-    
+
     <!-- banner -->
     <section class="banner">
       <h1>Sobre a CiroLancers</h1>
@@ -127,6 +128,9 @@ import ouvidoriaIcon from '../assets/icons/ouvidoria.png';
       </div>
     </section>
 
+    <!-- equipe -->
+    <SecaoEquipe />
+
     <!-- joinville -->
     <section class="joinville">
       <h2>Uma Empresa Construída para Joinville</h2>
@@ -140,7 +144,7 @@ import ouvidoriaIcon from '../assets/icons/ouvidoria.png';
       <h2>Faça Parte da CiroLancers</h2>
       <p>Junte-se a profissionais e clientes de Joinville que já confiam na CiroLancers</p>
       <div class="botoes">
-        <RouterLink to="/cadastro-cliente" class="btn-primario">Começar Agora</RouterLink>
+        <RouterLink to="/login" class="btn-primario">Começar Agora</RouterLink>
       </div>
     </section>
   </div>
