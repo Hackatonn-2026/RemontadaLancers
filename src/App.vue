@@ -23,9 +23,6 @@ import AppFooter from './components/AppFooter.vue';
 
 .conteudo-principal {
   flex: 1;
-  padding-top: 150px;
-  padding-bottom: 200px;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-top: 90px;
 }
 </style>

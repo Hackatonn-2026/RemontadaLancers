@@ -1,6 +1,5 @@
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
-import SearchBar from '@/components/SearchBar.vue'
 
 const categoriasHome = [
   {
@@ -67,6 +66,24 @@ const categoriasHome = [
     descricao: 'Seu dinheiro fica protegido até a conclusão do trabalho'
   }
 ]
+
+// const para a section "O que dizem nossos usuários"
+
+const depoimentos = [
+  {
+    texto: 'Encontrei um desenvolvedor excelente em menos de 24 horas. O projeto ficou melhor do que esperava!',
+    autor: 'João Pereira'
+  },
+  {
+    texto: 'Plataforma fácil de usar e profissionais qualificados. Recomendo!',
+    autor: 'Maria Fernanda'
+  },
+  {
+    texto: 'Consegui vários clientes através do Cirolancers. Mudou meu negócio!',
+    autor: 'Pedro Oliveira'
+  }
+]
+
 </script>
 
 <template>
@@ -76,8 +93,14 @@ const categoriasHome = [
     <section class="hero">
       <h1>Encontre um profissional agora</h1>
       <p>Conecte-se com os melhores freelancers para seu projeto</p>
-      <SearchBar />
 
+      <div class="buscaHero">
+        <input type="text" placeholder="Qual serviço você procura?" />
+        <button class="botaoBuscar">Buscar</button>
+      </div>
+    </section>
+
+    <section class="estatisticas">
       <div class="stats">
         <div class="stat">
           <h2>35</h2>
@@ -134,7 +157,7 @@ const categoriasHome = [
         <p class="destaque">Contrate profissionais em 4 passos simples</p>
       </div>
       <div class="passos">
-        <div class="passo" v-for="(etapa, indice) in etapas" :key="indice">
+        <div class="passo" v-for="etapa in etapas" :key="etapa.titulo">
           <div class="iconeWrapper">
             <span class="iconePasso" v-html="etapa.icone"></span>
           </div>
@@ -144,45 +167,88 @@ const categoriasHome = [
       </div>
     </section>
     <section class="oqueDizem">
-      <div class="titulo">
+      <div class="cabecalhoCategorias">
         <h2>O que dizem nossos usuários</h2>
       </div>
       <div class="depoimentos">
-        <div class="depoimento">
-          <p>"A plataforma me ajudou a encontrar um profissional incrível para meu projeto. Recomendo!"</p>
-          <span>- João Silva</span>
+        <div class="depoimento" v-for="depoimento in depoimentos" :key="depoimento.autor">
+          <p>"{{ depoimento.texto }}"</p>
+          <span>- {{ depoimento.autor }}</span>
         </div>
-        <div class="depoimento">
-          <p>"Fiquei impressionado com a qualidade dos freelancers disponíveis. Excelente experiência!"</p>
-          <span>- Maria Oliveira</span>
-        </div>
-        <div class="depoimento">
-          <p>"O processo foi rápido e seguro. Consegui contratar alguém confiável em pouco tempo."</p>
-          <span>- Carlos Souza</span>
-        </div>
+      </div>
+    </section>
+    <section class="prontoParaComecar">
+      <div class="cabecalhoCategorias">
+        <h2>Pronto para começar?</h2>
+        <p class="destaque">Junte-se a centenas de profissionais e clientes satisfeitos</p>
+      </div>
+      <div class="areaBotao">
+        <RouterLink to="/categorias" class="botaoSolido">Buscar Profissionais</RouterLink>
+        <RouterLink to="/cadastro" class="botaoContorno">Torne-se um Freelancer</RouterLink>
       </div>
     </section>
   </main>
 </template>
 
 <style scoped>
+.home-view {
+  display: block;
+}
+
 .hero {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 80px 20px 100px;
-  h1 {
-    font-size: 3.6rem;
-    margin-bottom: 10px;
-    color: #2563eb;
-  }
-  p {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
-    color: #8b8f94;
-  }
+  padding: 70px 20px;
+  background: #2563eb;
+}
+
+.hero h1 {
+  font-size: 3.4rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.hero p {
+  font-size: 1.4rem;
+  margin-bottom: 32px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.buscaHero {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px;
+  max-width: 520px;
+  width: 100%;
+}
+
+.buscaHero input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 999px;
+}
+
+.botaoBuscar {
+  border: none;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.estatisticas {
+  padding: 40px 20px;
+  background: #ffffff;
 }
 
 .stats {
@@ -190,8 +256,6 @@ const categoriasHome = [
   justify-content: center;
   gap: 60px;
   flex-wrap: wrap;
-  margin-top: 50px;
-  margin-bottom: 60px;
 }
 
 .stat h2 {
@@ -203,15 +267,21 @@ const categoriasHome = [
   color: #6b7280;
 }
 
+.destaqueCategorias,
+.comoFunciona,
+.oqueDizem,
+.prontoParaComecar {
+  padding: 60px 20px;
+}
+
 .destaqueCategorias {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px 80px;
+  background: #f8fafc;
 }
 
 .cabecalhoCategorias {
+  max-width: 1200px;
+  margin: 0 auto 32px;
   text-align: center;
-  margin-bottom: 24px;
 }
 
 .destaque {
@@ -233,6 +303,8 @@ const categoriasHome = [
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .card {
@@ -299,13 +371,8 @@ const categoriasHome = [
 }
 
 .comoFunciona {
-  padding: 60px 20px;
   text-align: center;
-}
-
-.destaque {
-  color: #6b7280;
-  margin-bottom: 40px;
+  background: #ffffff;
 }
 
 .passos {
@@ -352,4 +419,73 @@ const categoriasHome = [
   font-size: 0.9rem;
 }
 
+.oqueDizem {
+  text-align: center;
+  background: #f8fafc;
+}
+
+.depoimentos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.depoimento {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: left;
+}
+
+.depoimento p {
+  margin: 0 0 14px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.depoimento span {
+  display: block;
+  color: #111827;
+  font-weight: 700;
+}
+
+.prontoParaComecar {
+  text-align: center;
+  background-color: #2563eb;
+  color: #fff;
+  margin: 0;
+}
+
+.prontoParaComecar h2 {
+  color: #fff;
+}
+
+.prontoParaComecar .destaque {
+  color: #dbeafe;
+}
+
+.botaoSolido {
+  display: inline-block;
+  margin: 0 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: #fff;
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.botaoContorno {
+  margin: 0 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
 </style>
