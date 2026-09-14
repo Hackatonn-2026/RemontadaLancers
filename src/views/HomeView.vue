@@ -35,6 +35,7 @@ const categoriasHome = [
   <AppHeader />
 
   <main class="home-view">
+<<<<<<< HEAD
     <section class="hero">
       <h1>Encontre um profissional agora</h1>
       <p>Conecte-se com os melhores freelancers para seu projeto</p>
@@ -88,7 +89,6 @@ const categoriasHome = [
         </BaseButton>
       </div>
     </section>
-
   </main>
 </template>
 
