@@ -6,84 +6,121 @@ const categoriasHome = [
     nome: 'Desenvolvimento',
     descricao: 'Sites, aplicativos e sistemas',
     icone:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
   },
   {
     nome: 'Design',
     descricao: 'Logotipos e identidade visual',
     icone:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63 14 7l-1.5-1.5L17 1c.3-.3.7-.5 1.2-.5.4 0 .8.2 1.1.5l1.7 1.7c.3.3.5.7.5 1.1 0 .5-.2.9-.5 1.2Z"></path><path d="m14 7-8.5 8.5c-.3.3-.5.7-.5 1.2v3.8h3.8c.5 0 .9-.2 1.2-.5L18.5 11"></path><line x1="9" y1="9" x2="10.5" y2="10.5"></line></svg>',
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63 14 7l-1.5-1.5L17 1c.3-.3.7-.5 1.2-.5.4 0 .8.2 1.1.5l1.7 1.7c.3.3.5.7.5 1.1 0 .5-.2.9-.5 1.2Z"></path><path d="m14 7-8.5 8.5c-.3.3-.5.7-.5 1.2v3.8h3.8c.5 0 .9-.2 1.2-.5L18.5 11"></path><line x1="9" y1="9" x2="10.5" y2="10.5"></line></svg>',
   },
   {
     nome: 'Elétrica',
     descricao: 'Instalações e reparos',
     icone:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
   },
   {
     nome: 'Informática',
     descricao: 'Suporte técnico e redes',
     icone:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>',
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>',
   },
 ]
 
-
 // const para a section "Como Funciona"
-   const etapas = [
+const etapas = [
   {
-    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    icone: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 4h9a4 4 0 0 1 4 4v12l-3.5-1.5L10 20l-3.5-1.5L3 20V8a4 4 0 0 1 1-2.6" />
       <path d="M8 9h5M8 13h5" />
     </svg>`,
     titulo: '1. Descreva seu projeto',
-    descricao: 'Conte-nos o que você precisa de forma simples e rápida'
+    descricao: 'Conte-nos o que você precisa de forma simples e rápida',
   },
   {
-    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    icone: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="9" cy="7" r="3.5" />
       <path d="M2.5 21v-1.5a6.5 6.5 0 0 1 13 0V21" />
       <circle cx="18.5" cy="8" r="2.8" />
       <path d="M16 21v-1a4.5 4.5 0 0 1 6.5-4" />
     </svg>`,
     titulo: '2. Receba propostas',
-    descricao: 'Profissionais qualificados enviarão orçamentos para você'
+    descricao: 'Profissionais qualificados enviarão orçamentos para você',
   },
   {
-    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    icone: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 11.1V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9.5" />
       <path d="M8 12l3 3 8-9" />
     </svg>`,
     titulo: '3. Escolha o melhor',
-    descricao: 'Compare avaliações, preços e portfólios'
+    descricao: 'Compare avaliações, preços e portfólios',
   },
   {
-    icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    icone: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 2l8 3.5v6c0 5.5-3.4 9.5-8 11-4.6-1.5-8-5.5-8-11v-6L12 2z" />
       <path d="M9 12l2.2 2.2L15.5 9.5" />
     </svg>`,
     titulo: '4. Pague com segurança',
-    descricao: 'Seu dinheiro fica protegido até a conclusão do trabalho'
-  }
+    descricao: 'Seu dinheiro fica protegido até a conclusão do trabalho',
+  },
 ]
 
 // const para a section "O que dizem nossos usuários"
-
 const depoimentos = [
   {
-    texto: 'Encontrei um desenvolvedor excelente em menos de 24 horas. O projeto ficou melhor do que esperava!',
-    autor: 'João Pereira'
+    texto:
+      'Encontrei um desenvolvedor excelente em menos de 24 horas. O projeto ficou melhor do que esperava!',
+    autor: 'João Pereira',
   },
   {
     texto: 'Plataforma fácil de usar e profissionais qualificados. Recomendo!',
-    autor: 'Maria Fernanda'
+    autor: 'Maria Fernanda',
   },
   {
     texto: 'Consegui vários clientes através do Cirolancers. Mudou meu negócio!',
-    autor: 'Pedro Oliveira'
-  }
+    autor: 'Pedro Oliveira',
+  },
 ]
 
+const profissionaisEmDestaque = [
+  {
+    id: 1,
+    nome: 'Carlos Silva',
+    cargo: 'Desenvolvedor Full Stack',
+    avaliacao: 4.9,
+    totalAvaliacoes: 127,
+    preco: 150,
+    avatar: '/img/carlos.jpg',
+  },
+  {
+    id: 2,
+    nome: 'Ana Costa',
+    cargo: 'Designer Gráfica',
+    avaliacao: 5,
+    totalAvaliacoes: 89,
+    preco: 120,
+    avatar: '/img/ana.jpg',
+  },
+  {
+    id: 3,
+    nome: 'Roberto Santos',
+    cargo: 'Eletricista',
+    avaliacao: 4.8,
+    totalAvaliacoes: 203,
+    preco: 80,
+    avatar: '/img/roberto.jpg',
+  },
+  {
+    id: 4,
+    nome: 'Mariana Lima',
+    cargo: 'Professora de Inglês',
+    avaliacao: 4.9,
+    totalAvaliacoes: 156,
+    preco: 60,
+    avatar: '/img/mariana.jpg',
+  },
+]
 </script>
 
 <template>
@@ -125,7 +162,7 @@ const depoimentos = [
     </section>
 
     <section class="destaqueCategorias">
-      <div class="cabecalhoCategorias">
+      <div class="cabecalho">
         <p class="destaque">Categorias em alta</p>
         <h2>Principais áreas de atendimento</h2>
       </div>
@@ -148,28 +185,67 @@ const depoimentos = [
       </div>
     </section>
 
+    <section class="profissionaisDestaque">
+      <div class="cabecalho">
+        <h2>Profissionais em Destaque</h2>
+        <p class="subtitulo">Conheça alguns dos nossos melhores profissionais</p>
+      </div>
 
-    // espaço para seção profissionais em destaque
+      <div class="listaProfissionais">
+        <div
+          v-for="profissional in profissionaisEmDestaque"
+          :key="profissional.id"
+          class="cardProfissional"
+        >
+          <img :src="profissional.avatar" :alt="profissional.nome" class="fotoProfissional" />
+
+          <div class="infoProfissional">
+            <h3>{{ profissional.nome }}</h3>
+            <p class="cargo">{{ profissional.cargo }}</p>
+
+            <div class="linhaAvaliacao">
+              <span class="nota">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon
+                    points="12 2 15.1 8.6 22 9.5 17 14.4 18.2 21.5 12 18.2 5.8 21.5 7 14.4 2 9.5 8.9 8.6 12 2"
+                  />
+                </svg>
+                {{ profissional.avaliacao }} ({{ profissional.totalAvaliacoes }})
+              </span>
+
+              <span class="preco">R$ {{ profissional.preco }}/h</span>
+            </div>
+
+            <RouterLink to="/buscar" class="botaoPerfil">Ver perfil</RouterLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="areaBotao">
+        <RouterLink to="/buscar" class="botao">Ver todos os profissionais</RouterLink>
+      </div>
+    </section>
 
     <section class="comoFunciona">
-      <div class="cabecalhoCategorias">
+      <div class="cabecalho">
         <h2>Como Funciona</h2>
-        <p class="destaque">Contrate profissionais em 4 passos simples</p>
+        <p class="subtitulo">Contrate profissionais em 4 passos simples</p>
       </div>
+
       <div class="passos">
         <div class="passo" v-for="etapa in etapas" :key="etapa.titulo">
-          <div class="iconeWrapper">
-            <span class="iconePasso" v-html="etapa.icone"></span>
-          </div>
+          <div class="iconePasso" v-html="etapa.icone"></div>
           <h3>{{ etapa.titulo }}</h3>
           <p>{{ etapa.descricao }}</p>
         </div>
       </div>
     </section>
+
     <section class="oqueDizem">
-      <div class="cabecalhoCategorias">
+      <div class="cabecalho">
         <h2>O que dizem nossos usuários</h2>
       </div>
+
       <div class="depoimentos">
         <div class="depoimento" v-for="depoimento in depoimentos" :key="depoimento.autor">
           <p>"{{ depoimento.texto }}"</p>
@@ -177,11 +253,13 @@ const depoimentos = [
         </div>
       </div>
     </section>
+
     <section class="prontoParaComecar">
-      <div class="cabecalhoCategorias">
+      <div class="cabecalho">
         <h2>Pronto para começar?</h2>
-        <p class="destaque">Junte-se a centenas de profissionais e clientes satisfeitos</p>
+        <p class="subtitulo">Junte-se a centenas de profissionais e clientes satisfeitos</p>
       </div>
+
       <div class="areaBotao">
         <RouterLink to="/categorias" class="botaoSolido">Buscar Profissionais</RouterLink>
         <RouterLink to="/cadastro" class="botaoContorno">Torne-se um Freelancer</RouterLink>
@@ -191,131 +269,122 @@ const depoimentos = [
 </template>
 
 <style scoped>
-.home-view {
-  display: block;
-}
-
 .hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: #2563eb;
+  color: white;
   text-align: center;
   padding: 70px 20px;
-  background: #2563eb;
 }
 
 .hero h1 {
-  font-size: 3.4rem;
+  font-size: 48px;
   margin-bottom: 10px;
-  color: #ffffff;
 }
 
 .hero p {
-  font-size: 1.4rem;
-  margin-bottom: 32px;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 20px;
+  margin-bottom: 30px;
 }
 
 .buscaHero {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border-radius: 999px;
+  background-color: white;
+  border-radius: 30px;
   padding: 6px;
-  max-width: 520px;
-  width: 100%;
+  width: 500px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
 }
 
 .buscaHero input {
-  flex: 1;
+  width: 100%;
   border: none;
   outline: none;
   padding: 10px 16px;
-  font-size: 1rem;
-  border-radius: 999px;
+  font-size: 16px;
 }
 
 .botaoBuscar {
+  background-color: #2563eb;
+  color: white;
   border: none;
-  border-radius: 999px;
-  background: #2563eb;
-  color: #fff;
+  border-radius: 30px;
   padding: 10px 24px;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
 }
 
+/* numeros */
 .estatisticas {
+  background-color: white;
   padding: 40px 20px;
-  background: #ffffff;
 }
 
 .stats {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 60px;
-  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
 }
 
 .stat h2 {
   color: #2563eb;
   font-size: 34px;
+  margin-bottom: 4px;
 }
 
 .stat span {
   color: #6b7280;
 }
 
-.destaqueCategorias,
-.comoFunciona,
-.oqueDizem,
-.prontoParaComecar {
-  padding: 60px 20px;
-}
-
-.destaqueCategorias {
-  background: #f8fafc;
-}
-
-.cabecalhoCategorias {
-  max-width: 1200px;
-  margin: 0 auto 32px;
+.cabecalho {
   text-align: center;
+  margin-bottom: 30px;
+}
+
+.cabecalho h2 {
+  color: #111827;
+  font-size: 36px;
+  margin-bottom: 8px;
 }
 
 .destaque {
-  margin: 0 0 8px;
   color: #2563eb;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: bold;
   text-transform: uppercase;
+  margin-bottom: 8px;
 }
 
-.cabecalhoCategorias h2 {
-  margin: 0;
-  color: #111827;
-  font-size: 2.5rem;
+.subtitulo {
+  color: #6b7280;
+  font-size: 18px;
+}
+
+/* caegorias */
+.destaqueCategorias {
+  background-color: #f8fafc;
+  padding: 60px 20px;
 }
 
 .lista {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 22px 16px;
+  width: 250px;
+  background-color: white;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  background: #fff;
+  padding: 22px 16px;
+  text-align: center;
   text-decoration: none;
 }
 
@@ -326,166 +395,227 @@ const depoimentos = [
 .icone {
   width: 52px;
   height: 52px;
+  line-height: 52px;
   border-radius: 12px;
-  background: #eff6ff;
+  background-color: #eff6ff;
   color: #2563eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-
-.icone :deep(svg) {
-  width: 24px;
-  height: 24px;
+  margin: 0 auto 12px auto;
 }
 
 .card h3 {
-  margin: 0 0 6px;
   color: #111827;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
 .card p {
-  margin: 0;
   color: #6b7280;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 14px;
 }
 
 .areaBotao {
-  margin-top: 28px;
   text-align: center;
+  margin-top: 30px;
 }
 
 .botao {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: #f8fafc;
+  background-color: white;
   border: 1px solid #dbeafe;
+  border-radius: 30px;
   color: #1d4ed8;
-  font-weight: 600;
+  font-weight: bold;
+  padding: 12px 20px;
   text-decoration: none;
 }
 
-.comoFunciona {
+/* profissionais  */
+.profissionaisDestaque {
+  background-color: white;
+  padding: 60px 20px;
+}
+
+.listaProfissionais {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.cardProfissional {
+  width: 270px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.cardProfissional:hover {
+  border-color: #93c5fd;
+}
+
+.fotoProfissional {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+.infoProfissional {
+  padding: 18px;
+}
+
+.infoProfissional h3 {
+  color: #111827;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.cargo {
+  color: #6b7280;
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+
+.linhaAvaliacao {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.nota {
+  color: #111827;
+  font-size: 15px;
+}
+
+.nota svg {
+  color: #facc15;
+  vertical-align: text-bottom;
+}
+
+.preco {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.botaoPerfil {
+  display: block;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 8px;
+  padding: 11px;
   text-align: center;
-  background: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.botaoPerfil:hover {
+  background-color: #1d4ed8;
+}
+
+/* como funciona */
+.comoFunciona {
+  background-color: #f8fafc;
+  padding: 60px 20px;
 }
 
 .passos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
-.iconeWrapper {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  background: #2563eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.passo {
+  width: 240px;
+  text-align: center;
 }
 
 .iconePasso {
-  width: 28px;
-  height: 28px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.iconePasso :deep(svg) {
-  width: 100%;
-  height: 100%;
-  display: block;
+  width: 72px;
+  height: 72px;
+  line-height: 72px;
+  border-radius: 50%;
+  background-color: #2563eb;
+  color: white;
+  margin: 0 auto 16px auto;
 }
 
 .passo h3 {
   color: #111827;
+  font-size: 17px;
   margin-bottom: 6px;
 }
 
 .passo p {
   color: #6b7280;
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
+/* depoimentos */
 .oqueDizem {
-  text-align: center;
-  background: #f8fafc;
+  background-color: white;
+  padding: 60px 20px;
 }
 
 .depoimentos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
 .depoimento {
-  background: #fff;
+  width: 320px;
+  background-color: #f8fafc;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 24px 20px;
-  text-align: left;
 }
 
 .depoimento p {
-  margin: 0 0 14px;
   color: #374151;
   line-height: 1.6;
+  margin-bottom: 14px;
 }
 
 .depoimento span {
-  display: block;
   color: #111827;
-  font-weight: 700;
+  font-weight: bold;
 }
 
+/* chamada final */
 .prontoParaComecar {
-  text-align: center;
   background-color: #2563eb;
-  color: #fff;
-  margin: 0;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
 }
 
 .prontoParaComecar h2 {
-  color: #fff;
+  color: white;
 }
 
-.prontoParaComecar .destaque {
+.prontoParaComecar .subtitulo {
   color: #dbeafe;
 }
 
 .botaoSolido {
-  display: inline-block;
-  margin: 0 8px;
-  padding: 12px 24px;
-  border-radius: 8px;
-  background: #fff;
+  background-color: white;
   color: #2563eb;
-  font-weight: 700;
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin: 0 8px;
+  font-weight: bold;
   text-decoration: none;
 }
 
 .botaoContorno {
-  margin: 0 8px;
-  padding: 12px 24px;
+  border: 2px solid white;
+  color: white;
   border-radius: 8px;
-  background: transparent;
-  border: 2px solid #fff;
-  color: #fff;
-  font-weight: 700;
+  padding: 12px 24px;
+  margin: 0 8px;
+  font-weight: bold;
   text-decoration: none;
 }
 </style>
