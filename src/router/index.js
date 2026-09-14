@@ -6,9 +6,20 @@ import CategoriasView from '../views/CategoriasView.vue'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
 import SobreView from '../views/SobreView.vue'
+import SuporteView from '../views/SuporteView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      }
+    }
+
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
@@ -39,6 +50,11 @@ const router = createRouter({
       path: '/sobre',
       name: 'sobre',
       component: SobreView,
+    },
+    {
+      path: '/suporte',
+      name: 'suporte',
+      component: SuporteView,
     },
   ],
 })

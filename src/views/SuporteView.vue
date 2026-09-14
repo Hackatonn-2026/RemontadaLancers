@@ -37,8 +37,8 @@ function iniciarDenuncia() {
     </section>
 
     <!-- central de ajuda -->
-    <section id="central-de-ajuda" class="bloco">
-      <h2>Central de Ajuda</h2>
+    <section class="bloco">
+      <h2 id="central-de-ajuda">Central de Ajuda</h2>
 
       <p>
         Encontre respostas rápidas para as dúvidas mais comuns sobre a plataforma.
@@ -53,8 +53,8 @@ function iniciarDenuncia() {
     </section>
 
     <!-- perguntas frequentes -->
-    <section id="faq" class="bloco">
-      <h2>Perguntas Frequentes</h2>
+    <section class="bloco">
+      <h2 id="faq">Perguntas Frequentes</h2>
 
       <details class="pergunta">
         <summary class="titulo-pergunta">Quais são as formas de pagamento aceitas?</summary>
@@ -94,8 +94,8 @@ function iniciarDenuncia() {
     </section>
 
     <!-- termos de uso -->
-    <section id="termos-de-uso" class="bloco">
-      <h2>Termos de Uso</h2>
+    <section class="bloco">
+      <h2 id="termos-de-uso">Termos de Uso</h2>
 
       <p class="data">Última atualização: agosto de 2026</p>
 
@@ -138,8 +138,8 @@ function iniciarDenuncia() {
     </section>
 
     <!-- política de privacidade -->
-    <section id="politica-de-privacidade" class="bloco">
-      <h2>Política de Privacidade</h2>
+    <section class="bloco">
+      <h2 id="politica-de-privacidade">Política de Privacidade</h2>
 
       <p>
         Saiba como seus dados são tratados e protegidos ao utilizar a

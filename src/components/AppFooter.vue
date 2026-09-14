@@ -22,14 +22,14 @@
       </div>
 
       <div class="coluna-rodape">
-        <h3>Suporte</h3>
+        <h3><RouterLink to="/suporte" class="titulo-suporte">Suporte</RouterLink></h3>
         <ul>
-          <li><router-link :to="{ path: '/suporte', hash: '#central-de-ajuda' }">Central de Ajuda</router-link></li>
-          <li><router-link :to="{ path: '/suporte', hash: '#faq' }">FAQ</router-link></li>
-          <li><router-link :to="{ path: '/suporte', hash: '#termos-de-uso' }">Termos de uso</router-link></li>
-        <li><router-link :to="{ path: '/suporte', hash: '#politica-de-privacidade' }">Política de Privacidade</router-link></li>
-  </ul>
-</div>
+          <li><RouterLink to="#central-de-ajuda">Central de Ajuda</RouterLink></li>
+          <li><RouterLink to="#faq">FAQ</RouterLink></li>
+          <li><RouterLink to="#termos-de-uso">Termos de uso</RouterLink></li>
+          <li><RouterLink to="#politica-de-privacidade">Política de Privacidade</RouterLink></li>
+        </ul>
+      </div>
 
       <div class="coluna-rodape">
         <h3>Redes Sociais</h3>
@@ -101,6 +101,11 @@
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 12px;
+}
+
+.coluna-rodape h3 .titulo-suporte {
+  color: #ffffff;
+  font-size: 18px;
 }
 
 .coluna-rodape ul {
