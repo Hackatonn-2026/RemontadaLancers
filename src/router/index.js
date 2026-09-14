@@ -6,6 +6,7 @@ import CategoriasView from '../views/CategoriasView.vue'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
 import SobreView from '../views/SobreView.vue'
+import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/sobre',
       name: 'sobre',
       component: SobreView,
+    },
+    {
+      path: '/buscar',
+      name: 'buscar',
+      component: BuscasProfissionais,
     },
   ],
 })
