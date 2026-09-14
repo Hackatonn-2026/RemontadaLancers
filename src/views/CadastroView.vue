@@ -18,7 +18,7 @@
     </div>
     <div class="dados">
         <form class="cadastro-form" @submit.prevent="CriaConta">
-            <Inputs v-model="Nome" label="Nome" type="text" placeholder="Seu nome completo" />
+            <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
             <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
             <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
             <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />

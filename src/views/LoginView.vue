@@ -30,8 +30,16 @@ import Inputs from '../components/Inputs.vue'
 const email = ref('')
 const senha = ref('')
 function entrar() {
-    console.log('E-mail:', email.value)
-    console.log('Senha:', senha.value)
+    const usuario = JSON.parse(localStorage.getItem('usuario'))
+    if (!usuario) {
+        alert('Nenhum usuário cadastrado!')
+        return
+    }
+    if (email.value === usuario.email && senha.value === usuario.senha) {
+        alert('Login realizado com sucesso!')
+    } else {
+        alert('E-mail ou senha incorretos!')
+    }
 }
 </script>
 
