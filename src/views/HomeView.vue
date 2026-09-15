@@ -1,7 +1,10 @@
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
 import BaseButton from '@/components/Button.vue'
-import SearchBar from '@/components/SearchBar.vue'
+import carlosImg from '@/assets/carloscerto.jpg'
+import anaImg from '@/assets/images.jpeg'
+import robertoImg from '@/assets/59340563-sorridente-homem-com-curto-barba-e-azul-olhos-posando-dentro-uma-casual-branco-camiseta-contra-uma-luz-fundo-foto.jpg'
+import marianaImg from '@/assets/79037-gente-texto-especial-mulheres-impacto-social.jpg'
 
 const categoriasHome = [
   {
@@ -93,7 +96,7 @@ const profissionaisEmDestaque = [
     avaliacao: 4.9,
     totalAvaliacoes: 127,
     preco: 150,
-    avatar: '/img/carlos.jpg',
+    avatar: carlosImg,
   },
   {
     id: 2,
@@ -102,7 +105,7 @@ const profissionaisEmDestaque = [
     avaliacao: 5,
     totalAvaliacoes: 89,
     preco: 120,
-    avatar: '/img/ana.jpg',
+    avatar: anaImg,
   },
   {
     id: 3,
@@ -111,7 +114,7 @@ const profissionaisEmDestaque = [
     avaliacao: 4.8,
     totalAvaliacoes: 203,
     preco: 80,
-    avatar: '/img/roberto.jpg',
+    avatar: robertoImg,
   },
   {
     id: 4,
@@ -120,7 +123,8 @@ const profissionaisEmDestaque = [
     avaliacao: 4.9,
     totalAvaliacoes: 156,
     preco: 60,
-    avatar: '/img/mariana.jpg',
+
+    avatar: marianaImg,
   },
 ]
 </script>
@@ -183,9 +187,7 @@ const profissionaisEmDestaque = [
       </div>
 
       <div class="areaBotao">
-        <BaseButton to="/categorias" variant="secondary">
-          Ver todas as categorias
-        </BaseButton>
+        <BaseButton to="/categorias" variant="secondary"> Ver todas as categorias </BaseButton>
       </div>
     </section>
 
