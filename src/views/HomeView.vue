@@ -1,5 +1,7 @@
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
+import BaseButton from '@/components/Button.vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 const categoriasHome = [
   {
@@ -181,7 +183,9 @@ const profissionaisEmDestaque = [
       </div>
 
       <div class="areaBotao">
-        <RouterLink to="/categorias" class="botao">Ver todas as categorias</RouterLink>
+        <BaseButton to="/categorias" variant="secondary">
+          Ver todas as categorias
+        </BaseButton>
       </div>
     </section>
 
