@@ -102,5 +102,12 @@ function entrar() {
     justify-content: center;
     gap: 8px;
     margin-top: 12px;
+
+}
+.botao-cadastro {
+    color: #2563eb;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 </style>
