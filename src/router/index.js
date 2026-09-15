@@ -5,6 +5,7 @@ import ComoFuncionaView from '../views/ComoFuncionaView.vue'
 import CategoriasView from '../views/CategoriasView.vue'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
+import PerfilFreelancerView from '@/views/PerfilFreelancerView.vue'
 import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
@@ -39,6 +40,9 @@ const router = createRouter({
       component: CadastroView,
     },
     {
+      path: '/perfil-freelancer',
+      name: 'perfil-freelancer',
+      component: PerfilFreelancerView,
       path: '/perfil',
       name: 'perfil',
       component: PerfilUsuarioView,
