@@ -9,7 +9,7 @@
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
-         <RouterLink to="/editar-perfil">
+         <RouterLink to="/editar-perfil" class="botao">
                 Editar perfil
             </RouterLink>
       </div>
@@ -149,5 +149,14 @@ const usuario = {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.botao {
+  padding: 8px 15px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  width: fit-content;
+  font-size: 14px;
 }
 </style>

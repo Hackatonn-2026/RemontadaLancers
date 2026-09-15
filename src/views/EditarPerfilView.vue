@@ -1,8 +1,5 @@
 <template>
   <main>
-    <RouterLink to="/perfil" class="voltar">
-      Voltar para o perfil
-    </RouterLink>
     <div class="header">
       <div class="foto">
         <img src="/perfil.avif" alt="Foto de perfil">
@@ -14,14 +11,14 @@
       <h3 class="informacao-titulo">
         Informações pessoais
       </h3>
-      <form>
-        <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
-        <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
-        <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
-        <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
-        <RouterLink to="/perfil" class="botao-salvar" @click="salvarAlteracoes">
-          Salvar Alterações
-        </RouterLink>
+       <form class="form">
+      <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
+      <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
+      <Inputs v-model="senha" label="Senha" type="text" placeholder="Digite sua senha" />
+      <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
+      <RouterLink to="/perfil" class="botao" @click="salvarAlteracoes">
+        Salvar Alterações
+      </RouterLink>
       </form>
     </div>
   </main>
@@ -61,10 +58,39 @@ function salvarAlteracoes() {
   object-fit: cover;
   display: block;
 }
+
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 34px;
+  padding: 0 2rem;
+  margin: 2rem;
+
+}
+
+.informacao {
+  border: 1px solid #d1d5db;
+  border-radius: 15px;
+}
+.informacao-titulo {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 3rem 0 0 4rem;
+}
+.botao {
+  padding: 8px 15px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  width: fit-content;
+  font-size: 14px;
 }
 </style>
