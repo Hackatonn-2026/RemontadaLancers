@@ -10,16 +10,25 @@ const opcoesPreco = [
   { label: 'Acima de R$ 200', min: 200, max: Infinity },
 ]
 
+const opcoesNota = [
+  { label: '4.5 ou mais', min: 4.5 },
+  { label: '4.0 ou mais', min: 4.0 },
+  { label: '3.0 ou mais', min: 3.0 },
+]
+
 const precos = ref([])
+const notas = ref([])
 
 function aplicarFiltros() {
   emit('filtrar', {
-    precos: precos.value
+    precos: precos.value,
+    notas: notas.value
   })
 }
 
 function limparFiltros() {
   precos.value = []
+  notas.value = []
   aplicarFiltros()
 }
 </script>
@@ -33,6 +42,14 @@ function limparFiltros() {
         <legend>Preço por hora</legend>
         <label v-for="opcao in opcoesPreco" :key="opcao.label" class="check-label">
           <input v-model="precos" type="checkbox" :value="opcao">
+          <span>{{ opcao.label }}</span>
+        </label>
+      </fieldset>
+
+      <fieldset class="fieldset-nota">
+        <legend>Avaliação</legend>
+        <label v-for="opcao in opcoesNota" :key="opcao.label" class="check-label">
+          <input v-model="notas" type="checkbox" :value="opcao">
           <span>{{ opcao.label }}</span>
         </label>
       </fieldset>
@@ -73,6 +90,10 @@ fieldset {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+.fieldset-nota {
+  margin-top: 20px;
 }
 
 .check-label {
