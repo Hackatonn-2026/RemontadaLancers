@@ -46,34 +46,34 @@
         <h3>Redes Sociais</h3>
         <div class="social-icons">
           <a href="#" aria-label="Instagram">
-            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
               <path
-                d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm5.25-3.25a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"
-                fill="currentColor"
+                d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"
               />
             </svg>
           </a>
           <a href="#" aria-label="Facebook">
-            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
               <path
-                d="M13.5 22v-8h2.7l.4-3.2h-3.1V7.2c0-.9.3-1.6 1.7-1.6H17V2.7c-.3 0-1.3-.2-2.6-.2-2.6 0-4.4 1.5-4.4 4.5v2.5H7.5V14h2.5v8h3.5z"
-                fill="currentColor"
+                d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"
               />
             </svg>
           </a>
           <a href="#" aria-label="X">
-            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
               <path
-                d="M18.9 2h3.2l-7 8 8.3 12h-6.5l-5.1-7.3L5.1 22H1.9l7.5-8.6L1.5 2h6.7l4.6 6.8L18.9 2zm-1.1 18h1.8L7.4 3.9H5.5L17.8 20z"
-                fill="currentColor"
+                d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"
               />
             </svg>
           </a>
           <a href="#" aria-label="LinkedIn">
-            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
               <path
-                d="M6.94 8.5A1.56 1.56 0 1 1 6.9 5.4a1.56 1.56 0 0 1 .04 3.1zM5.5 10h2.8v9H5.5v-9zm4.7 0h2.7v1.2h.1c.4-.7 1.3-1.5 2.9-1.5 3 0 3.6 2 3.6 4.6V19h-2.8v-17.7c0-1.1-.1-2.5-1.6-2.5-1.6 0-1.8 1.2-1.8 2.5V19h-2.8v-9z"
-                fill="currentColor"
+                d="M196.3 512L103.4 512L103.4 212.9L196.3 212.9L196.3 512zM149.8 172.1C120.1 172.1 96 147.5 96 117.8C96 103.5 101.7 89.9 111.8 79.8C121.9 69.7 135.6 64 149.8 64C164 64 177.7 69.7 187.8 79.8C197.9 89.9 203.6 103.6 203.6 117.8C203.6 147.5 179.5 172.1 149.8 172.1zM543.9 512L451.2 512L451.2 366.4C451.2 331.7 450.5 287.2 402.9 287.2C354.6 287.2 347.2 324.9 347.2 363.9L347.2 512L254.4 512L254.4 212.9L343.5 212.9L343.5 253.7L344.8 253.7C357.2 230.2 387.5 205.4 432.7 205.4C526.7 205.4 544 267.3 544 347.7L544 512L543.9 512z"
               />
             </svg>
           </a>
@@ -97,26 +97,28 @@
   right: 0;
   background: #153885;
   color: #ffffff;
-  padding: 40px 60px 30px;
+  padding: 18px 28px 14px;
 }
 
 .conteiner-rodape {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 60px;
-  margin-left: 10px;
-  margin-bottom: 20px;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .marca-rodape {
-  max-width: 250px;
+  max-width: 260px;
 }
 
 .cabecalho-marca {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  line-height: 1;
 }
 
 .imagem-logo {
@@ -127,30 +129,32 @@
 }
 
 .nome-marca {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .descricao-marca {
-  font-size: 14px;
+  font-size: 15px;
   color: #d1d5db;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .coluna-rodape h3 {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
 }
 
 .coluna-rodape ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  gap: 8px;
 }
 
 .coluna-rodape li {
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .coluna-rodape a {
@@ -165,8 +169,10 @@
 
 .social-icons {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
+  margin-top: 4px;
 }
 
 .social-icons a {
@@ -175,9 +181,16 @@
   justify-content: center;
   width: 36px;
   height: 36px;
+  color: #ffffff;
   background: #2563eb;
   border-radius: 50%;
-  color: #ffffff;
+  padding: 0;
+}
+
+.social-icons svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 
 .social-icon {
@@ -188,8 +201,8 @@
 
 .divisor-rodape {
   border: none;
-  border-top: 1px solid #2563eb;
-  margin: 15px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  margin: 12px 0 10px;
 }
 
 .direitos-autorais {
