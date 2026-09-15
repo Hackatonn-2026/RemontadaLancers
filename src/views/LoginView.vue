@@ -26,7 +26,8 @@
 <script setup>
 import { ref } from 'vue'
 import Inputs from '../components/Inputs.vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const email = ref('')
 const senha = ref('')
 function entrar() {
@@ -34,9 +35,11 @@ function entrar() {
     if (!usuario) {
         alert('Nenhum usuário cadastrado!')
         return
+        router.push('/perfil')
     }
     if (email.value === usuario.email && senha.value === usuario.senha) {
         alert('Login realizado com sucesso!')
+        router.push('/perfil')
     } else {
         alert('E-mail ou senha incorretos!')
     }
