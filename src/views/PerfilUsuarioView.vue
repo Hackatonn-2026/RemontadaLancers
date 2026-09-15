@@ -12,6 +12,9 @@
          <RouterLink to="/editar-perfil" class="botao">
                 Editar perfil
             </RouterLink>
+           <button class="botao" @click="sair">
+                Sair
+            </button>
       </div>
 
     </section>
@@ -53,6 +56,8 @@
 
 
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 function carregarUsuario() {
   try {
     return JSON.parse(localStorage.getItem('usuario')) || {}
@@ -65,6 +70,10 @@ const dadosUsuario = carregarUsuario()
 const usuario = {
   ...dadosUsuario,
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
+}
+function sair() {
+  localStorage.removeItem('usuario')
+  router.push('/login')
 }
 
 </script>
@@ -158,5 +167,7 @@ const usuario = {
   border-radius: 5px;
   width: fit-content;
   font-size: 14px;
+  margin:0 10px 0 0;
+  border: none;
 }
 </style>
