@@ -17,6 +17,7 @@
         </button>
     </div>
     <div class="dados">
+        <form class="cadastro-form">
         <form class="cadastro-form" @submit.prevent="CriaConta">
             <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
             <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
@@ -40,46 +41,45 @@
                 </div>
                 <Inputs v-model="descricao" label="Descrição Profissional" type="textarea"
                     placeholder="Fale sobre sua experiência" />
-                    <div class="categorias">
-    <label>Categorias de Atuação</label>
+                <div class="categorias">
+                    <label>Categorias de Atuação</label>
 
-    <div class="lista-categorias">
-        <label>
-            <input type="checkbox" value="marketing" v-model="categorias">
-            Marketing
-        </label>
+                    <div class="lista-categorias">
+                        <label>
+                            <input type="checkbox" value="marketing" v-model="categorias">
+                            Marketing
+                        </label>
 
-        <label>
-            <input type="checkbox" value="design" v-model="categorias">
-            Design
-        </label>
+                        <label>
+                            <input type="checkbox" value="design" v-model="categorias">
+                            Design
+                        </label>
 
-        <label>
-            <input type="checkbox" value="edicao" v-model="categorias">
-            Edição
-        </label>
+                        <label>
+                            <input type="checkbox" value="edicao" v-model="categorias">
+                            Edição
+                        </label>
 
-        <label>
-            <input type="checkbox" value="consultoria" v-model="categorias">
-            Consultoria
-        </label>
+                        <label>
+                            <input type="checkbox" value="consultoria" v-model="categorias">
+                            Consultoria
+                        </label>
 
-        <label>
-            <input type="checkbox" value="desenvolvimento" v-model="categorias">
-            Desenvolvimento
-        </label>
+                        <label>
+                            <input type="checkbox" value="desenvolvimento" v-model="categorias">
+                            Desenvolvimento
+                        </label>
 
-        <label>
-            <input type="checkbox" value="traducao" v-model="categorias">
-            Tradução
-        </label>
-    </div>
-</div>
+                        <label>
+                            <input type="checkbox" value="traducao" v-model="categorias">
+                            Tradução
+                        </label>
+                    </div>
+                </div>
             </div>
-
-            <button type="submit" class="botao-criar">
+            <RouterLink to="/perfil" @click="CriaConta" class="botao-criar">
                 Criar conta
-            </button>
+            </RouterLink>
             <p class="tem-conta"> Ja tem uma conta?</p>
             <RouterLink to="/login" class="botao-login">
                 Faça login
@@ -127,6 +127,7 @@ h1 {
     justify-content: center;
     align-items: center;
 }
+
 p {
     font-size: 16px;
     color: #6b7280;
@@ -135,6 +136,7 @@ p {
     justify-content: center;
     align-items: center;
 }
+
 .tipo-usuario {
     display: flex;
     border: 1px solid #d1d5db;
@@ -143,6 +145,7 @@ p {
     gap: 4px;
     margin-bottom: 20px;
 }
+
 .tipo-usuario button {
     flex: 1;
     border: none;
@@ -152,10 +155,12 @@ p {
     font-size: 14px;
     cursor: pointer;
 }
+
 .tipo-usuario button.ativo {
     background: #2563eb;
     color: white;
 }
+
 .cadastro-page {
     min-height: 100vh;
     display: flex;
@@ -164,6 +169,7 @@ p {
     padding: 30px 20px;
     background: #f5f7fb;
 }
+
 .cadastro-card {
     width: 100%;
     max-width: 710px;
@@ -172,6 +178,7 @@ p {
     border-radius: 15px;
     padding: 28px 20px;
 }
+
 .cadastro-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -181,25 +188,30 @@ p {
     border: 1px solid #d1d5db;
     border-radius: 15px;
 }
+
 .dados-profissional {
     grid-column: 1 / -1;
     display: grid;
     gap: 20px;
 }
+
 .dados-profissional h4 {
     margin: 0;
     font-size: 16px;
     color: #111827;
 }
+
 .campo {
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
+
 .campo label {
     font-size: 14px;
     color: #111827;
 }
+
 .campo select {
     width: 100%;
     padding: 12px;
@@ -211,20 +223,24 @@ p {
     cursor: pointer;
     box-sizing: border-box;
 }
+
 .categorias {
     margin-top: 0;
 }
-.categorias > label {
+
+.categorias>label {
     display: block;
     margin-bottom: 12px;
     font-size: 14px;
     color: #111827;
 }
+
 .lista-categorias {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px 40px;
 }
+
 .lista-categorias label {
     display: flex;
     align-items: center;
@@ -232,12 +248,14 @@ p {
     font-size: 13px;
     color: #374151;
 }
+
 .lista-categorias input {
     margin: 0;
     width: 15px;
     height: 15px;
     cursor: pointer;
 }
+
 .botao-criar {
     grid-column: 1 / -1;
     width: 100%;
@@ -249,9 +267,11 @@ p {
     font-size: 18px;
     cursor: pointer;
 }
+
 .botao-criar:hover {
     background: #1d4ed8;
 }
+
 .tem-conta {
     margin: 0;
     color: #111827;
@@ -260,6 +280,7 @@ p {
     grid-column: 1;
     text-align: right;
 }
+
 .botao-login {
     margin: 0;
     color: #2563eb;
@@ -268,6 +289,7 @@ p {
     grid-column: 2;
     align-self: center;
 }
+
 .botao-login:hover {
     text-decoration: underline;
 }

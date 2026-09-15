@@ -16,15 +16,19 @@
     </nav>
 
 
-    <RouterLink to="/login" class="botao-login">
-  Login
+    <RouterLink v-if="!usuario" to="/login" class="botao-login">
+      Login
+    </RouterLink>
+
+    <RouterLink v-else to="/perfil" class="botao-perfil">
+  <img src="/perfil.avif" alt="Foto de perfil">
 </RouterLink>
   </header>
 </template>
 
 <script setup>
 import SearchBar from './SearchBar.vue';
-
+const usuario = JSON.parse(localStorage.getItem('usuario')) || null
 </script>
 
 <style scoped>
@@ -104,5 +108,32 @@ import SearchBar from './SearchBar.vue';
 
 .botao-cadastrar:active {
   transform: scale(0.96);
+}
+.botao-perfil {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #dbe8ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.botao-perfil {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.botao-perfil img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
