@@ -9,6 +9,9 @@
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
+         <RouterLink to="/editar-perfil">
+                Editar perfil
+            </RouterLink>
       </div>
 
     </section>

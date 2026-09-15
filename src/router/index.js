@@ -8,6 +8,7 @@ import CadastroView from '../views/CadastroView.vue'
 import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
+import EditarPerfilView from '../views/EditarPerfilView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,11 @@ const router = createRouter({
       name: 'suporte',
       component: SuporteView,
     },
+    {
+      path: '/editar-perfil',
+      name: 'editar-perfil',
+      component: EditarPerfilView,
+    }
   ],
 })
 
