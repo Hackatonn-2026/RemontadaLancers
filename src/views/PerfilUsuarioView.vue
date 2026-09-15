@@ -72,7 +72,6 @@ const usuario = {
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
 }
 function sair() {
-  localStorage.removeItem('usuario')
   router.push('/login')
 }
 
