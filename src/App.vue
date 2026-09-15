@@ -23,6 +23,10 @@ import AppFooter from './components/AppFooter.vue';
 
 .conteudo-principal {
   flex: 1;
+<<<<<<< HEAD
   padding-top: 90px;
+=======
+  padding-top: 92px;
+>>>>>>> ddf43f2 (alterações maneiras)
 }
 </style>
