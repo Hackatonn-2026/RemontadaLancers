@@ -7,6 +7,7 @@ import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
 import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
+import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
 import SuporteView from '../views/SuporteView.vue'
 
 const router = createRouter({
@@ -47,6 +48,9 @@ const router = createRouter({
       component: SobreView,
     },
     {
+      path: '/buscar',
+      name: 'buscar',
+      component: BuscasProfissionais,
       path: '/suporte',
       name: 'suporte',
       component: SuporteView,
