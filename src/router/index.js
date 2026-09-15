@@ -41,7 +41,8 @@ const router = createRouter({
       path: '/perfil',
       name: 'perfil',
       component: PerfilUsuarioView,
-
+    },
+    {
       path: '/sobre',
       name: 'sobre',
       component: SobreView,

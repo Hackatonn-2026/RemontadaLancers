@@ -3,8 +3,8 @@
 
     <section class="perfil-header">
       <div class="foto">
-  <img src="/perfil.avif" alt="Foto de perfil">
-</div>
+        <img src="/perfil.avif" alt="Foto de perfil">
+      </div>
 
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
@@ -27,10 +27,6 @@
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
 
-        <div>
-          <strong>Email</strong>
-          <p>{{ usuario.email || 'Não informado' }}</p>
-        </div>
       </div>
     </section>
 
@@ -39,16 +35,14 @@
     <section class="card">
       <div class="titulo-servicos">
         <h2>Serviços contratados</h2>
-
-        <button class="ver-todos">
-          Ver todos
-        </button>
       </div>
 
-    <div>
-          <strong>Servicos</strong>
-          <p>{{ usuario.servicos || 'Nenhum serviço contratado' }}</p>
-        </div>
+      <p v-if="!usuario.servicos.length">Nenhum serviço contratado</p>
+      <ul v-else class="lista-servicos">
+        <li v-for="servico in usuario.servicos" :key="servico.id || servico.nome || servico">
+          {{ servico.nome || servico }}
+        </li>
+      </ul>
     </section>
 
   </main>
@@ -56,10 +50,19 @@
 
 
 <script setup>
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || {}
+  } catch {
+    return {}
+  }
+}
 
-const usuario = JSON.parse(
-  localStorage.getItem('usuario')
-) || {}
+const dadosUsuario = carregarUsuario()
+const usuario = {
+  ...dadosUsuario,
+  servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
+}
 
 </script>
 

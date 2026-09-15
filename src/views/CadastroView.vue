@@ -17,7 +17,7 @@
         </button>
     </div>
     <div class="dados">
-        <form class="cadastro-form" @submit.prevent="CriaConta">
+        <form class="cadastro-form">
             <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
             <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
             <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
@@ -108,7 +108,8 @@ function CriaConta() {
         profissao: profissao.value,
         anosExperiencia: AnosDeExperiencia.value,
         descricao: descricao.value,
-        categorias: categorias.value
+        categorias: categorias.value,
+        servicos: []
     }
 
     localStorage.setItem('usuario', JSON.stringify(usuario))
