@@ -5,7 +5,14 @@ export const profissionais = [
     profissao: 'Desenvolvedor Full Stack',
     categoria: 'Desenvolvimento',
     descricao: 'Desenvolvedor com 10 anos de experiência criando sites e sistemas web do zero',
-    precoHora: 180
+    precoHora: 180,
+    rating: 4.8,
+    reviewsCount: 3,
+    reviews: [
+      { id: 1, author: 'Marina T.', date: '2025-08-12', rating: 5, comment: 'Excelente profissional, entregou o sistema antes do prazo e com ótima comunicação.' },
+      { id: 2, author: 'João P.', date: '2025-07-30', rating: 5, comment: 'Muito atencioso e resolveu um bug complexo que outros desenvolvedores não conseguiram.' },
+      { id: 3, author: 'Renata A.', date: '2025-06-18', rating: 4, comment: 'Bom trabalho, só demorou um pouco mais que o combinado.' },
+    ],
   },
 
   {
@@ -14,7 +21,13 @@ export const profissionais = [
     profissao: 'Designer Gráfica',
     categoria: 'Design',
     descricao: 'Designer apaixonada por transformar ideias em identidades visuais marcantes',
-    precoHora: 90
+    precoHora: 90,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Paulo H.', date: '2025-08-02', rating: 3, comment: 'Trabalho razoável, mas demorou mais do que o combinado para entregar.' },
+      { id: 2, author: 'Camila S.', date: '2025-05-14', rating: 2, comment: 'Não gostei muito do resultado final, tive que pedir vários ajustes.' },
+    ],
   },
 
   {
@@ -23,7 +36,14 @@ export const profissionais = [
     profissao: 'Eletricista Residencial e Comercial',
     categoria: 'Elétrica',
     descricao: 'Eletricista com 12 anos de experiência em instalações residenciais e comerciais, sempre seguindo as normas de segurança vigentes',
-    precoHora: 70
+    precoHora: 70,
+    rating: 4.7,
+    reviewsCount: 3,
+    reviews: [
+      { id: 1, author: 'Sandra M.', date: '2025-08-20', rating: 5, comment: 'Muito profissional, identificou o problema rápido e resolveu com segurança.' },
+      { id: 2, author: 'Eduardo R.', date: '2025-07-05', rating: 5, comment: 'Serviço impecável, deixou tudo organizado depois da instalação.' },
+      { id: 3, author: 'Lucas F.', date: '2025-04-22', rating: 4, comment: 'Bom atendimento, preço justo pelo serviço prestado.' },
+    ],
   },
 
   {
@@ -32,7 +52,13 @@ export const profissionais = [
     profissao: 'Técnica em Informática',
     categoria: 'Informática',
     descricao: 'Técnica em informática com experiência em manutenção, formatação e configuração de redes para uso residencial e pequenas empresas',
-    precoHora: 60
+    precoHora: 60,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Bruno C.', date: '2025-07-11', rating: 3, comment: 'Resolveu o problema, mas demorou bem mais do que o esperado.' },
+      { id: 2, author: 'Aline V.', date: '2025-03-09', rating: 2, comment: 'Atendimento confuso, não perguntou direito o que eu precisava.' },
+    ],
   },
 
   {
@@ -41,7 +67,14 @@ export const profissionais = [
     profissao: 'Jardineiro Profissional',
     categoria: 'Jardinagem',
     descricao: 'Jardineiro com 14 anos cuidando de jardins residenciais, sempre com atenção aos detalhes que fazem o espaço ficar bonito e saudável',
-    precoHora: 45
+    precoHora: 45,
+    rating: 4.9,
+    reviewsCount: 3,
+    reviews: [
+      { id: 1, author: 'Cristina O.', date: '2025-08-15', rating: 5, comment: 'Meu jardim nunca esteve tão bonito, muito cuidadoso com as plantas.' },
+      { id: 2, author: 'Marcos D.', date: '2025-06-30', rating: 5, comment: 'Pontual e caprichoso, recomendo demais.' },
+      { id: 3, author: 'Fabiana L.', date: '2025-05-02', rating: 5, comment: 'Excelente serviço, superou minhas expectativas.' },
+    ],
   },
 
   {
@@ -50,7 +83,13 @@ export const profissionais = [
     profissao: 'Fotógrafa Profissional',
     categoria: 'Fotografia',
     descricao: 'Fotógrafa com olhar atento para capturar momentos únicos, atuando em ensaios, eventos e retratos',
-    precoHora: 150
+    precoHora: 150,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Tatiana R.', date: '2025-08-08', rating: 2, comment: 'Fotos ficaram genéricas, esperava mais criatividade.' },
+      { id: 2, author: 'Diego M.', date: '2025-06-14', rating: 3, comment: 'Atendimento ok, mas atrasou bastante a entrega das fotos editadas.' },
+    ],
   },
 
   {
@@ -59,7 +98,14 @@ export const profissionais = [
     profissao: 'Professor Particular',
     categoria: 'Aulas',
     descricao: 'Professor com didática clara e paciente, ajudando alunos a entenderem a matéria de verdade, não só decorar fórmulas',
-    precoHora: 55
+    precoHora: 55,
+    rating: 4.9,
+    reviewsCount: 3,
+    reviews: [
+      { id: 1, author: 'Helena B.', date: '2025-08-01', rating: 5, comment: 'Meu filho melhorou muito as notas depois das aulas com ele.' },
+      { id: 2, author: 'Rodrigo S.', date: '2025-06-20', rating: 5, comment: 'Muito paciente e explica de um jeito fácil de entender.' },
+      { id: 3, author: 'Patrícia N.', date: '2025-04-10', rating: 5, comment: 'Excelente professor, super didático.' },
+    ],
   },
 
   {
@@ -68,7 +114,13 @@ export const profissionais = [
     profissao: 'Pintora Residencial e Comercial',
     categoria: 'Pintura',
     descricao: 'Pintora com 11 anos de experiência, capricho no acabamento e cuidado para deixar o ambiente do cliente limpo durante o serviço',
-    precoHora: 65
+    precoHora: 65,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Vinícius A.', date: '2025-07-25', rating: 3, comment: 'Serviço razoável, mas deixou respingos de tinta no chão.' },
+      { id: 2, author: 'Simone F.', date: '2025-05-19', rating: 2, comment: 'Acabamento ficou desigual em algumas paredes.' },
+    ],
   },
 
   {
@@ -77,7 +129,14 @@ export const profissionais = [
     profissao: 'Mecânico Automotivo',
     categoria: 'Mecânica',
     descricao: 'Mecânico com 6 anos de experiência, direto e honesto no diagnóstico, sempre explicando ao cliente o que realmente precisa ser feito',
-    precoHora: 80
+    precoHora: 80,
+    rating: 4.7,
+    reviewsCount: 3,
+    reviews: [
+      { id: 1, author: 'Felipe T.', date: '2025-08-05', rating: 5, comment: 'Muito honesto, não tentou vender serviço que eu não precisava.' },
+      { id: 2, author: 'Adriana C.', date: '2025-06-28', rating: 5, comment: 'Resolveu o problema do meu carro rapidinho.' },
+      { id: 3, author: 'Marcelo G.', date: '2025-05-11', rating: 4, comment: 'Bom mecânico, preço justo.' },
+    ],
   },
 
   {
@@ -86,7 +145,13 @@ export const profissionais = [
     profissao: 'Especialista em Marketing Digital',
     categoria: 'Marketing & Redes Sociais',
     descricao: 'Especialista em marketing digital, ajudando negócios locais a crescerem online com estratégia e conteúdo consistente',
-    precoHora: 120
+    precoHora: 120,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Otávio R.', date: '2025-07-19', rating: 2, comment: 'Não vi resultado nenhum depois de um mês de estratégia.' },
+      { id: 2, author: 'Beatriz L.', date: '2025-05-03', rating: 3, comment: 'Comunicação falha, demorava pra responder as mensagens.' },
+    ],
   },
 
   {
@@ -95,7 +160,13 @@ export const profissionais = [
     profissao: 'Tradutor Profissional',
     categoria: 'Tradução & Idiomas',
     descricao: 'Tradutor com 8 anos de experiência em textos técnicos e acadêmicos, com atenção ao contexto e não só à tradução literal',
-    precoHora: 95
+    precoHora: 95,
+    rating: 4.9,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Isabela F.', date: '2025-08-09', rating: 5, comment: 'Tradução perfeita, manteve o sentido técnico do texto original.' },
+      { id: 2, author: 'Gabriel M.', date: '2025-06-01', rating: 5, comment: 'Muito atento ao contexto, entrega de qualidade.' },
+    ],
   },
 
   {
@@ -104,7 +175,13 @@ export const profissionais = [
     profissao: 'Editor de Vídeo',
     categoria: 'Edição de Vídeo',
     descricao: 'Editor de vídeo com foco em contar histórias de forma dinâmica, do corte à finalização com motion graphics',
-    precoHora: 130
+    precoHora: 130,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Natália P.', date: '2025-07-14', rating: 3, comment: 'Edição ficou ok, mas o ritmo do vídeo não era o que eu esperava.' },
+      { id: 2, author: 'Henrique S.', date: '2025-04-27', rating: 2, comment: 'Entrega atrasou bastante e sem aviso prévio.' },
+    ],
   },
 
   {
@@ -113,7 +190,13 @@ export const profissionais = [
     profissao: 'Redatora e Copywriter',
     categoria: 'Redação',
     descricao: 'Redatora e copywriter que escreve textos claros e persuasivos, sempre pensando em quem vai ler do outro lado',
-    precoHora: 75
+    precoHora: 75,
+    rating: 4.8,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Caio V.', date: '2025-08-03', rating: 5, comment: 'Textos muito claros e persuasivos, ajudou bastante nas conversões.' },
+      { id: 2, author: 'Débora M.', date: '2025-05-22', rating: 4, comment: 'Boa redatora, entende bem o que o cliente precisa.' },
+    ],
   },
 
   {
@@ -122,7 +205,13 @@ export const profissionais = [
     profissao: 'Consultor Empresarial',
     categoria: 'Consultoria',
     descricao: 'Consultor empresarial com experiência ajudando pequenas e médias empresas a organizarem processos e tomarem decisões melhores',
-    precoHora: 250
+    precoHora: 250,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Roberta A.', date: '2025-07-28', rating: 2, comment: 'Consultoria muito genérica, esperava algo mais personalizado pro meu negócio.' },
+      { id: 2, author: 'Leandro B.', date: '2025-04-15', rating: 3, comment: 'Bom conhecimento técnico, mas quase nenhum acompanhamento depois.' },
+    ],
   },
 
   {
@@ -131,7 +220,14 @@ export const profissionais = [
     profissao: 'Profissional de Limpeza',
     categoria: 'Limpeza',
     descricao: 'Profissional de limpeza dedicada e caprichosa, que trata a casa do cliente com o mesmo cuidado que trataria a própria',
-    precoHora: 40
+    precoHora: 40,
+    rating: 4.9,
+    reviewsCount: 3,
+    reviews: [
+      { id: 1, author: 'Silvia T.', date: '2025-08-11', rating: 5, comment: 'Minha casa ficou impecável, muito caprichosa em tudo.' },
+      { id: 2, author: 'Antônio F.', date: '2025-06-24', rating: 5, comment: 'Pontual e cuidadosa, recomendo bastante.' },
+      { id: 3, author: 'Juliana R.', date: '2025-05-06', rating: 4, comment: 'Bom serviço, atenciosa com os pedidos.' },
+    ],
   },
 
   {
@@ -140,7 +236,13 @@ export const profissionais = [
     profissao: 'Produtor Musical',
     categoria: 'Música',
     descricao: 'Produtor musical envolvido com música desde cedo, hoje ajudando outros artistas a gravarem e produzirem suas faixas',
-    precoHora: 140
+    precoHora: 140,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Mariano C.', date: '2025-07-17', rating: 3, comment: 'Produção ficou boa, mas não capturou bem a sonoridade que eu queria.' },
+      { id: 2, author: 'Yasmin D.', date: '2025-05-29', rating: 2, comment: 'Demorou demais pra entregar a faixa finalizada.' },
+    ],
   },
 
   {
@@ -149,7 +251,13 @@ export const profissionais = [
     profissao: 'Desenvolvedor Front-end',
     categoria: 'Desenvolvimento',
     descricao: 'Focado em interfaces web modernas e performáticas',
-    precoHora: 160
+    precoHora: 160,
+    rating: 2.5,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Wesley P.', date: '2025-08-06', rating: 3, comment: 'Site funcional, mas o design final ficou bem genérico.' },
+      { id: 2, author: 'Larissa M.', date: '2025-06-09', rating: 2, comment: 'Prazo estourou bastante em relação ao combinado.' },
+    ],
   },
 
   {
@@ -158,7 +266,13 @@ export const profissionais = [
     profissao: 'Designer Gráfica e Branding',
     categoria: 'Design',
     descricao: 'Trabalha criando peças gráficas que comunicam com clareza e personalidade, sempre alinhando estética e objetivo do cliente',
-    precoHora: 100
+    precoHora: 100,
+    rating: 4.9,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Ricardo N.', date: '2025-07-21', rating: 5, comment: 'Branding ficou com muita personalidade, exatamente o que eu queria.' },
+      { id: 2, author: 'Fernanda G.', date: '2025-05-16', rating: 5, comment: 'Super criativa e atenciosa com o briefing.' },
+    ],
   },
 
   {
@@ -167,7 +281,13 @@ export const profissionais = [
     profissao: 'Eletricista Predial',
     categoria: 'Elétrica',
     descricao: 'Especializado em instalações elétricas prediais, com atenção especial à segurança e ao acabamento do serviço',
-    precoHora: 85
+    precoHora: 85,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Cláudia R.', date: '2025-07-02', rating: 2, comment: 'Serviço deixou fiação exposta, tive que chamar outro eletricista.' },
+      { id: 2, author: 'Igor L.', date: '2025-04-18', rating: 2, comment: 'Atendimento apressado, não explicou direito o que estava fazendo.' },
+    ],
   },
 
   {
@@ -176,7 +296,13 @@ export const profissionais = [
     profissao: 'Técnico de Informática',
     categoria: 'Informática',
     descricao: 'Atua resolvendo problemas de hardware e software com agilidade, sempre buscando deixar o equipamento do cliente funcionando como novo',
-    precoHora: 50
+    precoHora: 50,
+    rating: 4.7,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Priscila A.', date: '2025-08-13', rating: 5, comment: 'Consertou meu notebook rapidinho, muito ágil.' },
+      { id: 2, author: 'Danilo F.', date: '2025-05-25', rating: 4, comment: 'Bom técnico, resolveu o problema sem complicação.' },
+    ],
   },
 
   {
@@ -185,7 +311,13 @@ export const profissionais = [
     profissao: 'Paisagista',
     categoria: 'Jardinagem',
     descricao: 'Especializado em projetos paisagísticos, transformando quintais e áreas externas em ambientes mais verdes e agradáveis',
-    precoHora: 110
+    precoHora: 110,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Sônia B.', date: '2025-07-09', rating: 1, comment: 'Projeto não ficou nada parecido com o que combinamos, decepcionante.' },
+      { id: 2, author: 'Mateus V.', date: '2025-04-30', rating: 3, comment: 'Bom conhecimento de plantas, mas a execução deixou a desejar.' },
+    ],
   },
 
   {
@@ -194,7 +326,13 @@ export const profissionais = [
     profissao: 'Fotógrafa de Eventos',
     categoria: 'Fotografia',
     descricao: 'Especializada em cobrir eventos com naturalidade, entregando fotos editadas com cuidado e no prazo combinado',
-    precoHora: 175
+    precoHora: 175,
+    rating: 4.9,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Gustavo M.', date: '2025-08-17', rating: 5, comment: 'Fotos muito naturais, capturou a essência do evento.' },
+      { id: 2, author: 'Carla S.', date: '2025-06-05', rating: 5, comment: 'Entregou no prazo e com edição impecável.' },
+    ],
   },
 
   {
@@ -203,7 +341,13 @@ export const profissionais = [
     profissao: 'Professora de Idiomas',
     categoria: 'Aulas',
     descricao: 'Professora de idiomas com foco em conversação, ajudando alunos a ganharem confiança para falar desde as primeiras aulas',
-    precoHora: 60
+    precoHora: 60,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Vitor H.', date: '2025-07-23', rating: 2, comment: 'Aulas muito repetitivas, senti que não evoluí muito.' },
+      { id: 2, author: 'Amanda P.', date: '2025-05-08', rating: 2, comment: 'Cancelou algumas aulas sem muito aviso.' },
+    ],
   },
 
   {
@@ -212,7 +356,13 @@ export const profissionais = [
     profissao: 'Pintor Residencial',
     categoria: 'Pintura',
     descricao: 'Pintor dedicado a entregar um acabamento uniforme e duradouro, do preparo da parede até a última demão de tinta',
-    precoHora: 55
+    precoHora: 55,
+    rating: 4.6,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Elisa T.', date: '2025-07-06', rating: 5, comment: 'Acabamento muito uniforme, ficou perfeito.' },
+      { id: 2, author: 'Rafael N.', date: '2025-04-12', rating: 4, comment: 'Bom pintor, cuidadoso com o preparo da parede.' },
+    ],
   },
 
   {
@@ -221,7 +371,13 @@ export const profissionais = [
     profissao: 'Mecânico Automotivo',
     categoria: 'Mecânica',
     descricao: 'Especializado em diagnóstico eletrônico e manutenção preventiva, buscando resolver o problema do veículo sem gastos desnecessários',
-    precoHora: 90
+    precoHora: 90,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Fábio D.', date: '2025-08-04', rating: 1, comment: 'Trocou uma peça que não precisava e cobrou sem avisar antes.' },
+      { id: 2, author: 'Luciana C.', date: '2025-05-20', rating: 3, comment: 'Diagnóstico correto, mas atendimento meio grosseiro.' },
+    ],
   },
 
   {
@@ -230,7 +386,13 @@ export const profissionais = [
     profissao: 'Social Media',
     categoria: 'Marketing & Redes Sociais',
     descricao: 'Social media focada em criar conteúdo que engaja de verdade, com planejamento e identidade visual pensados para cada marca',
-    precoHora: 95
+    precoHora: 95,
+    rating: 4.8,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Thales R.', date: '2025-07-15', rating: 5, comment: 'Meu engajamento aumentou muito com o planejamento dela.' },
+      { id: 2, author: 'Vanessa L.', date: '2025-05-01', rating: 4, comment: 'Muito criativa e organizada com o calendário de posts.' },
+    ],
   },
 
   {
@@ -239,7 +401,13 @@ export const profissionais = [
     profissao: 'Tradutora Inglês-Português',
     categoria: 'Tradução & Idiomas',
     descricao: 'Tradutora dedicada a manter o sentido e o tom original do texto, atendendo desde documentos simples até materiais técnicos',
-    precoHora: 85
+    precoHora: 85,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Guilherme A.', date: '2025-08-10', rating: 2, comment: 'Tradução saiu com vários erros de contexto, tive que revisar tudo.' },
+      { id: 2, author: 'Raquel M.', date: '2025-06-02', rating: 2, comment: 'Entrega atrasou e a comunicação foi bem falha.' },
+    ],
   },
 
   {
@@ -248,7 +416,13 @@ export const profissionais = [
     profissao: 'Editor e Motion Designer',
     categoria: 'Edição de Vídeo',
     descricao: 'Editor e motion designer especializado em conteúdo para redes sociais, sempre buscando um ritmo que prende a atenção',
-    precoHora: 120
+    precoHora: 120,
+    rating: 4.7,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Bianca F.', date: '2025-07-27', rating: 5, comment: 'Ritmo dos vídeos ficou perfeito pras redes sociais.' },
+      { id: 2, author: 'Nicolas T.', date: '2025-05-13', rating: 4, comment: 'Bom trabalho de motion, entrega rápida.' },
+    ],
   },
 
   {
@@ -257,7 +431,13 @@ export const profissionais = [
     profissao: 'Redatora SEO',
     categoria: 'Redação',
     descricao: 'Redatora especializada em SEO, unindo boa escrita com técnica para ajudar o conteúdo do cliente a ser encontrado',
-    precoHora: 70
+    precoHora: 70,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Alexandre P.', date: '2025-08-14', rating: 1, comment: 'Texto entregue não tinha nada a ver com o que pedi no briefing.' },
+      { id: 2, author: 'Karina S.', date: '2025-06-07', rating: 3, comment: 'Escrita ok, mas o SEO não trouxe resultado nenhum.' },
+    ],
   },
 
   {
@@ -266,7 +446,13 @@ export const profissionais = [
     profissao: 'Consultor de Tecnologia',
     categoria: 'Consultoria',
     descricao: 'Consultor de tecnologia que traduz problemas complexos em soluções práticas, sempre alinhado à realidade do negócio do cliente',
-    precoHora: 220
+    precoHora: 220,
+    rating: 4.9,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Eliane V.', date: '2025-07-31', rating: 5, comment: 'Soluções muito práticas, entendeu bem a realidade do meu negócio.' },
+      { id: 2, author: 'Sérgio M.', date: '2025-05-17', rating: 5, comment: 'Consultoria excelente, valeu cada centavo.' },
+    ],
   },
 
   {
@@ -275,7 +461,13 @@ export const profissionais = [
     profissao: 'Especialista em Limpeza',
     categoria: 'Limpeza',
     descricao: 'Especialista em limpeza residencial e comercial, com atenção aos detalhes que fazem diferença no resultado final',
-    precoHora: 35
+    precoHora: 35,
+    rating: 2,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Douglas R.', date: '2025-08-19', rating: 2, comment: 'Deixou vários cantos sem limpar direito, tive que refazer.' },
+      { id: 2, author: 'Michele A.', date: '2025-06-11', rating: 2, comment: 'Atrasou bastante o horário combinado sem avisar.' },
+    ],
   },
 
   {
@@ -284,262 +476,12 @@ export const profissionais = [
     profissao: 'Músico e Professor de Música',
     categoria: 'Música',
     descricao: 'Músico e professor apaixonado por ensinar, adapta as aulas ao ritmo e ao gosto musical de cada aluno',
-    precoHora: 75
+    precoHora: 75,
+    rating: 4.9,
+    reviewsCount: 2,
+    reviews: [
+      { id: 1, author: 'Jéssica N.', date: '2025-07-24', rating: 5, comment: 'Adaptou as aulas ao meu ritmo, aprendi muito rápido.' },
+      { id: 2, author: 'Alan C.', date: '2025-05-09', rating: 5, comment: 'Excelente professor, muito paciente.' },
+    ],
   },
-  {
-    id: 33,
-    nome: 'Bianca Torres',
-    profissao: 'Contadora',
-    categoria: 'Contabilidade',
-    descricao: 'Contadora com experiência em MEI e pequenas empresas, ajudando a organizar as finanças e manter tudo em dia com o fisco',
-    precoHora: 130
-  },
-  {
-    id: 34,
-    nome: 'Otávio Nascimento',
-    profissao: 'Advogado Trabalhista',
-    categoria: 'Advocacia',
-    descricao: 'Advogado especializado em direito trabalhista, atendendo com clareza tanto empregados quanto pequenos empregadores',
-    precoHora: 200
-  },
-  {
-    id: 35,
-    nome: 'Priscila Gonçalves',
-    profissao: 'Arquiteta',
-    categoria: 'Arquitetura',
-    descricao: 'Arquiteta com foco em projetos residenciais, unindo funcionalidade e estética dentro do orçamento do cliente',
-    precoHora: 210
-  },
-  {
-    id: 36,
-    nome: 'Fabio Correia',
-    profissao: 'Encanador',
-    categoria: 'Encanamento',
-    descricao: 'Encanador com anos de experiência resolvendo vazamentos, entupimentos e instalações hidráulicas residenciais',
-    precoHora: 65
-  },
-  {
-    id: 37,
-    nome: 'Tatiane Vieira',
-    profissao: 'Personal Trainer',
-    categoria: 'Educação Física',
-    descricao: 'Personal trainer que monta treinos personalizados de acordo com o objetivo e a rotina de cada aluno',
-    precoHora: 80
-  },
-  {
-    id: 38,
-    nome: 'Leonardo Campos',
-    profissao: 'Marceneiro',
-    categoria: 'Marcenaria',
-    descricao: 'Marceneiro especializado em móveis sob medida, com acabamento caprichado do projeto à entrega',
-    precoHora: 95
-  },
-  {
-    id: 39,
-    nome: 'Débora Nogueira',
-    profissao: 'Nutricionista',
-    categoria: 'Nutrição',
-    descricao: 'Nutricionista que monta planos alimentares realistas, respeitando a rotina e as preferências de cada paciente',
-    precoHora: 110
-  },
-  {
-    id: 40,
-    nome: 'Ricardo Batista',
-    profissao: 'Chef de Cozinha',
-    categoria: 'Culinária',
-    descricao: 'Chef com experiência em eventos e aulas particulares de culinária, sempre buscando simplificar receitas sofisticadas',
-    precoHora: 160
-  },
-  {
-    id: 41,
-    nome: 'Amanda Freitas',
-    profissao: 'Manicure e Pedicure',
-    categoria: 'Beleza',
-    descricao: 'Manicure com atendimento domiciliar, prezando pela higiene e pelo capricho no acabamento das unhas',
-    precoHora: 45
-  },
-  {
-    id: 42,
-    nome: 'Wesley Moura',
-    profissao: 'Personal Organizer',
-    categoria: 'Organização',
-    descricao: 'Personal organizer que ajuda a transformar ambientes bagunçados em espaços funcionais e fáceis de manter',
-    precoHora: 90
-  },
-  {
-    id: 43,
-    nome: 'Carolina Azevedo',
-    profissao: 'Ilustradora',
-    categoria: 'Ilustração',
-    descricao: 'Ilustradora que cria artes autorais e por encomenda, do estilo minimalista ao mais detalhado, conforme o projeto',
-    precoHora: 100
-  },
-  {
-    id: 44,
-    nome: 'Jonas Cavalcante',
-    profissao: 'Instalador de Ar-Condicionado',
-    categoria: 'Refrigeração',
-    descricao: 'Técnico especializado em instalação e manutenção de ar-condicionado residencial e comercial',
-    precoHora: 75
-  },
-  {
-    id: 45,
-    nome: 'Vanessa Cunha',
-    profissao: 'Psicóloga Clínica',
-    categoria: 'Psicologia',
-    descricao: 'Psicóloga com abordagem acolhedora, atendendo adultos em processos de ansiedade, autoconhecimento e relacionamentos',
-    precoHora: 180
-  },
-  {
-    id: 46,
-    nome: 'Anderson Reis',
-    profissao: 'Motorista Particular',
-    categoria: 'Transporte',
-    descricao: 'Motorista particular com carro próprio, disponível para viagens curtas, aeroporto e eventos',
-    precoHora: 50
-  },
-  {
-    id: 47,
-    nome: 'Letícia Barbosa',
-    profissao: 'Costureira',
-    categoria: 'Costura',
-    descricao: 'Costureira especializada em ajustes e confecção sob medida, com atenção aos detalhes e prazos combinados',
-    precoHora: 40
-  },
-  {
-    id: 48,
-    nome: 'Gilberto Nunes',
-    profissao: 'Instrutor de Yoga',
-    categoria: 'Bem-Estar',
-    descricao: 'Instrutor de yoga que adapta as práticas ao nível de cada aluno, unindo respiração, movimento e equilíbrio',
-    precoHora: 70
-  },
-  {
-    id: 49,
-    nome: 'Simone Andrade',
-    profissao: 'Cabeleireira',
-    categoria: 'Beleza',
-    descricao: 'Cabeleireira com atendimento domiciliar, especializada em cortes, coloração e tratamentos capilares',
-    precoHora: 85
-  },
-  {
-    id: 50,
-    nome: 'Paulo Henrique Dias',
-    profissao: 'Técnico em Refrigeração',
-    categoria: 'Refrigeração',
-    descricao: 'Técnico com experiência em geladeiras, freezers e câmaras frias, atendendo residências e pequenos comércios',
-    precoHora: 60
-  },
-  {
-    id: 51,
-    nome: 'Cristiane Lopes',
-    profissao: 'Fisioterapeuta',
-    categoria: 'Fisioterapia',
-    descricao: 'Fisioterapeuta com atendimento domiciliar, focada em reabilitação pós-cirúrgica e alívio de dores crônicas',
-    precoHora: 140
-  },
-  {
-    id: 52,
-    nome: 'Renan Castro',
-    profissao: 'Programador de Jogos',
-    categoria: 'Desenvolvimento',
-    descricao: 'Desenvolvedor de jogos indie com experiência em Unity, do protótipo à publicação',
-    precoHora: 170
-  },
-  {
-    id: 53,
-    nome: 'Daniela Teixeira',
-    profissao: 'Doceira',
-    categoria: 'Culinária',
-    descricao: 'Doceira especializada em bolos e docinhos para festas, sempre priorizando sabor e apresentação caprichada',
-    precoHora: 55
-  },
-  {
-    id: 54,
-    nome: 'Igor Machado',
-    profissao: 'Segurança Particular',
-    categoria: 'Segurança',
-    descricao: 'Profissional de segurança com experiência em eventos e residências, discrição e atenção redobrada',
-    precoHora: 65
-  },
-  {
-    id: 55,
-    nome: 'Luana Ribeiro',
-    profissao: 'Dog Walker e Pet Sitter',
-    categoria: 'Pet Care',
-    descricao: 'Cuidadora de pets que oferece passeios e hospedagem, tratando cada animal com carinho e paciência',
-    precoHora: 35
-  },
-  {
-    id: 56,
-    nome: 'Márcio Gomes',
-    profissao: 'Instalador de Piso',
-    categoria: 'Construção',
-    descricao: 'Especializado em instalação de pisos laminados, porcelanato e vinílico, com acabamento nivelado e limpo',
-    precoHora: 80
-  },
-  {
-    id: 57,
-    nome: 'Elaine Cristina Souza',
-    profissao: 'Terapeuta Ocupacional',
-    categoria: 'Saúde',
-    descricao: 'Terapeuta ocupacional com foco em reabilitação e autonomia, atendendo crianças e adultos',
-    precoHora: 150
-  },
-  {
-    id: 58,
-    nome: 'Bruno Cesar Lima',
-    profissao: 'Instrutor de Autoescola',
-    categoria: 'Educação',
-    descricao: 'Instrutor de autoescola paciente e didático, com aulas práticas adaptadas ao ritmo de cada aluno',
-    precoHora: 90
-  },
-  {
-    id: 59,
-    nome: 'Kelly Aparecida Santos',
-    profissao: 'Maquiadora',
-    categoria: 'Beleza',
-    descricao: 'Maquiadora especializada em eventos e ensaios fotográficos, com técnica para durar o dia inteiro',
-    precoHora: 100
-  },
-  {
-    id: 60,
-    nome: 'Vitor Hugo Almeida',
-    profissao: 'Técnico em Automação Residencial',
-    categoria: 'Automação',
-    descricao: 'Especializado em instalação de sistemas de casa inteligente, câmeras e automação de iluminação',
-    precoHora: 190
-  },
-  {
-    id: 61,
-    nome: 'Rosana Pires',
-    profissao: 'Cuidadora de Idosos',
-    categoria: 'Cuidados',
-    descricao: 'Cuidadora experiente e paciente, oferecendo suporte diário e companhia para idosos com carinho e responsabilidade',
-    precoHora: 50
-  },
-  {
-    id: 62,
-    nome: 'Alexandre Moreira',
-    profissao: 'Analista de Dados',
-    categoria: 'Desenvolvimento',
-    descricao: 'Analista de dados que transforma planilhas confusas em relatórios e dashboards fáceis de entender',
-    precoHora: 145
-  },
-  {
-    id: 63,
-    nome: 'Jaqueline Rocha',
-    profissao: 'Web Designer',
-    categoria: 'Design',
-    descricao: 'Web designer focada em sites simples e bonitos para pequenos negócios que estão começando a vender online',
-    precoHora: 115
-  },
-  {
-    id: 64,
-    nome: 'Douglas Fernandes',
-    profissao: 'Montador de Móveis',
-    categoria: 'Montagem',
-    descricao: 'Montador de móveis rápido e organizado, atendendo residências com todo o ferramental necessário',
-    precoHora: 45
-  }
 ]

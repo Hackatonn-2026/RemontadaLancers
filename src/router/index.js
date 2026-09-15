@@ -40,13 +40,16 @@ const router = createRouter({
       component: CadastroView,
     },
     {
-      path: '/perfil-freelancer',
+      path: '/perfil-freelancer/:id',
       name: 'perfil-freelancer',
       component: PerfilFreelancerView,
+    },
+    {
       path: '/perfil',
       name: 'perfil',
       component: PerfilUsuarioView,
-
+    },
+    {
       path: '/sobre',
       name: 'sobre',
       component: SobreView,
