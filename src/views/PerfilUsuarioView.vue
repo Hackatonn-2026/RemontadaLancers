@@ -72,7 +72,8 @@ const usuario = {
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
 }
 function sair() {
-  localStorage.setItem('contaSalva', JSON.stringify(dadosUsuario))
+  const usuarioAtual = carregarUsuario()
+  localStorage.setItem('contaSalva', JSON.stringify(usuarioAtual))
   localStorage.removeItem('usuario')
   window.dispatchEvent(new Event('auth-change'))
   router.push('/login')

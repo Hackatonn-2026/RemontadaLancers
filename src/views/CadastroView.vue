@@ -38,8 +38,10 @@
                         <option value="5+">5+ anos</option>
                     </select>
                 </div>
-                <Inputs v-model="descricao" label="Descrição Profissional" type="textarea"
-                    placeholder="Fale sobre sua experiência" />
+                <div class="campo campo-descricao">
+                    <label for="descricao">Descrição profissional</label>
+                    <textarea id="descricao" v-model="descricao" placeholder="Fale sobre sua experiência" rows="5" />
+                </div>
                 <div class="categorias">
                     <label>Categorias de Atuação</label>
 
@@ -100,6 +102,7 @@ const descricao = ref('')
 const categorias = ref([])
 function CriaConta() {
     const usuario = {
+        id: Date.now().toString(),
         nome: nome.value,
         email: email.value,
         senha: senha.value,
@@ -229,6 +232,33 @@ p {
     color: #374151;
     cursor: pointer;
     box-sizing: border-box;
+}
+
+.campo-descricao {
+    grid-column: 1 / -1;
+}
+
+.campo-descricao textarea {
+    width: 100%;
+    min-height: 130px;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    color: #374151;
+    font: inherit;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.campo-descricao textarea::placeholder {
+    color: #9ca3af;
+}
+
+.campo-descricao textarea:focus {
+    outline: 2px solid #93c5fd;
+    border-color: #2563eb;
 }
 
 .categorias {

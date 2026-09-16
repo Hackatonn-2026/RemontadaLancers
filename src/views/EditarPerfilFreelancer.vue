@@ -15,19 +15,6 @@
         <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
         <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
         <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
-                    <select id="anos" v-model="AnosDeExperiencia">
-  localStorage.setItem('contaSalva', JSON.stringify(usuarioAtualizado))
-                        <option value="">Selecione seus anos de experiência</option>
-                        <option value="0-1">0-1 anos</option>
-                        <option value="1-3">1-3 anos</option>
-                        <option value="3-5">3-5 anos</option>
-                        <option value="5+">5+ anos</option>
-                    </select>
-                </div>
-                <Inputs v-model="descricao" label="Descrição Profissional" type="textarea"
-                    placeholder="Fale sobre sua experiência" />
-                <div class="categorias">
-                    <label>Categorias de Atuação</label>
 
         <div class="profissional">
           <h2>Informações profissionais</h2>
@@ -117,7 +104,8 @@ function salvarAlteracoes() {
 <style scoped>
 .pagina-edicao {
   width: min(100% - 32px, 900px);
-  margin: 40px auto;
+  margin: 32px auto;
+  padding-bottom: 32px;
 }
 .cabecalho-edicao {
   display: flex;
@@ -131,6 +119,7 @@ function salvarAlteracoes() {
   color: #172554;
 }
 .cabecalho-edicao p {
+  margin: 0;
   color: #64748b;
 }
 .foto {
@@ -149,8 +138,9 @@ function salvarAlteracoes() {
 }
 .informacao {
   border: 1px solid #d1d5db;
-  border-radius: 15px;
+  border-radius: 12px;
   background: white;
+  box-shadow: 0 4px 16px rgb(15 23 42 / 5%);
 }
 .informacao-titulo,
 .profissional h2 {
@@ -188,6 +178,7 @@ function salvarAlteracoes() {
 }
 .campo select,
 .campo textarea {
+  box-sizing: border-box;
   width: 100%;
   padding: 11px 12px;
   border: 1px solid #d1d5db;
@@ -234,6 +225,7 @@ function salvarAlteracoes() {
   padding-top: 8px;
 }
 .botao {
+  min-height: 40px;
   padding: 10px 18px;
   border: 0;
   border-radius: 6px;
@@ -246,10 +238,5 @@ function salvarAlteracoes() {
 }
 .botao:hover {
   background-color: #1d4ed8;
-}
-.botao.cancelar {
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #374151;
 }
 </style>
