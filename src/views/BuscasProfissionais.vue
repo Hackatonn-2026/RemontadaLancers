@@ -78,6 +78,13 @@ const profissionaisFiltrados = computed(() => {
     )
   }
 
+  if (filtrosSidebar.value && filtrosSidebar.value.notas.length > 0) {
+    const notas = filtrosSidebar.value.notas
+    lista = lista.filter(prof =>
+      notas.some(opcao => prof.rating >= opcao.min)
+    )
+  }
+
   return lista
 })
 
