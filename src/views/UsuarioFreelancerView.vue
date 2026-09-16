@@ -3,18 +3,12 @@
 
     <section class="perfil-header">
       <div class="foto">
-        <img src="/perfil.avif" alt="Foto de perfil">
-      </div>
+  <img src="/perfil.avif" alt="Foto de perfil">
+</div>
 
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
-         <RouterLink to="/editar-perfil" class="botao">
-                Editar perfil
-            </RouterLink>
-           <button class="botao" @click="sair">
-                Sair
-            </button>
       </div>
 
     </section>
@@ -33,22 +27,24 @@
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
 
+        <div>
+          <strong>Email</strong>
+          <p>{{ usuario.email || 'Não informado' }}</p>
+        </div>
       </div>
     </section>
-
-
-    
-    <section class="card">
-      <div class="titulo-servicos">
-        <h2>Serviços contratados</h2>
-      </div>
-
-      <p v-if="!usuario.servicos.length">Nenhum serviço contratado</p>
-      <ul v-else class="lista-servicos">
-        <li v-for="servico in usuario.servicos" :key="servico.id || servico.nome || servico">
-          {{ servico.nome || servico }}
-        </li>
-      </ul>
+    <section>
+       <div class="card">
+        <div class="informacoes-profissionais">
+          <h2>Informações Profissionais</h2>
+         <strong>Profissão:</strong> 
+        <p> {{ usuario.profissao || 'Não informado' }}</p>
+         <strong>Anos de Experiência:</strong>
+          <p>{{ usuario.anosExperiencia || 'Não informado' }}</p>
+        <strong>Descrição:</strong> 
+        <p>{{ usuario.descricao || 'Não informado' }}</p>
+        </div>
+      </div> 
     </section>
 
   </main>
@@ -56,24 +52,10 @@
 
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
-function carregarUsuario() {
-  try {
-    return JSON.parse(localStorage.getItem('usuario')) || {}
-  } catch {
-    return {}
-  }
-}
 
-const dadosUsuario = carregarUsuario()
-const usuario = {
-  ...dadosUsuario,
-  servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
-}
-function sair() {
-  router.push('/login')
-}
+const usuario = JSON.parse(
+  localStorage.getItem('usuario')
+) || {}
 
 </script>
 
@@ -128,6 +110,14 @@ function sair() {
 .card p {
   color: #64748b;
 }
+.card .informacoes-profissionais h2 {
+  margin-top: 0;
+  color: #172554;
+}
+.card .informacoes-profissionais p {
+  color: #64748b;
+  padding: 5px 0;
+}
 .informacoes {
   display: flex;
   gap: 80px;
@@ -158,15 +148,5 @@ function sair() {
   height: 100%;
   object-fit: cover;
 }
-.botao {
-  padding: 8px 15px;
-  background-color: #2563eb;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  width: fit-content;
-  font-size: 14px;
-  margin:0 10px 0 0;
-  border: none;
-}
+
 </style>
