@@ -1,11 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
 import BaseButton from '@/components/Button.vue'
-import carlosImg from '@/assets/carloscerto.jpg'
-import anaImg from '@/assets/images.jpeg'
-import robertoImg from '@/assets/59340563-sorridente-homem-com-curto-barba-e-azul-olhos-posando-dentro-uma-casual-branco-camiseta-contra-uma-luz-fundo-foto.jpg'
-import marianaImg from '@/assets/79037-gente-texto-especial-mulheres-impacto-social.jpg'
+import { profissionais } from '@/data/profissionais.js'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -17,6 +14,25 @@ function buscarHero() {
   }
 }
 
+// isso aqui ta pegando os profissionais melhor avaliados do profissionais.js
+const profissionaisEmDestaque = computed(() => {
+  const ordenados = [...profissionais].sort((a, b) => b.rating - a.rating)
+  const categoriasUsadas = []
+  const destaques = []
+
+  for (const prof of ordenados) {
+    if (destaques.length === 4) break
+    if (categoriasUsadas.includes(prof.categoria)) continue
+    categoriasUsadas.push(prof.categoria)
+    destaques.push(prof)
+  }
+
+  return destaques
+})
+
+function iniciais(nome) {
+  return nome.charAt(0).toUpperCase()
+}
 
 const categoriasHome = [
   {
@@ -97,46 +113,6 @@ const depoimentos = [
   {
     texto: 'Consegui vários clientes através do Cirolancers. Mudou meu negócio!',
     autor: 'Pedro Oliveira',
-  },
-]
-
-const profissionaisEmDestaque = [
-  {
-    id: 1,
-    nome: 'Carlos Silva',
-    cargo: 'Desenvolvedor Full Stack',
-    avaliacao: 4.9,
-    totalAvaliacoes: 127,
-    preco: 150,
-    avatar: carlosImg,
-  },
-  {
-    id: 2,
-    nome: 'Ana Costa',
-    cargo: 'Designer Gráfica',
-    avaliacao: 5,
-    totalAvaliacoes: 89,
-    preco: 120,
-    avatar: anaImg,
-  },
-  {
-    id: 3,
-    nome: 'Roberto Santos',
-    cargo: 'Eletricista',
-    avaliacao: 4.8,
-    totalAvaliacoes: 203,
-    preco: 80,
-    avatar: robertoImg,
-  },
-  {
-    id: 4,
-    nome: 'Mariana Lima',
-    cargo: 'Professora de Inglês',
-    avaliacao: 4.9,
-    totalAvaliacoes: 156,
-    preco: 60,
-
-    avatar: marianaImg,
   },
 ]
 </script>
@@ -220,11 +196,13 @@ const profissionaisEmDestaque = [
           :key="profissional.id"
           class="cardProfissional"
         >
-          <img :src="profissional.avatar" :alt="profissional.nome" class="fotoProfissional" />
+          <div class="fotoProfissional avatarIniciais">
+            {{ iniciais(profissional.nome) }}
+          </div>
 
           <div class="infoProfissional">
             <h3>{{ profissional.nome }}</h3>
-            <p class="cargo">{{ profissional.cargo }}</p>
+            <p class="cargo">{{ profissional.profissao }}</p>
 
             <div class="linhaAvaliacao">
               <span class="nota">
@@ -233,13 +211,13 @@ const profissionaisEmDestaque = [
                     points="12 2 15.1 8.6 22 9.5 17 14.4 18.2 21.5 12 18.2 5.8 21.5 7 14.4 2 9.5 8.9 8.6 12 2"
                   />
                 </svg>
-                {{ profissional.avaliacao }} ({{ profissional.totalAvaliacoes }})
+                {{ profissional.rating }} ({{ profissional.reviewsCount }})
               </span>
 
-              <span class="preco">R$ {{ profissional.preco }}/h</span>
+              <span class="preco">R$ {{ profissional.precoHora }}/h</span>
             </div>
 
-            <RouterLink to="/buscar" class="botaoPerfil">Ver perfil</RouterLink>
+            <RouterLink :to="`/perfil-freelancer/${profissional.id}`" class="botaoPerfil">Ver perfil</RouterLink>
           </div>
         </div>
       </div>
@@ -481,6 +459,16 @@ const profissionaisEmDestaque = [
   height: 230px;
   object-fit: cover;
   display: block;
+}
+
+.avatarIniciais {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2563eb;
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
 }
 
 .infoProfissional {
