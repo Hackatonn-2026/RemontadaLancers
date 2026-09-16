@@ -11,6 +11,7 @@ import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
 import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
 import UsuarioFreelancerView from '@/views/UsuarioFreelancerView.vue'
+import OrcamentoView from '@/views/OrcamentoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,10 @@ const router = createRouter({
       name: 'usuario-freelancer',
       component: UsuarioFreelancerView,
     }
+      path: '/orcamento',
+      name: 'orcamento',
+      component: OrcamentoView,
+    },
   ],
 })
 

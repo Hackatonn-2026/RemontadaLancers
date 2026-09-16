@@ -1,10 +1,22 @@
 <script setup>
+import { ref } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
 import BaseButton from '@/components/Button.vue'
 import carlosImg from '@/assets/carloscerto.jpg'
 import anaImg from '@/assets/images.jpeg'
 import robertoImg from '@/assets/59340563-sorridente-homem-com-curto-barba-e-azul-olhos-posando-dentro-uma-casual-branco-camiseta-contra-uma-luz-fundo-foto.jpg'
 import marianaImg from '@/assets/79037-gente-texto-especial-mulheres-impacto-social.jpg'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const termoBuscaHero = ref('')
+
+function buscarHero() {
+  if (termoBuscaHero.value.trim() !== '') {
+    router.push({ path: '/buscar', query: { busca: termoBuscaHero.value } })
+  }
+}
+
 
 const categoriasHome = [
   {
@@ -137,10 +149,15 @@ const profissionaisEmDestaque = [
       <h1>Encontre um profissional agora</h1>
       <p>Conecte-se com os melhores freelancers para seu projeto</p>
 
-      <div class="buscaHero">
-        <input type="text" placeholder="Qual serviço você procura?" />
-        <button class="botaoBuscar">Buscar</button>
-      </div>
+      <form class="buscaHero" @submit.prevent="buscarHero">
+        <input
+          type="text"
+          v-model="termoBuscaHero"
+          placeholder="Qual serviço você procura?"
+          @keyup.enter="buscarHero"
+        />
+        <button type="submit" class="botaoBuscar">Buscar</button>
+      </form>
     </section>
 
     <section class="estatisticas">

@@ -24,7 +24,10 @@ function voltar() {
 }
 
 function pedirOrcamento() {
-  router.push('/login')
+  router.push({
+    path: '/orcamento',
+    query: { profissional: profissional.value.id },
+  })
 }
 </script>
 

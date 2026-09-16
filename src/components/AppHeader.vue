@@ -16,7 +16,7 @@
     </nav>
 
 
-    <RouterLink v-if="!usuario" to="/login" class="botao-login">
+    <RouterLink to="/login" class="botao-login">
       Login
     </RouterLink>
 
@@ -39,9 +39,16 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import SearchBar from './SearchBar.vue';
 const usuario = JSON.parse(localStorage.getItem('usuario')) || null
 const tipoUsuario = usuario?.tipoUsuario
+
+const router = useRouter()
+
+function executarBusca(termo) {
+  router.push({ path: '/buscar', query: { busca: termo } })
+}
 </script>
 
 <style scoped>
