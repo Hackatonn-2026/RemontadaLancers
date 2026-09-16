@@ -1,147 +1,242 @@
 <template>
-  <main>
-    <div class="header">
+  <main class="pagina-edicao">
+    <section class="cabecalho-edicao">
       <div class="foto">
         <img src="/perfil.avif" alt="Foto de perfil">
       </div>
-      <h1>Editar Perfil</h1>
-      <p>Atualize suas informações pessoais</p>
-    </div>
-    <div class="informacao">
-      <h3 class="informacao-titulo">
-        Informações pessoais
-      </h3>
-       <form class="form">
-      <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
-      <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
-      <Inputs v-model="senha" label="Senha" type="text" placeholder="Digite sua senha" />
-      <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
-      <h4>Informações Profissionais</h4>
-                <Inputs v-model="profissao" label="Profissão/Especialidade" type="text"
-                    placeholder="Ex: Dev Full Stack" />
-                <div class="campo">
-                    <label for="anos">Anos de Experiência</label>
+      <h1>Editar perfil</h1>
+      <p>Atualize suas informações pessoais e profissionais.</p>
+    </section>
 
-                    <select id="anos" v-model="AnosDeExperiencia">
-                        <option value="">Selecione seus anos de experiência</option>
-                        <option value="0-1">0-1 anos</option>
-                        <option value="1-3">1-3 anos</option>
-                        <option value="3-5">3-5 anos</option>
-                        <option value="5+">5+ anos</option>
-                    </select>
-                </div>
-                <Inputs v-model="descricao" label="Descrição Profissional" type="textarea"
-                    placeholder="Fale sobre sua experiência" />
-                <div class="categorias">
-                    <label>Categorias de Atuação</label>
+    <form class="informacao" @submit.prevent="salvarAlteracoes">
+      <h2 class="informacao-titulo">Informações pessoais</h2>
+      <div class="formulario">
+        <Inputs v-model="nome" label="Nome" placeholder="Seu nome completo" />
+        <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
+        <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
+        <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
 
-                    <div class="lista-categorias">
-                        <label>
-                            <input type="checkbox" value="marketing" v-model="categorias">
-                            Marketing
-                        </label>
+        <div class="profissional">
+          <h2>Informações profissionais</h2>
+          <Inputs v-model="profissao" label="Profissão/Especialidade" placeholder="Ex: Dev Full Stack" />
 
-                        <label>
-                            <input type="checkbox" value="design" v-model="categorias">
-                            Design
-                        </label>
+          <div class="campo">
+            <label for="anos">Anos de experiência</label>
+            <select id="anos" v-model="anosExperiencia">
+              <option value="">Selecione seus anos de experiência</option>
+              <option value="0-1">0-1 anos</option>
+              <option value="1-3">1-3 anos</option>
+              <option value="3-5">3-5 anos</option>
+              <option value="5+">5+ anos</option>
+            </select>
+          </div>
 
-                        <label>
-                            <input type="checkbox" value="edicao" v-model="categorias">
-                            Edição
-                        </label>
+          <div class="campo">
+            <label for="descricao">Descrição profissional</label>
+            <textarea id="descricao" v-model="descricao" placeholder="Fale sobre sua experiência" rows="5" />
+          </div>
 
-                        <label>
-                            <input type="checkbox" value="consultoria" v-model="categorias">
-                            Consultoria
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="desenvolvimento" v-model="categorias">
-                            Desenvolvimento
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="traducao" v-model="categorias">
-                            Tradução
-                        </label>
-                    </div>
-                </div>
-      <RouterLink to="/perfil" class="botao" @click="salvarAlteracoes">
-        Salvar Alterações
-      </RouterLink>
-      </form>
-    </div>
+          <fieldset class="categorias">
+            <h4>Categorias de atuação</h4>
+            <div class="lista-categorias">
+              <label v-for="categoria in opcoesCategorias" :key="categoria.valor">
+                <input v-model="categorias" type="checkbox" :value="categoria.valor">
+                {{ categoria.nome }}
+              </label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="acoes">
+          <button type="submit" class="botao">Salvar alterações</button>
+        </div>
+      </div>
+    </form>
   </main>
 </template>
+
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
-const usuario = JSON.parse(localStorage.getItem('usuario'));
-const nome = ref(usuario.nome);
-const email = ref(usuario.email);
-const senha = ref(usuario.senha);
-const telefone = ref(usuario.telefone);
+
+const router = useRouter()
+const usuario = carregarUsuario()
+const rotaPerfil = usuario.tipoUsuario === 'freelancer' ? `/usuario-freelancer/${usuario.id || 'perfil'}`: '/perfil'
+const nome = ref(usuario.nome || '')
+const email = ref(usuario.email || '')
+const senha = ref(usuario.senha || '')
+const telefone = ref(usuario.telefone || '')
+const profissao = ref(usuario.profissao || '')
+const anosExperiencia = ref(usuario.anosExperiencia || '')
+const descricao = ref(usuario.descricao || '')
+const categorias = ref(Array.isArray(usuario.categorias) ? [...usuario.categorias] : [])
+const opcoesCategorias = [
+  { valor: 'marketing', nome: 'Marketing' },
+  { valor: 'design', nome: 'Design' },
+  { valor: 'edicao', nome: 'Edição' },
+  { valor: 'consultoria', nome: 'Consultoria' },
+  { valor: 'desenvolvimento', nome: 'Desenvolvimento' },
+  { valor: 'traducao', nome: 'Tradução' },
+]
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || {}
+  } catch {
+    return {}
+  }
+}
 function salvarAlteracoes() {
   const usuarioAtualizado = {
     ...usuario,
     nome: nome.value,
     email: email.value,
     senha: senha.value,
-    telefone: telefone.value
+    telefone: telefone.value,
+    profissao: profissao.value,
+    anosExperiencia: anosExperiencia.value,
+    descricao: descricao.value,
+    categorias: categorias.value,
   }
-
   localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
+  router.push(rotaPerfil)
 }
 </script>
 <style scoped>
-.foto {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid white;
+.pagina-edicao {
+  width: min(100% - 32px, 900px);
+  margin: 40px auto;
 }
-
-.foto img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.header {
+.cabecalho-edicao {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  text-align: center;
 }
-
-.form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 34px;
-  padding: 0 2rem;
-  margin: 2rem;
-
+.cabecalho-edicao h1 {
+  margin: 16px 0 4px;
+  color: #172554;
 }
-
+.cabecalho-edicao p {
+  color: #64748b;
+}
+.foto {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border: 4px solid white;
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgb(15 23 42 / 12%);
+}
+.foto img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
 .informacao {
   border: 1px solid #d1d5db;
   border-radius: 15px;
+  background: white;
+}
+.informacao-titulo,
+.profissional h2 {
+  margin: 0;
+  color: #172554;
+  font-size: 20px;
+  font-weight: 700;
 }
 .informacao-titulo {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 3rem 0 0 4rem;
+  padding: 28px 32px 0;
+}
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+  padding: 28px 32px 32px;
+}
+.profissional {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 20px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+}
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.campo label,
+.categorias h4 {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+  color: #374151;
+  font: inherit;
+  resize: vertical;
+}
+.campo select:focus,
+.campo textarea:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+.categorias {
+  padding: 0;
+  border: 0;
+}
+.categorias h4 {
+  margin-bottom: 12px;
+}
+.lista-categorias {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.lista-categorias label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #374151;
+  font-size: 14px;
+}
+.lista-categorias input {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+}
+.acoes {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
 }
 .botao {
-  padding: 8px 15px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 6px;
   background-color: #2563eb;
   color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  width: fit-content;
+  font: inherit;
   font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.botao:hover {
+  background-color: #1d4ed8;
+}
+.botao.cancelar {
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
 }
 </style>
