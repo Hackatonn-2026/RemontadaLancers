@@ -16,7 +16,7 @@
     </nav>
 
 
-    <RouterLink v-if="!usuario" to="/login" class="botao-login">
+    <RouterLink to="/login" class="botao-login">
       Login
     </RouterLink>
 
@@ -57,6 +57,14 @@ function atualizarSessao() {
 
 onMounted(() => window.addEventListener('auth-change', atualizarSessao))
 onUnmounted(() => window.removeEventListener('auth-change', atualizarSessao))
+import { useRouter } from 'vue-router'
+import SearchBar from './SearchBar.vue';
+
+const router = useRouter()
+
+function executarBusca(termo) {
+  router.push({ path: '/buscar', query: { busca: termo } })
+}
 </script>
 
 <style scoped>
