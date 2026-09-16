@@ -3,7 +3,7 @@
 
     <RouterLink to="/" class="logo">
       <div class="icone-logo"></div>
-      <span class="texto-logo">Remontada<br />Lancers</span>
+      <span class="texto-logo">Ciro<br />Lancers</span>
     </RouterLink>
 
     <SearchBar @buscar="executarBusca" />
