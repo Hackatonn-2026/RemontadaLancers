@@ -27,6 +27,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const email = ref('')
@@ -38,11 +39,13 @@ function entrar() {
     if (!usuario) {
         alert('Nenhum usuário cadastrado!')
         return
+        router.push('/perfil')
     }
     if (email.value === usuario.email && senha.value === usuario.senha) {
         localStorage.setItem('usuario', JSON.stringify(usuario))
         window.dispatchEvent(new Event('auth-change'))
         alert('Login realizado com sucesso!')
+        router.push('/perfil')
         router.push(usuario.tipoUsuario === 'freelancer' ? `/usuario-freelancer/${usuario.id || 'perfil'}` : '/perfil')
     } else {
         alert('E-mail ou senha incorretos!')
@@ -106,5 +109,12 @@ function entrar() {
     justify-content: center;
     gap: 8px;
     margin-top: 12px;
+
+}
+.botao-cadastro {
+    color: #2563eb;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 </style>
