@@ -33,22 +33,18 @@
         </div>
       </div>
     </section>
-
-
-    
-    <section class="card">
-      <div class="titulo-servicos">
-        <h2>Serviços contratados</h2>
-
-        <button class="ver-todos">
-          Ver todos
-        </button>
-      </div>
-
-    <div>
-          <strong>Servicos</strong>
-          <p>{{ usuario.servicos || 'Nenhum serviço contratado' }}</p>
+    <section>
+       <div class="card">
+        <div class="informacoes-profissionais">
+          <h2>Informações Profissionais</h2>
+         <strong>Profissão:</strong> 
+        <p> {{ usuario.profissao || 'Não informado' }}</p>
+         <strong>Anos de Experiência:</strong>
+          <p>{{ usuario.anosExperiencia || 'Não informado' }}</p>
+        <strong>Descrição:</strong> 
+        <p>{{ usuario.descricao || 'Não informado' }}</p>
         </div>
+      </div> 
     </section>
 
   </main>
@@ -114,6 +110,14 @@ const usuario = JSON.parse(
 .card p {
   color: #64748b;
 }
+.card .informacoes-profissionais h2 {
+  margin-top: 0;
+  color: #172554;
+}
+.card .informacoes-profissionais p {
+  color: #64748b;
+  padding: 5px 0;
+}
 .informacoes {
   display: flex;
   gap: 80px;
@@ -144,4 +148,5 @@ const usuario = JSON.parse(
   height: 100%;
   object-fit: cover;
 }
+
 </style>

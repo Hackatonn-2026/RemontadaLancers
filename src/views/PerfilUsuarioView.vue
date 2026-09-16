@@ -3,12 +3,18 @@
 
     <section class="perfil-header">
       <div class="foto">
-  <img src="/perfil.avif" alt="Foto de perfil">
-</div>
+        <img src="/perfil.avif" alt="Foto de perfil">
+      </div>
 
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
+         <RouterLink to="/editar-perfil" class="botao">
+                Editar perfil
+            </RouterLink>
+           <button class="botao" @click="sair">
+                Sair
+            </button>
       </div>
 
     </section>
@@ -27,10 +33,6 @@
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
 
-        <div>
-          <strong>Email</strong>
-          <p>{{ usuario.email || 'Não informado' }}</p>
-        </div>
       </div>
     </section>
 
@@ -39,16 +41,14 @@
     <section class="card">
       <div class="titulo-servicos">
         <h2>Serviços contratados</h2>
-
-        <button class="ver-todos">
-          Ver todos
-        </button>
       </div>
 
-    <div>
-          <strong>Servicos</strong>
-          <p>{{ usuario.servicos || 'Nenhum serviço contratado' }}</p>
-        </div>
+      <p v-if="!usuario.servicos.length">Nenhum serviço contratado</p>
+      <ul v-else class="lista-servicos">
+        <li v-for="servico in usuario.servicos" :key="servico.id || servico.nome || servico">
+          {{ servico.nome || servico }}
+        </li>
+      </ul>
     </section>
 
   </main>
@@ -56,10 +56,24 @@
 
 
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || {}
+  } catch {
+    return {}
+  }
+}
 
-const usuario = JSON.parse(
-  localStorage.getItem('usuario')
-) || {}
+const dadosUsuario = carregarUsuario()
+const usuario = {
+  ...dadosUsuario,
+  servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
+}
+function sair() {
+  router.push('/login')
+}
 
 </script>
 
@@ -143,5 +157,16 @@ const usuario = JSON.parse(
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.botao {
+  padding: 8px 15px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  width: fit-content;
+  font-size: 14px;
+  margin:0 10px 0 0;
+  border: none;
 }
 </style>

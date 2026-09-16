@@ -20,7 +20,19 @@
       Login
     </RouterLink>
 
-    <RouterLink v-else to="/perfil" class="botao-perfil">
+<RouterLink
+  v-if="tipoUsuario === 'freelancer'"
+  to='/usuario-freelancer/:id'
+  class="botao-perfil"
+>
+  <img src="/perfil.avif" alt="Foto de perfil">
+</RouterLink>
+
+<RouterLink
+  v-else
+  to="/perfil"
+  class="botao-perfil"
+>
   <img src="/perfil.avif" alt="Foto de perfil">
 </RouterLink>
   </header>
@@ -29,6 +41,7 @@
 <script setup>
 import SearchBar from './SearchBar.vue';
 const usuario = JSON.parse(localStorage.getItem('usuario')) || null
+const tipoUsuario = usuario?.tipoUsuario
 </script>
 
 <style scoped>
