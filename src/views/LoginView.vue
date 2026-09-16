@@ -25,21 +25,28 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
 const email = ref('')
 const senha = ref('')
 function entrar() {
-    const usuario = JSON.parse(localStorage.getItem('usuario'))
+    const usuario = JSON.parse(
+        localStorage.getItem('contaSalva') || localStorage.getItem('usuario') || 'null'
+    )
     if (!usuario) {
         alert('Nenhum usuário cadastrado!')
         return
         router.push('/perfil')
     }
     if (email.value === usuario.email && senha.value === usuario.senha) {
+        localStorage.setItem('usuario', JSON.stringify(usuario))
+        window.dispatchEvent(new Event('auth-change'))
         alert('Login realizado com sucesso!')
         router.push('/perfil')
+        router.push(usuario.tipoUsuario === 'freelancer' ? `/usuario-freelancer/${usuario.id || 'perfil'}` : '/perfil')
     } else {
         alert('E-mail ou senha incorretos!')
     }

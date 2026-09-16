@@ -17,14 +17,54 @@
 
 
     <RouterLink to="/login" class="botao-login">
-  Login
-</RouterLink>
+      Login
+    </RouterLink>
+
+    <template v-else>
+      <RouterLink
+        v-if="tipoUsuario === 'freelancer'"
+        :to="`/usuario-freelancer/${usuario.id || 'perfil'}`"
+        class="botao-perfil"
+      >
+        <img src="/perfil.avif" alt="Foto de perfil">
+      </RouterLink>
+
+      <RouterLink v-else to="/perfil" class="botao-perfil">
+        <img src="/perfil.avif" alt="Foto de perfil">
+      </RouterLink>
+    </template>
   </header>
 </template>
 
 <script setup>
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import SearchBar from './SearchBar.vue'
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || null
+  } catch {
+    return null
+  }
+}
+
+const usuario = ref(carregarUsuario())
+const tipoUsuario = computed(() => usuario.value?.tipoUsuario)
+
+function atualizarSessao() {
+  usuario.value = carregarUsuario()
+}
+
+onMounted(() => window.addEventListener('auth-change', atualizarSessao))
+onUnmounted(() => window.removeEventListener('auth-change', atualizarSessao))
+import { useRouter } from 'vue-router'
 import SearchBar from './SearchBar.vue';
 
+const router = useRouter()
+
+function executarBusca(termo) {
+  router.push({ path: '/buscar', query: { busca: termo } })
+}
 </script>
 
 <style scoped>
@@ -104,5 +144,32 @@ import SearchBar from './SearchBar.vue';
 
 .botao-cadastrar:active {
   transform: scale(0.96);
+}
+.botao-perfil {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #dbe8ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.botao-perfil {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.botao-perfil img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
