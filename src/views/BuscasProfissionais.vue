@@ -62,9 +62,11 @@ const profissionaisFiltrados = computed(() => {
       if (prof.categoria && tirarLetrasEspeciais(prof.categoria) === buscaSemLetrasEspeciais) {
         return true
       }
+      const nomeSemLetrasEspeciais = tirarLetrasEspeciais(prof.nome)
       const profissaoSemLetrasEspeciais = prof.profissao ? tirarLetrasEspeciais(prof.profissao) : ''
       const descricaoSemLetrasEspeciais = prof.descricao ? tirarLetrasEspeciais(prof.descricao) : ''
-      return profissaoSemLetrasEspeciais.includes(buscaSemLetrasEspeciais)
+      return nomeSemLetrasEspeciais.includes(buscaSemLetrasEspeciais)
+        || profissaoSemLetrasEspeciais.includes(buscaSemLetrasEspeciais)
         || descricaoSemLetrasEspeciais.includes(buscaSemLetrasEspeciais)
     })
   }
