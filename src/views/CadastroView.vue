@@ -115,7 +115,7 @@ function CriaConta() {
 
     console.log(usuario)
     if (tipoUsuario.value === 'freelancer') {
-        router.push('/perfil-freelancer/:id')
+        router.push(`/usuario-freelancer/`)
     } else {
         router.push('/perfil')
     }
