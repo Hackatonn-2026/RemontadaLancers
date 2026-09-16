@@ -16,32 +16,55 @@
     </nav>
 
 
-    <RouterLink v-if="!usuario" to="/login" class="botao-login">
+    <RouterLink to="/login" class="botao-login">
       Login
     </RouterLink>
 
-<RouterLink
-  v-if="tipoUsuario === 'freelancer'"
-  to='/usuario-freelancer/:id'
-  class="botao-perfil"
->
-  <img src="/perfil.avif" alt="Foto de perfil">
-</RouterLink>
+    <template v-else>
+      <RouterLink
+        v-if="tipoUsuario === 'freelancer'"
+        :to="`/usuario-freelancer/${usuario.id || 'perfil'}`"
+        class="botao-perfil"
+      >
+        <img src="/perfil.avif" alt="Foto de perfil">
+      </RouterLink>
 
-<RouterLink
-  v-else
-  to="/perfil"
-  class="botao-perfil"
->
-  <img src="/perfil.avif" alt="Foto de perfil">
-</RouterLink>
+      <RouterLink v-else to="/perfil" class="botao-perfil">
+        <img src="/perfil.avif" alt="Foto de perfil">
+      </RouterLink>
+    </template>
   </header>
 </template>
 
 <script setup>
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import SearchBar from './SearchBar.vue'
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || null
+  } catch {
+    return null
+  }
+}
+
+const usuario = ref(carregarUsuario())
+const tipoUsuario = computed(() => usuario.value?.tipoUsuario)
+
+function atualizarSessao() {
+  usuario.value = carregarUsuario()
+}
+
+onMounted(() => window.addEventListener('auth-change', atualizarSessao))
+onUnmounted(() => window.removeEventListener('auth-change', atualizarSessao))
+import { useRouter } from 'vue-router'
 import SearchBar from './SearchBar.vue';
-const usuario = JSON.parse(localStorage.getItem('usuario')) || null
-const tipoUsuario = usuario?.tipoUsuario
+
+const router = useRouter()
+
+function executarBusca(termo) {
+  router.push({ path: '/buscar', query: { busca: termo } })
+}
 </script>
 
 <style scoped>

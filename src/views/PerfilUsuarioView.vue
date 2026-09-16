@@ -72,6 +72,9 @@ const usuario = {
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
 }
 function sair() {
+  localStorage.setItem('contaSalva', JSON.stringify(dadosUsuario))
+  localStorage.removeItem('usuario')
+  window.dispatchEvent(new Event('auth-change'))
   router.push('/login')
 }
 
@@ -79,29 +82,27 @@ function sair() {
 
 <style scoped>
 .perfil {
-  max-width: 1000px;
+  width: min(100% - 32px, 900px);
   margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  padding: 0;
 }
 .perfil-header {
   display: flex;
   align-items: center;
-  gap: 25px;
-  padding: 30px;
+  gap: 24px;
+  padding: 28px 32px;
   background: #eef5ff;
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 .foto {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background: #dbe8ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 4px solid white;
+  box-shadow: 0 4px 14px rgb(15 23 42 / 12%);
 }
 .dados-principais {
   flex: 1;
@@ -109,64 +110,101 @@ function sair() {
 .dados-principais h1 {
   margin: 0 0 8px;
   color: #172554;
+  font-size: 28px;
+  font-weight: 700;
 }
 .dados-principais p {
-  margin: 5px 0;
+  margin: 0 0 16px;
   color: #64748b;
 }
 .card {
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 15px;
-  padding: 25px;
-  margin-bottom: 20px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
 }
 .card h2 {
-  margin-top: 0;
+  margin: 0 0 20px;
   color: #172554;
+  font-size: 20px;
+  font-weight: 700;
 }
 .card p {
+  margin: 5px 0 0;
   color: #64748b;
 }
 .informacoes {
-  display: flex;
-  gap: 80px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 }
 .informacoes strong {
   color: #172554;
+  font-size: 14px;
 }
 .titulo-servicos {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.ver-todos {
-  border: none;
-  background: none;
-  color: #2563eb;
-  cursor: pointer;
-}
-.foto {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
 .foto img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 .botao {
-  padding: 8px 15px;
-  background-color: #2563eb;
+  display: inline-block;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 6px;
+  background: #2563eb;
   color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  width: fit-content;
+  cursor: pointer;
   font-size: 14px;
-  margin:0 10px 0 0;
-  border: none;
+  font-weight: 500;
+  text-decoration: none;
+  margin-right: 8px;
+}
+.botao:hover {
+  background: #1d4ed8;
+}
+.lista-servicos {
+  margin: 0;
+  padding-left: 20px;
+  color: #64748b;
+}
+.lista-servicos li + li {
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .perfil {
+    width: min(100% - 20px, 900px);
+    margin: 24px auto;
+  }
+
+  .perfil-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 24px 20px;
+  }
+
+  .dados-principais {
+    width: 100%;
+  }
+
+  .informacoes {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 24px 20px;
+  }
+
+  .botao {
+    margin-bottom: 8px;
+  }
 }
 </style>

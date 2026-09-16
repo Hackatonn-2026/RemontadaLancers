@@ -108,10 +108,12 @@ function CriaConta() {
         profissao: profissao.value,
         anosExperiencia: AnosDeExperiencia.value,
         descricao: descricao.value,
-        categorias: categorias.value
+        categorias: categorias.value,
+        servicos: []
     }
 
     localStorage.setItem('usuario', JSON.stringify(usuario))
+    localStorage.setItem('contaSalva', JSON.stringify(usuario))
 
     console.log(usuario)
     if (tipoUsuario.value === 'freelancer') {

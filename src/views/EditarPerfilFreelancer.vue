@@ -15,6 +15,19 @@
         <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
         <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
         <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
+                    <select id="anos" v-model="AnosDeExperiencia">
+  localStorage.setItem('contaSalva', JSON.stringify(usuarioAtualizado))
+                        <option value="">Selecione seus anos de experiência</option>
+                        <option value="0-1">0-1 anos</option>
+                        <option value="1-3">1-3 anos</option>
+                        <option value="3-5">3-5 anos</option>
+                        <option value="5+">5+ anos</option>
+                    </select>
+                </div>
+                <Inputs v-model="descricao" label="Descrição Profissional" type="textarea"
+                    placeholder="Fale sobre sua experiência" />
+                <div class="categorias">
+                    <label>Categorias de Atuação</label>
 
         <div class="profissional">
           <h2>Informações profissionais</h2>
