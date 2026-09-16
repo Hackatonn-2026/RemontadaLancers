@@ -26,11 +26,20 @@
 <script setup>
 import { ref } from 'vue'
 import Inputs from '../components/Inputs.vue'
-const usuario = JSON.parse(localStorage.getItem('usuario'));
-const nome = ref(usuario.nome);
-const email = ref(usuario.email);
-const senha = ref(usuario.senha);
-const telefone = ref(usuario.telefone);
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || {}
+  } catch {
+    return {}
+  }
+}
+
+const usuario = carregarUsuario()
+const nome = ref(usuario.nome || '')
+const email = ref(usuario.email || '')
+const senha = ref(usuario.senha || '')
+const telefone = ref(usuario.telefone || '')
 function salvarAlteracoes() {
   const usuarioAtualizado = {
     ...usuario,
