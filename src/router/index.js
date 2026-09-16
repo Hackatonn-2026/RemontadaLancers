@@ -10,6 +10,9 @@ import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
 import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
+import UsuarioFreelancerView from '@/views/UsuarioFreelancerView.vue'
+import EditarPerfilView from '../views/EditarPerfilView.vue'
+import EditarPerfilFreelancerView from '@/views/EditarPerfilFreelancer.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +66,21 @@ const router = createRouter({
       path: '/buscar',
       name: 'buscar',
       component: BuscasProfissionais,
+    },
+    {
+      path: '/usuario-freelancer/:id',
+      name: 'usuario-freelancer',
+      component: UsuarioFreelancerView,
+    },
+    {
+      path: '/editar-perfil',
+      name: 'editar-perfil',
+      component: EditarPerfilView,
+    },
+    {
+      path: '/editar-perfil-freelancer',
+      name: 'editar-perfil-freelancer',
+      component: EditarPerfilFreelancerView,
     }
   ],
 })

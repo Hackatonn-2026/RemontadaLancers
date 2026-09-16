@@ -17,7 +17,7 @@
         </button>
     </div>
     <div class="dados">
-                <form class="cadastro-form" @submit.prevent="CriaConta">
+        <form class="cadastro-form" @submit.prevent="CriaConta">
             <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
             <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
             <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
@@ -76,9 +76,7 @@
                     </div>
                 </div>
             </div>
-            <RouterLink to="/perfil" @click="CriaConta" class="botao-criar">
-                Criar conta
-            </RouterLink>
+            <button type="submit" class="botao-criar">Criar conta</button>
             <p class="tem-conta"> Ja tem uma conta?</p>
             <RouterLink to="/login" class="botao-login">
                 Faça login
@@ -88,7 +86,9 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+const router = useRouter()
 const tipoUsuario = ref('cliente')
 const nome = ref('')
 const email = ref('')
@@ -108,13 +108,21 @@ function CriaConta() {
         profissao: profissao.value,
         anosExperiencia: AnosDeExperiencia.value,
         descricao: descricao.value,
-        categorias: categorias.value
+        categorias: categorias.value,
+        servicos: []
     }
 
     localStorage.setItem('usuario', JSON.stringify(usuario))
+    localStorage.setItem('contaSalva', JSON.stringify(usuario))
 
     console.log(usuario)
+    if (tipoUsuario.value === 'freelancer') {
+        router.push(`/usuario-freelancer/${usuario.id}`)
+    } else {
+        router.push('/perfil')
+    }
 }
+
 </script>
 
 <style scoped>
