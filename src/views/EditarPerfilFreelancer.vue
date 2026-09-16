@@ -36,7 +36,7 @@
             <textarea id="descricao" v-model="descricao" placeholder="Fale sobre sua experiência" rows="5" />
           </div>
 
-          <fieldset class="categorias">
+          <div class="categorias">
             <h4>Categorias de atuação</h4>
             <div class="lista-categorias">
               <label v-for="categoria in opcoesCategorias" :key="categoria.valor">
@@ -44,7 +44,7 @@
                 {{ categoria.nome }}
               </label>
             </div>
-          </fieldset>
+          </div>
         </div>
         <div class="acoes">
           <button type="submit" class="botao">Salvar alterações</button>
