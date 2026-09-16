@@ -5,6 +5,7 @@ import ComoFuncionaView from '../views/ComoFuncionaView.vue'
 import CategoriasView from '../views/CategoriasView.vue'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
+import PerfilFreelancerView from '@/views/PerfilFreelancerView.vue'
 import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
@@ -39,6 +40,11 @@ const router = createRouter({
       component: CadastroView,
     },
     {
+      path: '/perfil-freelancer/:id',
+      name: 'perfil-freelancer',
+      component: PerfilFreelancerView,
+    },
+    {
       path: '/perfil',
       name: 'perfil',
       component: PerfilUsuarioView,
@@ -54,9 +60,20 @@ const router = createRouter({
       component: SuporteView,
     },
     {
+ editar-perfill
       path: '/editar-perfil',
       name: 'editar-perfil',
       component: EditarPerfilView,
+=======
+      path: '/buscar',
+      name: 'buscar',
+      component: BuscasProfissionais,
+    },
+    {
+      path: '/usuario-freelancer/:id',
+      name: 'usuario-freelancer',
+      component: UsuarioFreelancerView,
+ editar-freelancer
     }
   ],
 })
