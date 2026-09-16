@@ -50,6 +50,7 @@ function salvarAlteracoes() {
   }
 
   localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
+  localStorage.setItem('contaSalva', JSON.stringify(usuarioAtualizado))
 }
 </script>
 <style scoped>

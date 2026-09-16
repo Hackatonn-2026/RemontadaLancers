@@ -23,6 +23,7 @@
                     <label for="anos">Anos de Experiência</label>
 
                     <select id="anos" v-model="AnosDeExperiencia">
+  localStorage.setItem('contaSalva', JSON.stringify(usuarioAtualizado))
                         <option value="">Selecione seus anos de experiência</option>
                         <option value="0-1">0-1 anos</option>
                         <option value="1-3">1-3 anos</option>

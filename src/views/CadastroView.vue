@@ -113,6 +113,7 @@ function CriaConta() {
     }
 
     localStorage.setItem('usuario', JSON.stringify(usuario))
+    localStorage.setItem('contaSalva', JSON.stringify(usuario))
 
     console.log(usuario)
     if (tipoUsuario.value === 'freelancer') {
