@@ -10,6 +10,7 @@ import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
 import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
+import OrcamentoView from '@/views/OrcamentoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,7 +64,12 @@ const router = createRouter({
       path: '/buscar',
       name: 'buscar',
       component: BuscasProfissionais,
-    }
+    },
+    {
+      path: '/orcamento',
+      name: 'orcamento',
+      component: OrcamentoView,
+    },
   ],
 })
 
