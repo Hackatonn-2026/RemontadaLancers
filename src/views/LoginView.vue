@@ -27,7 +27,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
-import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const email = ref('')
@@ -39,7 +38,6 @@ function entrar() {
     if (!usuario) {
         alert('Nenhum usuário cadastrado!')
         return
-        router.push('/perfil')
     }
     if (email.value === usuario.email && senha.value === usuario.senha) {
         localStorage.setItem('usuario', JSON.stringify(usuario))

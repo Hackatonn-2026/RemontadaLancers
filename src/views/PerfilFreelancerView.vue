@@ -23,9 +23,6 @@ function voltar() {
   router.push('/buscar')
 }
 
-function pedirOrcamento() {
-  router.push('/login')
-}
 </script>
 
 <template>
@@ -78,9 +75,6 @@ function pedirOrcamento() {
 
         <aside class="barra-servicos">
           <p class="preco">R$ {{ profissional.precoHora }}<span>/hora</span></p>
-          <button type="button" class="btn-orcamento" @click="pedirOrcamento">
-            Pedir Orçamento
-          </button>
         </aside>
       </main>
     </template>
@@ -230,22 +224,6 @@ function pedirOrcamento() {
   font-size: 14px;
   font-weight: 400;
   color: #6b7280;
-}
-
-.btn-orcamento {
-  width: 100%;
-  height: 44px;
-  border: 0;
-  border-radius: 9px;
-  background: #2563eb;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-orcamento:hover {
-  background: #1d4ed8;
 }
 
 @media (max-width: 900px) {
