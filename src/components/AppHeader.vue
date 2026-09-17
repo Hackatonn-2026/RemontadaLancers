@@ -3,7 +3,7 @@
 
     <RouterLink to="/" class="logo">
       <div class="icone-logo"></div>
-      <span class="texto-logo">Remontada<br />Lancers</span>
+      <span class="texto-logo">Ciro<br />Lancers</span>
     </RouterLink>
 
     <SearchBar @buscar="executarBusca" />
@@ -12,7 +12,7 @@
       <RouterLink to="/" class="link-nav">Home</RouterLink>
       <RouterLink to="/como-funciona" class="link-nav">Como funciona</RouterLink>
       <RouterLink to="/categorias" class="link-nav">Categorias</RouterLink>
-
+      <RouterLink to="/servicos" class="link-nav">Serviços</RouterLink>
     </nav>
 
 

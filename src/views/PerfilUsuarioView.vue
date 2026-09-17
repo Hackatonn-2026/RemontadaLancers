@@ -39,10 +39,11 @@
 
 
     
-    <section class="card">
+    <section class="card" v-if="solicitacoesRecebidas.length">
       <div class="titulo-servicos">
         <h2>Serviços contratados</h2>
       </div>
+    </section>
 
       <p v-if="!usuario.servicos.length">Ainda não há serviços contratados.</p>
       <ul v-else class="lista-servicos">

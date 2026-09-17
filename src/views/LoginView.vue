@@ -27,6 +27,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+import { obterUsuarios } from '@/data/usuarios'
 
 const router = useRouter()
 const email = ref('')

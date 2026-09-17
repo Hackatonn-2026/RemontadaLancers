@@ -64,6 +64,16 @@ const router = createRouter({
       component: SuporteView,
     },
     {
+      path: '/servicos',
+      name: 'servicos',
+      component: ServicosView,
+    },
+    {
+      path: '/cadastro-servico',
+      name: 'cadastro-servico',
+      component: CadastroServicoView,
+    },
+    {
       path: '/buscar',
       name: 'buscar',
       component: BuscasProfissionais,
