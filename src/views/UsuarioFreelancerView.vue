@@ -9,6 +9,7 @@
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
+        
         <div class="acoes-perfil">
           <RouterLink to="/editar-perfil-freelancer" class="botao">
             Editar perfil
@@ -34,6 +35,14 @@
           <strong>Telefone</strong>
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
+
+          <RedesSociais
+          :instagram="usuario.instagram"
+          :facebook="usuario.facebook"
+          :linkedin="usuario.linkedin"
+          :whatsapp="usuario.whatsapp"
+        />
+    
       </div>
     </section>
     <section>
@@ -56,6 +65,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import RedesSociais from '@/components/RedesSociais.vue'
 
 const router = useRouter()
 const usuario = JSON.parse(localStorage.getItem('usuario')) || {}
