@@ -31,7 +31,7 @@
                     <label for="anos">Anos de Experiência</label>
 
                     <select id="anos" v-model="AnosDeExperiencia">
-                        <option value="">Selecione seus anos de experiência</option>
+                        <option value="">Selecione seu tempo de experiência</option>
                         <option value="0-1">0-1 anos</option>
                         <option value="1-3">1-3 anos</option>
                         <option value="3-5">3-5 anos</option>
@@ -118,7 +118,7 @@ function CriaConta() {
     localStorage.setItem('usuario', JSON.stringify(usuario))
     localStorage.setItem('contaSalva', JSON.stringify(usuario))
 
-    console.log(usuario)
+
     if (tipoUsuario.value === 'freelancer') {
         router.push(`/usuario-freelancer/${usuario.id}`)
     } else {

@@ -51,6 +51,29 @@
       </ul>
     </section>
 
+    <section class="card">
+      <h2>Minhas solicitações</h2>
+      <p class="texto-ajuda">Aqui ficam as ideias de serviço que você colocou para andar.</p>
+
+      <p v-if="!usuario.pedidosOrcamento.length" class="lista-vazia">
+        Você ainda não pediu nenhum orçamento.
+      </p>
+
+      <div v-else class="lista-pedidos">
+        <article v-for="pedido in usuario.pedidosOrcamento" :key="pedido.id" class="pedido">
+          <div class="pedido-check">✓</div>
+          <div class="pedido-conteudo">
+            <div class="pedido-topo">
+              <h3>{{ pedido.profissional }}</h3>
+              <span class="pedido-status">Solicitado</span>
+            </div>
+            <p>{{ pedido.descricao }}</p>
+            <small v-if="pedido.prazo">Prazo: {{ pedido.prazo }}</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
   </main>
 </template>
 
@@ -59,17 +82,14 @@
 import { useRouter } from 'vue-router'
 const router = useRouter()
 function carregarUsuario() {
-  try {
-    return JSON.parse(localStorage.getItem('usuario')) || {}
-  } catch {
-    return {}
-  }
+  return JSON.parse(localStorage.getItem('usuario') || '{}')
 }
 
 const dadosUsuario = carregarUsuario()
 const usuario = {
   ...dadosUsuario,
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
+  pedidosOrcamento: dadosUsuario.pedidosOrcamento || []
 }
 function sair() {
   const usuarioAtual = carregarUsuario()
@@ -180,6 +200,84 @@ function sair() {
   margin-top: 8px;
 }
 
+.lista-servicos li {
+  display: grid;
+  gap: 4px;
+}
+
+.lista-servicos span {
+  color: #64748b;
+}
+
+.texto-ajuda,
+.lista-vazia {
+  margin-bottom: 20px;
+}
+
+.lista-pedidos {
+  display: grid;
+  gap: 12px;
+}
+
+.pedido {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #dbe5f4;
+  border-radius: 10px;
+  background: #f8fbff;
+}
+
+.pedido-check {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.pedido-conteudo {
+  min-width: 0;
+  flex: 1;
+}
+
+.pedido-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pedido h3 {
+  margin: 0;
+  color: #172554;
+  font-size: 16px;
+}
+
+.pedido p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.pedido small {
+  color: #64748b;
+}
+
+.pedido-status {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   .perfil {
     width: min(100% - 20px, 900px);
@@ -206,6 +304,12 @@ function sair() {
 
   .botao {
     margin-bottom: 8px;
+  }
+
+  .pedido-topo {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 }
 </style>

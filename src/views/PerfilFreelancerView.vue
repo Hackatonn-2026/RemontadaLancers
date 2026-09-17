@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { profissionais } from '@/data/profissionais.js'
 import AbasPerfil from '../components/AbasPerfil.vue'
@@ -10,9 +9,7 @@ const route = useRoute()
 const router = useRouter()
 const abaAtiva = ref('Sobre')
 
-const profissional = computed(() =>
-  profissionais.find(item => item.id === Number(route.params.id))
-)
+const profissional = profissionais.find(item => item.id === Number(route.params.id))
 
 function estrelasTexto(nota = 0) {
   const cheias = Math.round(nota)
@@ -21,6 +18,10 @@ function estrelasTexto(nota = 0) {
 
 function voltar() {
   router.push('/buscar')
+}
+
+function solicitarOrcamento() {
+  router.push(`/solicitar-orcamento?profissional=${profissional.id}`)
 }
 
 </script>
@@ -32,7 +33,7 @@ function voltar() {
       <button type="button" class="btn-voltar" @click="voltar">Voltar para a busca</button>
     </div>
 
-    <template v-else>
+    <div v-else>
       <header class="cabecalho">
         <div class="container">
           <button type="button" class="btn-voltar" @click="voltar">&larr; Voltar</button>
@@ -75,9 +76,12 @@ function voltar() {
 
         <aside class="barra-servicos">
           <p class="preco">R$ {{ profissional.precoHora }}<span>/hora</span></p>
+          <button type="button" class="botao-orcamento" @click="solicitarOrcamento">
+            Solicitar orçamento
+          </button>
         </aside>
       </main>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -224,6 +228,22 @@ function voltar() {
   font-size: 14px;
   font-weight: 400;
   color: #6b7280;
+}
+
+.botao-orcamento {
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao-orcamento:hover {
+  background: #1d4ed8;
 }
 
 @media (max-width: 900px) {

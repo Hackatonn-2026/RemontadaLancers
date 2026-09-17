@@ -13,6 +13,7 @@ import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
 import UsuarioFreelancerView from '@/views/UsuarioFreelancerView.vue'
 import EditarPerfilView from '../views/EditarPerfilView.vue'
 import EditarPerfilFreelancerView from '@/views/EditarPerfilFreelancer.vue'
+import SolicitarOrcamentoView from '@/views/SolicitarOrcamentoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,6 +82,14 @@ const router = createRouter({
       path: '/editar-perfil-freelancer',
       name: 'editar-perfil-freelancer',
       component: EditarPerfilFreelancerView,
+    },
+    {
+      path: '/solicitar-orcamento',
+      name: 'solicitar-orcamento',
+      component: SolicitarOrcamentoView,
+      beforeEnter: () => {
+        return localStorage.getItem('usuario') ? true : { name: 'login' }
+      },
     }
   ],
 })
