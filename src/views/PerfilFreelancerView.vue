@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { profissionais } from '@/data/profissionais.js'
 import AbasPerfil from '../components/AbasPerfil.vue'
 import AbaAvaliacao from '@/components/AbaAvaliacao.vue'
+import RedesSociais from '@/components/RedesSociais.vue'
 import { ref } from 'vue'
 
 const route = useRoute()
@@ -10,6 +11,10 @@ const router = useRouter()
 const abaAtiva = ref('Sobre')
 
 const profissional = profissionais.find(item => item.id === Number(route.params.id))
+const usuarioAtual = JSON.parse(localStorage.getItem('usuario')) || {}
+
+// Usa as redes salvas pelo freelancer quando este é o perfil aberto.
+const redesDoProfissional = usuarioAtual.id === profissional?.id ? usuarioAtual : profissional
 
 function estrelasTexto(nota = 0) {
   const cheias = Math.round(nota)
@@ -48,6 +53,12 @@ function solicitarOrcamento() {
                 {{ estrelasTexto(profissional.rating) }}
                 <span>{{ profissional.rating }} ({{ profissional.reviewsCount }} avaliações)</span>
               </p>
+              <RedesSociais
+                :instagram="redesDoProfissional?.instagram"
+                :facebook="redesDoProfissional?.facebook"
+                :linkedin="redesDoProfissional?.linkedin"
+                :whatsapp="redesDoProfissional?.whatsapp"
+              />
             </div>
           </div>
         </div>

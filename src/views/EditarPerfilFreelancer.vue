@@ -16,6 +16,7 @@
         <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
         <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
 
+
         <div class="profissional">
           <h2>Informações profissionais</h2>
           <Inputs v-model="profissao" label="Profissão/Especialidade" placeholder="Ex: Dev Full Stack" />
@@ -45,6 +46,15 @@
               </label>
             </div>
           </div>
+
+          <div class="redes-sociais">
+            <h2>Redes sociais <span>(opcional)</span></h2>
+            <Inputs v-model="instagram" label="Instagram" type="url" placeholder="https://instagram.com/seu-perfil" />
+            <Inputs v-model="facebook" label="Facebook" type="url" placeholder="https://facebook.com/seu-perfil" />
+            <Inputs v-model="linkedin" label="LinkedIn" type="url" placeholder="https://linkedin.com/in/seu-perfil" />
+            <Inputs v-model="whatsapp" label="WhatsApp" type="url" placeholder="https://wa.me/5511999999999" />
+          </div>
+
         </div>
         <div class="acoes">
           <button type="submit" class="botao">Salvar alterações</button>
@@ -73,6 +83,10 @@ const profissao = ref(usuario.profissao || '')
 const anosExperiencia = ref(usuario.anosExperiencia || '')
 const descricao = ref(usuario.descricao || '')
 const categorias = ref(Array.isArray(usuario.categorias) ? [...usuario.categorias] : [])
+const instagram = ref(usuario.instagram || '')
+const facebook = ref(usuario.facebook || '')
+const linkedin = ref(usuario.linkedin || '')
+const whatsapp = ref(usuario.whatsapp || '')
 
 const opcoesCategorias = [
   { valor: 'marketing', nome: 'Marketing' },
@@ -102,9 +116,23 @@ function salvarAlteracoes() {
     anosExperiencia: anosExperiencia.value,
     descricao: descricao.value,
     categorias: categorias.value,
+    instagram: instagram.value,
+    facebook: facebook.value,
+    linkedin: linkedin.value,
+    whatsapp: whatsapp.value,
   }
 
   localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
+
+  // Atualiza os dados também na lista usada pelo login.
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+  const indice = usuarios.findIndex((item) => item.email === usuario.email)
+
+  if (indice !== -1) {
+    usuarios[indice] = usuarioAtualizado
+    localStorage.setItem('usuarios', JSON.stringify(usuarios))
+  }
+
   router.push(rotaPerfil)
 }
 </script>
@@ -206,6 +234,19 @@ function salvarAlteracoes() {
 }
 .categorias h4 {
   margin-bottom: 12px;
+}
+.redes-sociais {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+}
+.redes-sociais h2 {
+  grid-column: 1 / -1;
+}
+.redes-sociais span {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 400;
 }
 .lista-categorias {
   display: grid;
