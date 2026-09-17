@@ -3,7 +3,7 @@
     <div class="conteiner-rodape">
       <div class="marca-rodape">
         <div class="cabecalho-marca">
-          <div class="imagem-logo" aria-hidden="true"></div>
+          <img src="/logoCL.png" alt="CiroLancers" class="imagem-logo" />
           <span class="nome-marca">CiroLancers</span>
         </div>
         <p class="descricao-marca">
@@ -120,8 +120,10 @@
 .imagem-logo {
   width: 40px;
   height: 40px;
-  background: #2563eb;
   border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
 }
 
 .nome-marca {

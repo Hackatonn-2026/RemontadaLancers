@@ -1,8 +1,7 @@
 <template>
   <header class="cabecalho">
-
     <RouterLink to="/" class="logo">
-      <div class="icone-logo"></div>
+      <img src="/logoCL.png" alt="CiroLancers logo" class="icone-logo" />
       <span class="texto-logo">Ciro<br />Lancers</span>
     </RouterLink>
 
@@ -12,17 +11,12 @@
       <RouterLink to="/" class="link-nav">Home</RouterLink>
       <RouterLink to="/categorias" class="link-nav">Categorias</RouterLink>
       <RouterLink to="/servicos" class="link-nav">Serviços</RouterLink>
-
-
     </nav>
 
-
-    <RouterLink v-if="!estaLogado" to="/login" class="botao-login">
-      Login
-    </RouterLink>
+    <RouterLink v-if="!estaLogado" to="/login" class="botao-login"> Login </RouterLink>
 
     <RouterLink v-else :to="rotaPerfil" class="botao-perfil">
-      <img src="/perfil.avif" alt="Abrir meu perfil">
+      <img src="/perfil.avif" alt="Abrir meu perfil" />
     </RouterLink>
   </header>
 </template>
@@ -93,9 +87,11 @@ function executarBusca(termo) {
 .icone-logo {
   width: 50px;
   height: 50px;
-  background: #2563eb;
   border-radius: 50%;
   flex-shrink: 0;
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
 }
 
 .texto-logo {
@@ -131,7 +127,9 @@ function executarBusca(termo) {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
   flex-shrink: 0;
 }
 
