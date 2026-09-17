@@ -1,24 +1,18 @@
 <template>
   <main class="perfil">
-
     <section class="perfil-header">
       <div class="foto">
-        <img src="/perfil.avif" alt="Foto de perfil">
+        <img src="/perfil.avif" alt="Foto de perfil" />
       </div>
 
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
         <div class="acoes-perfil">
-          <RouterLink to="/editar-perfil" class="botao">
-            Editar perfil
-          </RouterLink>
-          <button class="botao" @click="sair">
-            Sair
-          </button>
+          <RouterLink to="/editar-perfil" class="botao"> Editar perfil </RouterLink>
+          <button class="botao" @click="sair">Sair</button>
         </div>
       </div>
-
     </section>
 
     <section class="card">
@@ -37,8 +31,6 @@
       </div>
     </section>
 
-
-    
     <section class="card" v-if="solicitacoesRecebidas.length">
       <div class="titulo-servicos">
         <h2>Serviços contratados</h2>
@@ -53,34 +45,37 @@
     </section>
 
     <section class="card">
-      <h2>Minhas solicitações</h2>
-      <p class="texto-ajuda">Aqui ficam as ideias de serviço que você colocou para andar.</p>
+      <h2>Serviços solicitados</h2>
 
-      <p v-if="!usuario.pedidosOrcamento.length" class="lista-vazia">
-        Você ainda não pediu nenhum orçamento.
+      <p v-if="solicitacoesCliente.length === 0" class="lista-vazia">
+        Ainda não há nenhum serviço solicitado.
       </p>
 
-      <div v-else class="lista-pedidos">
-        <article v-for="pedido in usuario.pedidosOrcamento" :key="pedido.id" class="pedido">
-          <div class="pedido-check">✓</div>
-          <div class="pedido-conteudo">
-            <div class="pedido-topo">
-              <h3>{{ pedido.profissional }}</h3>
-              <span class="pedido-status">Solicitado</span>
-            </div>
-            <p>{{ pedido.descricao }}</p>
-            <small v-if="pedido.prazo">Prazo: {{ pedido.prazo }}</small>
+      <div v-else class="lista-status-usuario">
+        <article
+          v-for="solicitacao in solicitacoesCliente"
+          :key="solicitacao.id"
+          class="pedido-status-item"
+        >
+          <div class="pedido-topo">
+            <h3>{{ solicitacao.servicoTitulo }}</h3>
+            <span class="pedido-status" :class="statusClass(solicitacao.status)">
+              {{ statusTexto(solicitacao.status) }}
+            </span>
           </div>
+
+          <p class="descricao-status">
+            {{ descricaoStatus(solicitacao.status) }}
+          </p>
         </article>
       </div>
     </section>
-
   </main>
 </template>
 
-
 <script setup>
 import { useRouter } from 'vue-router'
+import { obterSolicitacoesPorCliente } from '@/data/solicitacoes'
 
 const router = useRouter()
 
@@ -92,9 +87,28 @@ const dadosUsuario = carregarUsuario()
 const usuario = {
   ...dadosUsuario,
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
-  pedidosOrcamento: dadosUsuario.pedidosOrcamento || []
+  pedidosOrcamento: dadosUsuario.pedidosOrcamento || [],
 }
 const solicitacoesRecebidas = Array.isArray(usuario.servicos) ? usuario.servicos : []
+const solicitacoesCliente = obterSolicitacoesPorCliente(usuario.id)
+
+function statusTexto(status) {
+  if (status === 'pendente') return 'Serviço aceito'
+  if (status === 'aceita') return 'Serviço aceito'
+  return 'Sem status'
+}
+
+function descricaoStatus(status) {
+  if (status === 'pendente') return 'Serviço aceito.'
+  if (status === 'aceita') return 'Serviço aceito.'
+  return 'Status ainda não informado.'
+}
+
+function statusClass(status) {
+  if (status === 'pendente') return 'pendente'
+  if (status === 'aceita') return 'aceita'
+  return ''
+}
 
 function sair() {
   const usuarioAtual = carregarUsuario()
@@ -218,6 +232,58 @@ function sair() {
   margin-bottom: 20px;
 }
 
+.lista-status-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pedido-status-item {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 16px;
+}
+
+.pedido-status-item .pedido-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pedido-status-item h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 18px;
+}
+
+.descricao-status {
+  margin: 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pedido-status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #2563eb;
+}
+
+.pedido-status.pendente {
+  background: #2563eb;
+}
+
+.pedido-status.aceita {
+  background: #2563eb;
+}
+
 .lista-pedidos {
   display: grid;
   gap: 12px;
@@ -274,9 +340,9 @@ function sair() {
 
 .pedido-status {
   padding: 4px 8px;
-  border-radius: 999px;
-  background: #dcfce7;
-  color: #166534;
+  border-radius: 0;
+  background: #2563eb;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;

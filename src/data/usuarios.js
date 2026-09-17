@@ -35,7 +35,7 @@ export function buscarUsuarioPorCredenciais(email, senha) {
   const emailNormalizado = String(email || '')
     .trim()
     .toLowerCase()
-  const usuariosLista = obterUsuarios()
+  const usuariosLista = obterUsuarios(obterUsuariosCadastrados())
 
   return (
     usuariosLista.find((usuario) => {
@@ -50,7 +50,7 @@ export function buscarUsuarioPorCredenciais(email, senha) {
 }
 
 // coloca os dois usuarios fixos junto com os novos cadastrados sem dar conflito de email
-export function obterUsuarios(usuariosCadastrados = []) {
+export function obterUsuarios(usuariosCadastrados = obterUsuariosCadastrados()) {
   const usuariosSalvos = Array.isArray(usuariosCadastrados)
     ? usuariosCadastrados
     : obterUsuariosCadastrados()
