@@ -20,6 +20,9 @@ const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
 const usuarioEhFreelancer = usuarioAtual &&
   (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
 
+// Sem login, o cadastro de serviço leva para a tela de login.
+const destinoCadastroServico = usuarioAtual ? '/cadastro-servico' : '/login'
+
 // soma os usuarios fixos com os novos 
 const usuarios = obterUsuarios(usuariosCadastrados)
 
@@ -147,7 +150,7 @@ function solicitarServico(servico) {
 
    <BaseButton
       v-if="!usuarioEhFreelancer"
-      to="/cadastro-servico"
+      :to="destinoCadastroServico"
       class="botao-flutuante"
     >
       + Cadastrar Serviço
