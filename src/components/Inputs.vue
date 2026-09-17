@@ -6,6 +6,10 @@
 </template>
 
 <script setup>
+defineOptions({
+  name: 'InputField'
+})
+
 defineProps({
     label: String,
     placeholder: String,

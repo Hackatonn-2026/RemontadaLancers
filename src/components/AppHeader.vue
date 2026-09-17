@@ -16,17 +16,47 @@
     </nav>
 
 
-    <RouterLink to="/login" class="botao-login">
+    <RouterLink v-if="!estaLogado" to="/login" class="botao-login">
       Login
+    </RouterLink>
+
+    <RouterLink v-else :to="rotaPerfil" class="botao-perfil">
+      <img src="/perfil.avif" alt="Abrir meu perfil">
     </RouterLink>
   </header>
 </template>
 
 <script setup>
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import SearchBar from './SearchBar.vue';
+import SearchBar from './SearchBar.vue'
 
 const router = useRouter()
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || null
+  } catch {
+    return null
+  }
+}
+
+const usuario = ref(carregarUsuario())
+const estaLogado = computed(() => Boolean(usuario.value))
+const rotaPerfil = computed(() => {
+  if (usuario.value?.tipoUsuario === 'freelancer') {
+    return `/usuario-freelancer/${usuario.value.id || 'perfil'}`
+  }
+
+  return '/perfil'
+})
+
+function atualizarSessao() {
+  usuario.value = carregarUsuario()
+}
+
+onMounted(() => window.addEventListener('auth-change', atualizarSessao))
+onUnmounted(() => window.removeEventListener('auth-change', atualizarSessao))
 
 function executarBusca(termo) {
   router.push({ path: '/buscar', query: { busca: termo } })

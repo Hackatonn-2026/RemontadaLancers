@@ -31,9 +31,7 @@ defineProps({
       <p class="preco">{{ preco }}</p>
     </div>
 
-   <!-- expressão para abrir o perfil pelo id do profissional -->
-
-    <BaseButton :to="`/profissional/${id}`" class="ver-perfil">
+  <BaseButton :to="`/perfil-freelancer/${id}`" class="ver-perfil">
       Ver Perfil
     </BaseButton>
 

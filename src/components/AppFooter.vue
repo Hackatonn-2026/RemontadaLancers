@@ -3,8 +3,8 @@
     <div class="conteiner-rodape">
       <div class="marca-rodape">
         <div class="cabecalho-marca">
-          <img src="" alt="logo" class="imagem-logo" />
-          <span class="nome-marca">CiroLancers</span>
+          <div class="imagem-logo" aria-hidden="true"></div>
+          <span class="nome-marca">RemontadaLancers</span>
         </div>
         <p class="descricao-marca">
           Conectando profissionais talentosos com clientes que precisam de
@@ -34,10 +34,9 @@
       <div class="coluna-rodape">
         <h3>Redes Sociais</h3>
         <div class="social-icons">
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
+          <a href="https://www.facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">Facebook</a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">LinkedIn</a>
         </div>
       </div>
     </div>
