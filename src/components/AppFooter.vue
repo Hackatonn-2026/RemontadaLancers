@@ -4,7 +4,7 @@
       <div class="marca-rodape">
         <div class="cabecalho-marca">
           <div class="imagem-logo" aria-hidden="true"></div>
-          <span class="nome-marca">RemontadaLancers</span>
+          <span class="nome-marca">CiroLancers</span>
         </div>
         <p class="descricao-marca">
           Conectando profissionais talentosos com clientes que precisam de serviços de qualidade.
