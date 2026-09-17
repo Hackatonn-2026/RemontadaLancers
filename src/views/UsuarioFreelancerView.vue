@@ -9,12 +9,14 @@
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
-         <RouterLink to="/editar-perfil-freelancer" class="botao">
-                Editar perfil
-            </RouterLink>
-           <button class="botao" @click="sair">
-                Sair
-            </button>
+        <div class="acoes-perfil">
+          <RouterLink to="/editar-perfil-freelancer" class="botao">
+            Editar perfil
+          </RouterLink>
+          <button class="botao" @click="sair">
+            Sair
+          </button>
+        </div>
       </div>
 
     </section>
@@ -32,23 +34,18 @@
           <strong>Telefone</strong>
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
-
-        <div>
-          <strong>Email</strong>
-          <p>{{ usuario.email || 'Não informado' }}</p>
-        </div>
       </div>
     </section>
     <section>
        <div class="card">
         <div class="informacoes-profissionais">
-          <h2>Informações Profissionais</h2>
-         <strong>Profissão:</strong> 
-        <p> {{ usuario.profissao || 'Não informado' }}</p>
-         <strong>Anos de Experiência:</strong>
+          <h2>Informações profissionais</h2>
+          <strong>Profissão</strong>
+          <p>{{ usuario.profissao || 'Não informado' }}</p>
+          <strong>Anos de experiência</strong>
           <p>{{ usuario.anosExperiencia || 'Não informado' }}</p>
-        <strong>Descrição:</strong> 
-        <p>{{ usuario.descricao || 'Não informado' }}</p>
+          <strong>Descrição</strong>
+          <p>{{ usuario.descricao || 'Não informado' }}</p>
         </div>
       </div> 
     </section>
@@ -61,10 +58,7 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-const usuario = JSON.parse(
-  localStorage.getItem('usuario')
-) || {}
+const usuario = JSON.parse(localStorage.getItem('usuario')) || {}
 
 function sair() {
   localStorage.setItem('contaSalva', JSON.stringify(usuario))
@@ -72,7 +66,6 @@ function sair() {
   window.dispatchEvent(new Event('auth-change'))
   router.push('/login')
 }
-
 </script>
 
 <style scoped>

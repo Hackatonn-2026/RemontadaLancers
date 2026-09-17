@@ -1,22 +1,22 @@
 <template>
-    <div class="criar">
+    <div class="cabecalho-cadastro">
         <h1>
             Criar conta
         </h1>
         <p>
-            Junte-se à maior plataforma de freelancers do Brasil
+            Encontre o profissional certo para seu projeto.
         </p>
     </div>
     <div class="tipo-usuario">
         <button type="button" :class="{ ativo: tipoUsuario === 'cliente' }" @click="tipoUsuario = 'cliente'">
-            Quero Contratar
+            Quero contratar
         </button>
 
         <button type="button" :class="{ ativo: tipoUsuario === 'freelancer' }" @click="tipoUsuario = 'freelancer'">
-            Sou Profissional
+            Sou profissional
         </button>
     </div>
-    <div class="dados">
+    <div class="dados-cadastro">
         <form class="cadastro-form" @submit.prevent="CriaConta">
             <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
             <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <button type="submit" class="botao-criar">Criar conta</button>
-            <p class="tem-conta"> Ja tem uma conta?</p>
+            <p class="tem-conta">Já tem uma conta?</p>
             <RouterLink to="/login" class="botao-login">
                 Faça login
             </RouterLink>
@@ -90,6 +90,7 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+
 const router = useRouter()
 const tipoUsuario = ref('cliente')
 const nome = ref('')
@@ -100,32 +101,31 @@ const profissao = ref('')
 const AnosDeExperiencia = ref('')
 const descricao = ref('')
 const categorias = ref([])
+
 function CriaConta() {
-    const usuario = {
-        id: Date.now().toString(),
-        nome: nome.value,
-        email: email.value,
-        senha: senha.value,
-        telefone: telefone.value,
-        tipoUsuario: tipoUsuario.value,
-        profissao: profissao.value,
-        anosExperiencia: AnosDeExperiencia.value,
-        descricao: descricao.value,
-        categorias: categorias.value,
-        servicos: []
-    }
+  const usuario = {
+    id: Date.now().toString(),
+    nome: nome.value,
+    email: email.value,
+    senha: senha.value,
+    telefone: telefone.value,
+    tipoUsuario: tipoUsuario.value,
+    profissao: profissao.value,
+    anosExperiencia: AnosDeExperiencia.value,
+    descricao: descricao.value,
+    categorias: categorias.value,
+    servicos: []
+  }
 
-    localStorage.setItem('usuario', JSON.stringify(usuario))
-    localStorage.setItem('contaSalva', JSON.stringify(usuario))
+  localStorage.setItem('usuario', JSON.stringify(usuario))
+  localStorage.setItem('contaSalva', JSON.stringify(usuario))
 
+  const rota = tipoUsuario.value === 'freelancer'
+    ? `/usuario-freelancer/${usuario.id}`
+    : '/perfil'
 
-    if (tipoUsuario.value === 'freelancer') {
-        router.push(`/usuario-freelancer/${usuario.id}`)
-    } else {
-        router.push('/perfil')
-    }
+  router.push(rota)
 }
-
 </script>
 
 <style scoped>

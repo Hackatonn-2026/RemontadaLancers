@@ -9,12 +9,14 @@
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
-         <RouterLink to="/editar-perfil" class="botao">
-                Editar perfil
-            </RouterLink>
-           <button class="botao" @click="sair">
-                Sair
-            </button>
+        <div class="acoes-perfil">
+          <RouterLink to="/editar-perfil" class="botao">
+            Editar perfil
+          </RouterLink>
+          <button class="botao" @click="sair">
+            Sair
+          </button>
+        </div>
       </div>
 
     </section>
@@ -32,7 +34,6 @@
           <strong>Telefone</strong>
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
-
       </div>
     </section>
 
@@ -43,7 +44,7 @@
         <h2>Serviços contratados</h2>
       </div>
 
-      <p v-if="!usuario.servicos.length">Nenhum serviço contratado</p>
+      <p v-if="!usuario.servicos.length">Ainda não há serviços contratados.</p>
       <ul v-else class="lista-servicos">
         <li v-for="servico in usuario.servicos" :key="servico.id || servico.nome || servico">
           {{ servico.nome || servico }}
@@ -80,7 +81,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
+
 function carregarUsuario() {
   return JSON.parse(localStorage.getItem('usuario') || '{}')
 }
@@ -91,6 +94,7 @@ const usuario = {
   servicos: Array.isArray(dadosUsuario.servicos) ? dadosUsuario.servicos : [],
   pedidosOrcamento: dadosUsuario.pedidosOrcamento || []
 }
+
 function sair() {
   const usuarioAtual = carregarUsuario()
   localStorage.setItem('contaSalva', JSON.stringify(usuarioAtual))
@@ -98,7 +102,6 @@ function sair() {
   window.dispatchEvent(new Event('auth-change'))
   router.push('/login')
 }
-
 </script>
 
 <style scoped>

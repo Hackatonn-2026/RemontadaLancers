@@ -4,20 +4,20 @@
       <div class="foto">
         <img src="/perfil.avif" alt="Foto de perfil">
       </div>
-      <h1>Editar Perfil</h1>
-      <p>Atualize suas informações pessoais</p>
+      <h1>Editar perfil</h1>
+      <p>Atualize seus dados pessoais.</p>
     </div>
     <div class="informacao">
       <h3 class="informacao-titulo">
         Informações pessoais
       </h3>
-       <form class="form">
+      <form class="form">
       <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
       <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
       <Inputs v-model="senha" label="Senha" type="text" placeholder="Digite sua senha" />
       <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
       <RouterLink to="/perfil" class="botao" @click="salvarAlteracoes">
-        Salvar
+        Salvar alterações
       </RouterLink>
       </form>
     </div>
@@ -40,6 +40,7 @@ const nome = ref(usuario.nome || '')
 const email = ref(usuario.email || '')
 const senha = ref(usuario.senha || '')
 const telefone = ref(usuario.telefone || '')
+
 function salvarAlteracoes() {
   const usuarioAtualizado = {
     ...usuario,

@@ -14,13 +14,14 @@ const enviado = ref(false)
 const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || '{}')
 nome.value = usuarioLogado.nome || ''
 email.value = usuarioLogado.email || ''
+
 const profissionalSelecionado = profissionais.find(
   profissional => profissional.id == route.query.profissional
 )
 
 function enviarOrcamento() {
   if (!nome.value || !email.value || !descricao.value) {
-    alert('Por favor preencha os campos obrigatorios!')
+    alert('Por favor preencha os campos obrigatórios!')
     return
   }
 
@@ -35,6 +36,7 @@ function enviarOrcamento() {
 
   usuarioLogado.pedidosOrcamento = usuarioLogado.pedidosOrcamento || []
   usuarioLogado.pedidosOrcamento.push(novoPedido)
+
   localStorage.setItem('usuario', JSON.stringify(usuarioLogado))
   localStorage.setItem('contaSalva', JSON.stringify(usuarioLogado))
   enviado.value = true
@@ -48,7 +50,7 @@ function enviarOrcamento() {
       <div v-if="enviado" class="sucesso">
         <span class="sucesso-icone">✓</span>
         <h1>Pedido enviado!</h1>
-        <p>Seu pedido foi salvo. Em breve você poderá receber propostas de profissionais.</p>
+        <p>Seu pedido foi salvo. Em breve você vai receber algumas propostas.</p>
         <button type="button" class="botao-principal" @click="router.push('/buscar')">
           Continuar buscando
         </button>
@@ -56,12 +58,12 @@ function enviarOrcamento() {
 
       <div v-else>
         <button type="button" class="voltar" @click="router.back()">← Voltar</button>
-        <p class="etiqueta">SOLICITE UM ORÇAMENTO</p>
+        <p class="etiqueta">SOLICITAR ORÇAMENTO</p>
         
         <h1 v-if="profissionalSelecionado">Fale com {{ profissionalSelecionado.nome }}</h1>
         <h1 v-else>Conte o que você precisa</h1>
 
-        <p class="intro">Conte do seu jeito o que você gostaria de colocar em prática.</p>
+        <p class="intro">Descreva do seu jeito o que você gostaria de fazer.</p>
 
         <div v-if="profissionalSelecionado" class="profissional-resumo">
           <strong>{{ profissionalSelecionado.nome }}</strong>

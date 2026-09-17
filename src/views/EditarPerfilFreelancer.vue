@@ -5,7 +5,7 @@
         <img src="/perfil.avif" alt="Foto de perfil">
       </div>
       <h1>Editar perfil</h1>
-      <p>Atualize suas informações pessoais e profissionais.</p>
+      <p>Atualize seus dados pessoais e profissionais.</p>
     </section>
 
     <form class="informacao" @submit.prevent="salvarAlteracoes">
@@ -61,7 +61,10 @@ import Inputs from '../components/Inputs.vue'
 
 const router = useRouter()
 const usuario = carregarUsuario()
-const rotaPerfil = usuario.tipoUsuario === 'freelancer' ? `/usuario-freelancer/${usuario.id || 'perfil'}`: '/perfil'
+const rotaPerfil = usuario.tipoUsuario === 'freelancer'
+  ? `/usuario-freelancer/${usuario.id || 'perfil'}`
+  : '/perfil'
+
 const nome = ref(usuario.nome || '')
 const email = ref(usuario.email || '')
 const senha = ref(usuario.senha || '')
@@ -70,6 +73,7 @@ const profissao = ref(usuario.profissao || '')
 const anosExperiencia = ref(usuario.anosExperiencia || '')
 const descricao = ref(usuario.descricao || '')
 const categorias = ref(Array.isArray(usuario.categorias) ? [...usuario.categorias] : [])
+
 const opcoesCategorias = [
   { valor: 'marketing', nome: 'Marketing' },
   { valor: 'design', nome: 'Design' },
@@ -78,6 +82,7 @@ const opcoesCategorias = [
   { valor: 'desenvolvimento', nome: 'Desenvolvimento' },
   { valor: 'traducao', nome: 'Tradução' },
 ]
+
 function carregarUsuario() {
   try {
     return JSON.parse(localStorage.getItem('usuario')) || {}
@@ -85,6 +90,7 @@ function carregarUsuario() {
     return {}
   }
 }
+
 function salvarAlteracoes() {
   const usuarioAtualizado = {
     ...usuario,
@@ -97,6 +103,7 @@ function salvarAlteracoes() {
     descricao: descricao.value,
     categorias: categorias.value,
   }
+
   localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
   router.push(rotaPerfil)
 }
