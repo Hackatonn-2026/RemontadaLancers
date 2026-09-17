@@ -1,23 +1,23 @@
 <template>
-    <div class="criar">
+    <div class="cabecalho-cadastro">
         <h1>
             Criar conta
         </h1>
         <p>
-            Junte-se à maior plataforma de freelancers do Brasil
+            Encontre o profissional certo para seu projeto.
         </p>
     </div>
     <div class="tipo-usuario">
         <button type="button" :class="{ ativo: tipoUsuario === 'cliente' }" @click="tipoUsuario = 'cliente'">
-            Quero Contratar
+            Quero contratar
         </button>
 
         <button type="button" :class="{ ativo: tipoUsuario === 'freelancer' }" @click="tipoUsuario = 'freelancer'">
-            Sou Profissional
+            Sou profissional
         </button>
     </div>
-    <div class="dados">
-                <form class="cadastro-form" @submit.prevent="CriaConta">
+    <div class="dados-cadastro">
+        <form class="cadastro-form" @submit.prevent="CriaConta">
             <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
             <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
             <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
@@ -31,15 +31,17 @@
                     <label for="anos">Anos de Experiência</label>
 
                     <select id="anos" v-model="AnosDeExperiencia">
-                        <option value="">Selecione seus anos de experiência</option>
+                        <option value="">Selecione seu tempo de experiência</option>
                         <option value="0-1">0-1 anos</option>
                         <option value="1-3">1-3 anos</option>
                         <option value="3-5">3-5 anos</option>
                         <option value="5+">5+ anos</option>
                     </select>
                 </div>
-                <Inputs v-model="descricao" label="Descrição Profissional" type="textarea"
-                    placeholder="Fale sobre sua experiência" />
+                <div class="campo campo-descricao">
+                    <label for="descricao">Descrição profissional</label>
+                    <textarea id="descricao" v-model="descricao" placeholder="Fale sobre sua experiência" rows="5" />
+                </div>
                 <div class="categorias">
                     <label>Categorias de Atuação</label>
 
@@ -76,10 +78,8 @@
                     </div>
                 </div>
             </div>
-            <RouterLink to="/perfil" @click="CriaConta" class="botao-criar">
-                Criar conta
-            </RouterLink>
-            <p class="tem-conta"> Ja tem uma conta?</p>
+            <button type="submit" class="botao-criar">Criar conta</button>
+            <p class="tem-conta">Já tem uma conta?</p>
             <RouterLink to="/login" class="botao-login">
                 Faça login
             </RouterLink>
@@ -88,7 +88,10 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+
+const router = useRouter()
 const tipoUsuario = ref('cliente')
 const nome = ref('')
 const email = ref('')
@@ -98,22 +101,30 @@ const profissao = ref('')
 const AnosDeExperiencia = ref('')
 const descricao = ref('')
 const categorias = ref([])
+
 function CriaConta() {
-    const usuario = {
-        nome: nome.value,
-        email: email.value,
-        senha: senha.value,
-        telefone: telefone.value,
-        tipoUsuario: tipoUsuario.value,
-        profissao: profissao.value,
-        anosExperiencia: AnosDeExperiencia.value,
-        descricao: descricao.value,
-        categorias: categorias.value
-    }
+  const usuario = {
+    id: Date.now().toString(),
+    nome: nome.value,
+    email: email.value,
+    senha: senha.value,
+    telefone: telefone.value,
+    tipoUsuario: tipoUsuario.value,
+    profissao: profissao.value,
+    anosExperiencia: AnosDeExperiencia.value,
+    descricao: descricao.value,
+    categorias: categorias.value,
+    servicos: []
+  }
 
-    localStorage.setItem('usuario', JSON.stringify(usuario))
+  localStorage.setItem('usuario', JSON.stringify(usuario))
+  localStorage.setItem('contaSalva', JSON.stringify(usuario))
 
-    console.log(usuario)
+  const rota = tipoUsuario.value === 'freelancer'
+    ? `/usuario-freelancer/${usuario.id}`
+    : '/perfil'
+
+  router.push(rota)
 }
 </script>
 
@@ -221,6 +232,33 @@ p {
     color: #374151;
     cursor: pointer;
     box-sizing: border-box;
+}
+
+.campo-descricao {
+    grid-column: 1 / -1;
+}
+
+.campo-descricao textarea {
+    width: 100%;
+    min-height: 130px;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    color: #374151;
+    font: inherit;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.campo-descricao textarea::placeholder {
+    color: #9ca3af;
+}
+
+.campo-descricao textarea:focus {
+    outline: 2px solid #93c5fd;
+    border-color: #2563eb;
 }
 
 .categorias {

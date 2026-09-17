@@ -1,23 +1,23 @@
 <template>
-    <main class="login-page">
-        <section class="login-card">
-            <div class="login-header">
+    <main class="pagina-login">
+        <section class="card-login">
+            <div class="cabecalho-login">
                 <h1>Entrar na sua conta</h1>
-                <p>Bem-vindo de volta!</p>
+                <p>Que bom te ver de novo.</p>
             </div>
 
-            <form class="login-form" @submit.prevent="entrar">
+            <form class="form-login" @submit.prevent="entrar">
                 <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
 
                 <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
 
                 <button type="submit" class="botao-entrar">Entrar</button>
-                <div class="cadastro-link">
-                <p>Não tem uma conta?</p>
-                <RouterLink to="/cadastro" class="botao-cadastro">
-                    Cadastre-se grátis
-                </RouterLink>
-</div>
+                <div class="link-cadastro">
+                    <p>Ainda não tem conta?</p>
+                    <RouterLink to="/cadastro" class="botao-cadastro">
+                        Criar conta
+                    </RouterLink>
+                </div>
             </form>
         </section>
     </main>
@@ -25,26 +25,45 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+import { obterUsuarios } from '@/data/usuarios'
 
+const router = useRouter()
 const email = ref('')
 const senha = ref('')
+
 function entrar() {
-    const usuario = JSON.parse(localStorage.getItem('usuario'))
-    if (!usuario) {
-        alert('Nenhum usuário cadastrado!')
-        return
-    }
-    if (email.value === usuario.email && senha.value === usuario.senha) {
-        alert('Login realizado com sucesso!')
-    } else {
-        alert('E-mail ou senha incorretos!')
-    }
+  const usuario = JSON.parse(
+    localStorage.getItem('contaSalva') || localStorage.getItem('usuario') || 'null'
+  )
+
+  if (!usuario) {
+    alert('Nenhum usuário cadastrado!')
+    return
+  }
+
+  const loginCorreto = email.value === usuario.email && senha.value === usuario.senha
+
+  if (!loginCorreto) {
+    alert('E-mail ou senha incorretos!')
+    return
+  }
+
+  localStorage.setItem('usuario', JSON.stringify(usuario))
+  window.dispatchEvent(new Event('auth-change'))
+  alert('Login realizado com sucesso!')
+
+  const rota = usuario.tipoUsuario === 'freelancer'
+    ? `/usuario-freelancer/${usuario.id || 'perfil'}`
+    : '/perfil'
+
+  router.push(rota)
 }
 </script>
 
 <style scoped>
-.login-page {
+.pagina-login {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -53,7 +72,7 @@ function entrar() {
     background: #f5f7fb;
 }
 
-.login-card {
+.card-login {
     width: min(100%, 420px);
     background: #fff;
     border-radius: 18px;
@@ -61,23 +80,23 @@ function entrar() {
     padding: 32px 28px;
 }
 
-.login-header {
+.cabecalho-login {
     margin-bottom: 24px;
 }
 
-.login-header h1 {
+.cabecalho-login h1 {
     margin: 0 0 8px;
     font-size: 2rem;
     color: #111827;
 }
 
-.login-header p {
+.cabecalho-login p {
     margin: 0;
     font-size: 1rem;
     color: #4b5563;
 }
 
-.login-form {
+.form-login {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -93,11 +112,24 @@ function entrar() {
     font-weight: 700;
     cursor: pointer;
 }
-.cadastro-link {
+.link-cadastro {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.link-cadastro p {
+    margin: 0;
+    color: #4b5563;
+}
+
+.botao-cadastro {
+    color: #2563eb;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 </style>
