@@ -121,9 +121,9 @@ function solicitarServico(servico) {
             <span>Publicado por {{ servico.usuario?.nome || 'Usuário da plataforma' }}</span>
           </div>
 
-          <!-- direcionar ao login (usuario cliene) -->
+          <!-- direcionar ao login (usuario cliene) -->bot
           <BaseButton
-            v-if="!usuarioEhFreelancer"
+            v-if="!usuarioAtual"
             to="/login"
             class="botao-solicitar"
           >
@@ -131,7 +131,7 @@ function solicitarServico(servico) {
           </BaseButton>
 
           <BaseButton
-            v-else
+            v-else-if="usuarioEhFreelancer"
             class="botao-solicitar"
             @click="solicitarServico(servico)"
           >
@@ -146,6 +146,7 @@ function solicitarServico(servico) {
     </section>
 
    <BaseButton
+      v-if="!usuarioEhFreelancer"
       to="/cadastro-servico"
       class="botao-flutuante"
     >
