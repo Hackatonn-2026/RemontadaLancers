@@ -10,6 +10,8 @@ import PerfilUsuarioView from '../views/PerfilUsuarioView.vue'
 import SobreView from '../views/SobreView.vue'
 import SuporteView from '../views/SuporteView.vue'
 import BuscasProfissionais from '@/views/BuscasProfissionais.vue'
+import ServicosView from '../views/ServicosView.vue'
+import CadastroServicoView from '../views/CadastroServicoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +60,16 @@ const router = createRouter({
       path: '/suporte',
       name: 'suporte',
       component: SuporteView,
+    },
+    {
+      path: '/servicos',
+      name: 'servicos',
+      component: ServicosView,
+    },
+    {
+      path: '/cadastro-servico',
+      name: 'cadastro-servico',
+      component: CadastroServicoView,
     },
     {
       path: '/buscar',

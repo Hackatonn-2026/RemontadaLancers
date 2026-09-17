@@ -36,19 +36,21 @@
 
 
     
-    <section class="card">
+    <section class="card" v-if="solicitacoesRecebidas.length">
       <div class="titulo-servicos">
-        <h2>Serviços contratados</h2>
-
-        <button class="ver-todos">
-          Ver todos
-        </button>
+        <h2>Solicitações recebidas</h2>
       </div>
 
-    <div>
-          <strong>Servicos</strong>
-          <p>{{ usuario.servicos || 'Nenhum serviço contratado' }}</p>
-        </div>
+      <div v-for="solicitacao in solicitacoesRecebidas" :key="solicitacao.id" class="solicitacao">
+        <strong>{{ solicitacao.freelancerNome }}</strong>
+        <p>Quer realizar o serviço “{{ solicitacao.servicoTitulo }}”.</p>
+        <span>Status: {{ solicitacao.status }}</span>
+      </div>
+    </section>
+
+    <section class="card" v-else>
+      <h2>Solicitações recebidas</h2>
+      <p>Nenhum freelancer solicitou seus serviços ainda.</p>
     </section>
 
   </main>
@@ -56,10 +58,16 @@
 
 
 <script setup>
+import { computed } from 'vue'
+import { obterSolicitacoes } from '@/data/solicitacoes'
 
 const usuario = JSON.parse(
   localStorage.getItem('usuario')
 ) || {}
+
+const solicitacoesRecebidas = computed(() =>
+  obterSolicitacoes().filter((solicitacao) => solicitacao.clienteId === usuario.id)
+)
 
 </script>
 
@@ -131,6 +139,18 @@ const usuario = JSON.parse(
   background: none;
   color: #2563eb;
   cursor: pointer;
+}
+.solicitacao {
+  padding: 14px 0;
+  border-top: 1px solid #e2e8f0;
+}
+.solicitacao p {
+  margin: 6px 0;
+}
+.solicitacao span {
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
 }
 .foto {
   width: 90px;

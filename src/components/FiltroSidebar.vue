@@ -10,25 +10,26 @@ const opcoesPreco = [
   { label: 'Acima de R$ 200', min: 200, max: Infinity },
 ]
 
-const opcoesNota = [
-  { label: '4.5 ou mais', min: 4.5 },
-  { label: '4.0 ou mais', min: 4.0 },
-  { label: '3.0 ou mais', min: 3.0 },
+const regioes = [
+  'Zona Sul',
+  'Zona Norte',
+  'Zona Leste',
+  'Zona Oeste',
 ]
 
 const precos = ref([])
-const notas = ref([])
+const regioesSelecionadas = ref([])
 
 function aplicarFiltros() {
   emit('filtrar', {
     precos: precos.value,
-    notas: notas.value
+    regioes: regioesSelecionadas.value,
   })
 }
 
 function limparFiltros() {
   precos.value = []
-  notas.value = []
+  regioesSelecionadas.value = []
   aplicarFiltros()
 }
 </script>
@@ -39,18 +40,18 @@ function limparFiltros() {
 
     <form @submit.prevent="aplicarFiltros">
       <fieldset>
-        <legend>Preço por hora</legend>
+        <h3>Preço por hora</h3>
         <label v-for="opcao in opcoesPreco" :key="opcao.label" class="check-label">
           <input v-model="precos" type="checkbox" :value="opcao">
           <span>{{ opcao.label }}</span>
         </label>
       </fieldset>
 
-      <fieldset class="fieldset-nota">
-        <legend>Avaliação</legend>
-        <label v-for="opcao in opcoesNota" :key="opcao.label" class="check-label">
-          <input v-model="notas" type="checkbox" :value="opcao">
-          <span>{{ opcao.label }}</span>
+      <fieldset class="fieldset-regiao">
+        <h3>Região</h3>
+        <label v-for="regiao in regioes" :key="regiao" class="check-label">
+          <input v-model="regioesSelecionadas" type="checkbox" :value="regiao">
+          <span>{{ regiao }}</span>
         </label>
       </fieldset>
 
@@ -67,21 +68,22 @@ function limparFiltros() {
   border: 1px solid #e1e4e8;
   border-radius: 14px;
   background: #fff;
-  color: #344054;
+  color: black;
   box-shadow: 0 2px 4px rgba(16, 24, 40, .08);
   box-sizing: border-box;
 }
 
 h2 {
   margin: 0 0 20px;
-  color: #1d2939;
+  color: black;
   font-size: 18px;
+  font-weight: bold;
 }
 
-legend {
+fieldset h3 {
   display: block;
   margin-bottom: 9px;
-  color: #475467;
+  color: black;
   font-size: 14px;
   font-weight: 600;
 }
