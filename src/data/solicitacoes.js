@@ -19,23 +19,27 @@ export function obterSolicitacoes() {
   }
 }
 
-export function criarSolicitacao({ servico, freelancer }) {
+export function criarSolicitacao({ servico, cliente, freelancer }) {
   const solicitacoes = obterSolicitacoes()
+  const clienteId = Number(cliente?.id ?? servico?.usuarioId ?? servico?.clienteId ?? 0)
+  const freelancerId = Number(freelancer?.id ?? servico?.usuarioId ?? 0)
+
   const jaSolicitado = solicitacoes.some(
     (solicitacao) =>
-      solicitacao.servicoId === servico.id && solicitacao.freelancerId === freelancer.id,
+      Number(solicitacao.servicoId) === Number(servico?.id) &&
+      Number(solicitacao.clienteId) === clienteId &&
+      Number(solicitacao.freelancerId) === freelancerId,
   )
 
   if (jaSolicitado) return null
 
-  // status inicial do serviço solicitado pelo freelancer
   const solicitacao = {
     id: Date.now(),
-    servicoId: servico.id,
-    clienteId: servico.usuarioId,
-    freelancerId: freelancer.id,
-    freelancerNome: freelancer.nome,
-    servicoTitulo: servico.titulo,
+    servicoId: Number(servico?.id ?? 0),
+    clienteId,
+    freelancerId,
+    freelancerNome: freelancer?.nome || servico?.usuario?.nome || 'Freelancer',
+    servicoTitulo: servico?.titulo || 'Serviço solicitado',
     status: 'aceita',
     dataCriacao: new Date().toISOString(),
   }
@@ -43,15 +47,25 @@ export function criarSolicitacao({ servico, freelancer }) {
   solicitacoes.push(solicitacao)
   localStorage.setItem(CHAVE_SOLICITACOES, JSON.stringify(solicitacoes))
 
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('solicitacoes-atualizadas'))
+  }
+
   return solicitacao
 }
 
 export function obterSolicitacoesPorFreelancer(freelancerId) {
-  return obterSolicitacoes().filter((solicitacao) => solicitacao.freelancerId === freelancerId)
+  const idAlvo = String(freelancerId ?? '')
+  return obterSolicitacoes().filter(
+    (solicitacao) => String(solicitacao.freelancerId) === idAlvo,
+  )
 }
 
 export function obterSolicitacoesPorCliente(clienteId) {
-  return obterSolicitacoes().filter((solicitacao) => solicitacao.clienteId === clienteId)
+  const idAlvo = String(clienteId ?? '')
+  return obterSolicitacoes().filter(
+    (solicitacao) => String(solicitacao.clienteId) === idAlvo,
+  )
 }
 
 export function atualizarStatusSolicitacao(solicitacaoId, novoStatus) {

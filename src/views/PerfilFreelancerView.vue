@@ -26,6 +26,18 @@ function voltar() {
 }
 
 function solicitarOrcamento() {
+  const usuarioAtual = JSON.parse(localStorage.getItem('usuario') || 'null')
+
+  if (!usuarioAtual) {
+    router.push('/login')
+    return
+  }
+
+  if (usuarioAtual.id === profissional.id) {
+    alert('Você não pode solicitar orçamento para o seu próprio perfil.')
+    return
+  }
+
   router.push(`/solicitar-orcamento?profissional=${profissional.id}`)
 }
 

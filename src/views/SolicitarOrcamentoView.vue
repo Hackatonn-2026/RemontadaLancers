@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { profissionais } from '@/data/profissionais.js'
+import { criarSolicitacao } from '@/data/solicitacoes'
 
 const route = useRoute()
 const router = useRouter()
@@ -11,9 +12,14 @@ const descricao = ref('')
 const prazo = ref('')
 const enviado = ref(false)
 
-const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || '{}')
-nome.value = usuarioLogado.nome || ''
-email.value = usuarioLogado.email || ''
+const usuarioLogado = JSON.parse(localStorage.getItem('usuario') || 'null')
+
+if (!usuarioLogado) {
+  router.push('/login')
+}
+
+nome.value = usuarioLogado?.nome || ''
+email.value = usuarioLogado?.email || ''
 
 const profissionalSelecionado = profissionais.find(
   profissional => profissional.id == route.query.profissional
@@ -25,13 +31,32 @@ function enviarOrcamento() {
     return
   }
 
+  const servicoSolicitado = {
+    id: Date.now(),
+    titulo: profissionalSelecionado
+      ? `Orçamento para ${profissionalSelecionado.nome}`
+      : 'Solicitação de orçamento',
+    usuarioId: profissionalSelecionado?.id ?? 0,
+  }
+
+  const solicitacao = criarSolicitacao({
+    servico: servicoSolicitado,
+    cliente: usuarioLogado,
+    freelancer: profissionalSelecionado || { id: 0, nome: 'Profissional' },
+  })
+
+  if (!solicitacao) {
+    alert('Você já enviou uma solicitação para este profissional.')
+    return
+  }
+
   const novoPedido = {
     id: Date.now(),
     nome: nome.value,
     email: email.value,
     descricao: descricao.value,
     prazo: prazo.value,
-    profissional: profissionalSelecionado?.nome || 'Profissionais disponíveis'
+    profissional: profissionalSelecionado?.nome || 'Profissionais disponíveis',
   }
 
   usuarioLogado.pedidosOrcamento = usuarioLogado.pedidosOrcamento || []

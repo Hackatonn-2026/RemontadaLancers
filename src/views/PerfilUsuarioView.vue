@@ -74,6 +74,7 @@
 </template>
 
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { obterSolicitacoesPorCliente } from '@/data/solicitacoes'
 
@@ -90,7 +91,20 @@ const usuario = {
   pedidosOrcamento: dadosUsuario.pedidosOrcamento || [],
 }
 const solicitacoesRecebidas = Array.isArray(usuario.servicos) ? usuario.servicos : []
-const solicitacoesCliente = obterSolicitacoesPorCliente(usuario.id)
+const solicitacoesCliente = ref([])
+
+function carregarSolicitacoes() {
+  solicitacoesCliente.value = obterSolicitacoesPorCliente(usuario.id)
+}
+
+onMounted(() => {
+  carregarSolicitacoes()
+  window.addEventListener('solicitacoes-atualizadas', carregarSolicitacoes)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('solicitacoes-atualizadas', carregarSolicitacoes)
+})
 
 function statusTexto(status) {
   if (status === 'pendente') return 'Serviço aceito'
