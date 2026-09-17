@@ -3,7 +3,7 @@
     <div class="conteiner-rodape">
       <div class="marca-rodape">
         <div class="cabecalho-marca">
-          <img src="" alt="logo" class="imagem-logo" />
+          <div class="imagem-logo" aria-hidden="true"></div>
           <span class="nome-marca">RemontadaLancers</span>
         </div>
         <p class="descricao-marca">
@@ -91,10 +91,6 @@
 
 <style scoped>
 .rodape {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: #153885;
   color: #ffffff;
   padding: 18px 28px 14px;

@@ -3,7 +3,7 @@
 
     <RouterLink to="/" class="logo">
       <div class="icone-logo"></div>
-      <span class="texto-logo">Remontada<br />Lancers</span>
+      <span class="texto-logo">Ciro<br />Lancers</span>
     </RouterLink>
 
     <SearchBar @buscar="executarBusca" />
@@ -18,13 +18,51 @@
     </nav>
 
 
-    <button class="botao-cadastrar">Login</button>
+    <RouterLink v-if="!estaLogado" to="/login" class="botao-login">
+      Login
+    </RouterLink>
+
+    <RouterLink v-else :to="rotaPerfil" class="botao-perfil">
+      <img src="/perfil.avif" alt="Abrir meu perfil">
+    </RouterLink>
   </header>
 </template>
 
 <script setup>
-import SearchBar from './SearchBar.vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import SearchBar from './SearchBar.vue'
 
+const router = useRouter()
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || null
+  } catch {
+    return null
+  }
+}
+
+const usuario = ref(carregarUsuario())
+const estaLogado = computed(() => Boolean(usuario.value))
+const rotaPerfil = computed(() => {
+  if (usuario.value?.tipoUsuario === 'freelancer') {
+    return `/usuario-freelancer/${usuario.value.id || 'perfil'}`
+  }
+
+  return '/perfil'
+})
+
+function atualizarSessao() {
+  usuario.value = carregarUsuario()
+}
+
+onMounted(() => window.addEventListener('auth-change', atualizarSessao))
+onUnmounted(() => window.removeEventListener('auth-change', atualizarSessao))
+
+function executarBusca(termo) {
+  router.push({ path: '/buscar', query: { busca: termo } })
+}
 </script>
 
 <style scoped>
@@ -85,7 +123,7 @@ import SearchBar from './SearchBar.vue';
   color: #2563eb;
 }
 
-.botao-cadastrar {
+.botao-login {
   background: #2563eb;
   color: #fff;
   border: none;
@@ -104,5 +142,32 @@ import SearchBar from './SearchBar.vue';
 
 .botao-cadastrar:active {
   transform: scale(0.96);
+}
+.botao-perfil {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #dbe8ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.botao-perfil {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.botao-perfil img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
