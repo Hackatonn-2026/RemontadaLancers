@@ -83,13 +83,27 @@
 </template>
 
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import RedesSociais from '@/components/RedesSociais.vue'
 import { obterSolicitacoesPorFreelancer } from '@/data/solicitacoes'
 
 const router = useRouter()
 const usuario = JSON.parse(localStorage.getItem('usuario')) || {}
-const servicosSolicitados = obterSolicitacoesPorFreelancer(usuario.id)
+const servicosSolicitados = ref([])
+
+function carregarSolicitacoes() {
+  servicosSolicitados.value = obterSolicitacoesPorFreelancer(usuario.id)
+}
+
+onMounted(() => {
+  carregarSolicitacoes()
+  window.addEventListener('solicitacoes-atualizadas', carregarSolicitacoes)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('solicitacoes-atualizadas', carregarSolicitacoes)
+})
 
 function formatarStatus(status) {
   if (status === 'pendente') return 'Serviço aceito'

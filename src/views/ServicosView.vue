@@ -62,7 +62,16 @@ function atualizarFiltros(novosFiltros) {
 
 // solicitar o servico 
 function solicitarServico(servico) {
-  const solicitacao = criarSolicitacao({ servico, freelancer: usuarioAtual })
+  const cliente = servico.usuario || {
+    id: servico.usuarioId,
+    nome: 'Cliente da plataforma',
+  }
+
+  const solicitacao = criarSolicitacao({
+    servico,
+    cliente: usuarioEhFreelancer ? cliente : usuarioAtual,
+    freelancer: usuarioEhFreelancer ? usuarioAtual : cliente,
+  })
 
   // impede solicitar duas vezes
   if (!solicitacao) {
@@ -70,7 +79,11 @@ function solicitarServico(servico) {
     return
   }
 
-  alert(`Solicitação enviada para o cliente.`)
+  const mensagem = usuarioEhFreelancer
+    ? 'Solicitação registrada no seu perfil de freelancer.'
+    : 'Solicitação enviada para o cliente.'
+
+  alert(mensagem)
 }
 </script>
 
