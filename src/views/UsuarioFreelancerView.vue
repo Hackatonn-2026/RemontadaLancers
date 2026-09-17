@@ -1,25 +1,19 @@
 <template>
   <main class="perfil">
-
     <section class="perfil-header">
       <div class="foto">
-  <img src="/perfil.avif" alt="Foto de perfil">
-</div>
+        <img src="/perfil.avif" alt="Foto de perfil" />
+      </div>
 
       <div class="dados-principais">
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
-        
+
         <div class="acoes-perfil">
-          <RouterLink to="/editar-perfil-freelancer" class="botao">
-            Editar perfil
-          </RouterLink>
-          <button class="botao" @click="sair">
-            Sair
-          </button>
+          <RouterLink to="/editar-perfil-freelancer" class="botao"> Editar perfil </RouterLink>
+          <button class="botao" @click="sair">Sair</button>
         </div>
       </div>
-
     </section>
 
     <section class="card">
@@ -36,17 +30,17 @@
           <p>{{ usuario.telefone || 'Não informado' }}</p>
         </div>
 
-          <RedesSociais
+        <RedesSociais
           :instagram="usuario.instagram"
           :facebook="usuario.facebook"
           :linkedin="usuario.linkedin"
           :whatsapp="usuario.whatsapp"
         />
-    
       </div>
     </section>
+
     <section>
-       <div class="card">
+      <div class="card">
         <div class="informacoes-profissionais">
           <h2>Informações profissionais</h2>
           <strong>Profissão</strong>
@@ -56,19 +50,64 @@
           <strong>Descrição</strong>
           <p>{{ usuario.descricao || 'Não informado' }}</p>
         </div>
-      </div> 
+      </div>
     </section>
 
+    <section class="card">
+      <h2>Pedidos recebidos</h2>
+
+      <p v-if="servicosSolicitados.length === 0" class="vazio">
+        Nenhum pedido recebido por enquanto.
+      </p>
+
+      <div v-else class="lista-status">
+        <article
+          v-for="solicitacao in servicosSolicitados"
+          :key="solicitacao.id"
+          class="item-status"
+        >
+          <div class="titulo-item">
+            <strong>{{ solicitacao.servicoTitulo }}</strong>
+            <span class="status-badge" :class="statusClass(solicitacao.status)">
+              {{ formatarStatus(solicitacao.status) }}
+            </span>
+          </div>
+
+          <p class="descricao-status">
+            {{ descricaoStatus(solicitacao.status) }}
+          </p>
+        </article>
+      </div>
+    </section>
   </main>
 </template>
-
 
 <script setup>
 import { useRouter } from 'vue-router'
 import RedesSociais from '@/components/RedesSociais.vue'
+import { obterSolicitacoesPorFreelancer } from '@/data/solicitacoes'
 
 const router = useRouter()
 const usuario = JSON.parse(localStorage.getItem('usuario')) || {}
+const servicosSolicitados = obterSolicitacoesPorFreelancer(usuario.id)
+
+function formatarStatus(status) {
+  if (status === 'pendente') return 'Serviço aceito'
+  if (status === 'aceita') return 'Serviço aceito'
+  return 'Sem status'
+}
+
+function descricaoStatus(status) {
+  if (status === 'pendente') return 'Serviço aceito.'
+  if (status === 'aceita') return 'Serviço aceito.'
+  return 'Status ainda não informado.'
+}
+
+function statusClass(status) {
+  if (status === 'pendente') return 'pendente'
+  if (status === 'aceita') return 'aceita'
+  return ''
+}
 
 function sair() {
   localStorage.setItem('contaSalva', JSON.stringify(usuario))
@@ -168,6 +207,77 @@ function sair() {
   margin: 0;
   line-height: 1.5;
 }
+.lista-status {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.item-status {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  background: #f8fafc;
+}
+.titulo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.status-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #2563eb;
+}
+.status-badge.pendente {
+  background: #2563eb;
+}
+.status-badge.aceita {
+  background: #2563eb;
+}
+.atualizar-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.atualizar-status select {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 12px;
+  border-radius: 0;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+}
+.atualizar-status button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.historico-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.historico-coluna ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #334155;
+  line-height: 1.8;
+}
+.vazio {
+  color: #64748b;
+}
+
 .botao {
   display: inline-flex;
   align-items: center;
@@ -182,11 +292,15 @@ function sair() {
   margin: 0 8px 0 0;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
+
 .botao:hover {
   background-color: #1d4ed8;
 }
+
 .botao:active {
   transform: translateY(1px);
 }
@@ -232,5 +346,4 @@ function sair() {
     margin-bottom: 8px;
   }
 }
-
 </style>
