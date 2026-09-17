@@ -89,6 +89,7 @@
 <script setup>
 import { ref } from 'vue'
 import Inputs from '../components/Inputs.vue'
+import { obterUsuarios } from '@/data/usuarios'
 const tipoUsuario = ref('cliente')
 const nome = ref('')
 const email = ref('')
@@ -99,11 +100,17 @@ const AnosDeExperiencia = ref('')
 const descricao = ref('')
 const categorias = ref([])
 function CriaConta() {
+    const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
+    const maiorId = obterUsuarios(usuariosCadastrados)
+        .reduce((maior, usuario) => Math.max(maior, usuario.id || 0), 0)
+
     const usuario = {
+        id: maiorId + 1,
         nome: nome.value,
         email: email.value,
         senha: senha.value,
         telefone: telefone.value,
+        tipo: tipoUsuario.value,
         tipoUsuario: tipoUsuario.value,
         profissao: profissao.value,
         anosExperiencia: AnosDeExperiencia.value,
@@ -111,6 +118,9 @@ function CriaConta() {
         categorias: categorias.value
     }
 
+    const usuarios = obterUsuarios([...usuariosCadastrados, usuario])
+
+    localStorage.setItem('usuarios', JSON.stringify(usuarios))
     localStorage.setItem('usuario', JSON.stringify(usuario))
 
     console.log(usuario)

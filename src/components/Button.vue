@@ -69,7 +69,7 @@ const emit = defineEmits(['click'])
   border: none;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 0 10px 10px 0;
+  border-radius: 10px;
   text-decoration: none;
   display: inline-block;
   padding: 10px 16px;

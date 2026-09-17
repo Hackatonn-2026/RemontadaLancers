@@ -26,20 +26,28 @@
 <script setup>
 import { ref } from 'vue'
 import Inputs from '../components/Inputs.vue'
+import { obterUsuarios } from '@/data/usuarios'
 
 const email = ref('')
 const senha = ref('')
 function entrar() {
-    const usuario = JSON.parse(localStorage.getItem('usuario'))
+    const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
+    const usuarios = obterUsuarios(usuariosCadastrados)
+    const usuario = usuarios.find(
+        (item) => item.email === email.value && item.senha === senha.value
+    )
+
     if (!usuario) {
+        if (usuarios.length === 0) {
         alert('Nenhum usuário cadastrado!')
+        } else {
+            alert('E-mail ou senha incorretos!')
+        }
         return
     }
-    if (email.value === usuario.email && senha.value === usuario.senha) {
-        alert('Login realizado com sucesso!')
-    } else {
-        alert('E-mail ou senha incorretos!')
-    }
+
+    localStorage.setItem('usuario', JSON.stringify(usuario))
+    alert('Login realizado com sucesso!')
 }
 </script>
 
