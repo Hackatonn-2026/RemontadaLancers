@@ -1,22 +1,60 @@
 <template>
   <section class="bloco">
+    <div class="controles">
+      <h2>Categorias</h2>
+      <button type="button" class="botao" @click="abrirFormulario">
+        {{ mostrandoFormulario ? 'Cancelar' : 'Adicionar categoria' }}
+      </button>
+    </div>
+
+    <form v-if="mostrandoFormulario" class="formulario" @submit.prevent="salvarCategoria">
+      <label for="nome-categoria">Nome</label>
+      <input id="nome-categoria" v-model="formulario.nome" required maxlength="100" />
+
+      <label for="descricao-categoria">Descrição</label>
+      <input id="descricao-categoria" v-model="formulario.descricao" />
+
+      <button type="submit" class="botao" :disabled="salvando">
+        {{ salvando ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </form>
+
+    <p v-if="carregando" class="mensagem">Carregando categorias...</p>
+    <p v-if="erro" class="mensagem erro" role="alert">{{ erro }}</p>
+    <p v-if="mensagem" class="mensagem" role="status">{{ mensagem }}</p>
+
     <div class="lista">
-      <RouterLink
-        v-for="categoria in listaCategorias"
-        :key="categoria.nome"
-        :to="{ path: '/buscar', query: { busca: categoria.nome } }"
-        class="card"
-      >
-        <div class="icone" v-html="categoria.icone"></div>
-        <h3>{{ categoria.nome }}</h3>
-        <p>{{ categoria.descricao }}</p>
-      </RouterLink>
+      <article v-for="categoria in categorias" :key="categoria.id" class="card">
+        <RouterLink :to="{ path: '/buscar', query: { busca: categoria.nome } }" class="card-link">
+          <div class="icone" v-html="iconeCategoria(categoria.nome)"></div>
+          <h3>{{ categoria.nome }}</h3>
+          <p>{{ categoria.descricao }}</p>
+        </RouterLink>
+        <div class="acoes">
+          <button type="button" :disabled="salvando" @click="editarCategoria(categoria)">Editar</button>
+          <button type="button" class="excluir" :disabled="salvando" @click="excluirCategoria(categoria)">
+            Excluir
+          </button>
+        </div>
+      </article>
     </div>
   </section>
 </template>
 
 <script setup>
-const listaCategorias = [
+import { onMounted, ref } from 'vue'
+
+const API_URL = 'http://localhost:3000'
+const categorias = ref([])
+const formulario = ref({ nome: '', descricao: '' })
+const editandoId = ref(null)
+const mostrandoFormulario = ref(false)
+const carregando = ref(true)
+const salvando = ref(false)
+const erro = ref('')
+const mensagem = ref('')
+
+const listaInicial = [
   {
     icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
     nome: 'Desenvolvimento',
@@ -108,6 +146,108 @@ const listaCategorias = [
     descricao: 'Tradução juramentada e revisão',
   },
 ]
+
+onMounted(async () => {
+  try {
+    await carregarCategorias()
+  } catch (falha) {
+    categorias.value = listaInicial.map((categoria, id) => ({ ...categoria, id }))
+    erro.value = 'API desligada. As categorias salvas não podem ser alteradas.'
+  } finally {
+    carregando.value = false
+  }
+})
+
+async function carregarCategorias() {
+  const resposta = await fetch(`${API_URL}/categorias`)
+  if (!resposta.ok) throw new Error('Erro ao carregar categorias.')
+  categorias.value = await resposta.json()
+}
+
+function iconeCategoria(nome) {
+  const categoria = listaInicial.find((item) => item.nome === nome)
+  return categoria ? categoria.icone : listaInicial[0].icone
+}
+
+function abrirFormulario() {
+  mostrandoFormulario.value = !mostrandoFormulario.value
+  editandoId.value = null
+  formulario.value = { nome: '', descricao: '' }
+  erro.value = ''
+  mensagem.value = ''
+}
+
+function editarCategoria(categoria) {
+  editandoId.value = categoria.id
+  formulario.value = { nome: categoria.nome, descricao: categoria.descricao }
+  mostrandoFormulario.value = true
+  erro.value = ''
+  mensagem.value = ''
+}
+
+async function salvarCategoria() {
+  erro.value = ''
+  mensagem.value = ''
+
+  const nome = formulario.value.nome.trim()
+  if (!nome) {
+    erro.value = 'Informe o nome da categoria.'
+    return
+  }
+
+  const nomeRepetido = categorias.value.some(
+    (categoria) =>
+      String(categoria.id) !== String(editandoId.value) &&
+      categoria.nome.toLowerCase() === nome.toLowerCase(),
+  )
+  if (nomeRepetido) {
+    erro.value = 'Já existe uma categoria com esse nome.'
+    return
+  }
+
+  salvando.value = true
+  try {
+    const resposta = await fetch(
+      editandoId.value === null
+        ? `${API_URL}/categorias`
+        : `${API_URL}/categorias/${editandoId.value}`,
+      {
+        method: editandoId.value === null ? 'POST' : 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, descricao: formulario.value.descricao.trim() }),
+      },
+    )
+    if (!resposta.ok) throw new Error('Erro ao salvar categoria.')
+
+    await carregarCategorias()
+    mensagem.value = editandoId.value === null ? 'Categoria adicionada.' : 'Categoria atualizada.'
+    mostrandoFormulario.value = false
+    formulario.value = { nome: '', descricao: '' }
+    editandoId.value = null
+  } catch (falha) {
+    erro.value = falha.message
+  } finally {
+    salvando.value = false
+  }
+}
+
+async function excluirCategoria(categoria) {
+  if (!window.confirm(`Deseja excluir a categoria "${categoria.nome}"?`)) return
+
+  erro.value = ''
+  mensagem.value = ''
+  try {
+    const resposta = await fetch(`${API_URL}/categorias/${categoria.id}`, {
+      method: 'DELETE',
+    })
+    if (!resposta.ok) throw new Error('Erro ao excluir categoria.')
+
+    await carregarCategorias()
+    mensagem.value = 'Categoria excluída.'
+  } catch (falha) {
+    erro.value = falha.message
+  }
+}
 </script>
 
 <style scoped>
@@ -115,6 +255,39 @@ const listaCategorias = [
   max-width: 1200px;
   margin: 0 auto;
   padding: 50px 20px 60px;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.controles h2 {
+  margin: 0;
+  color: #111827;
+}
+
+.formulario {
+  display: grid;
+  gap: 10px;
+  max-width: 520px;
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.formulario input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
 }
 
 .topo {
@@ -146,6 +319,10 @@ const listaCategorias = [
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   background: #fff;
+}
+
+.card-link {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -184,6 +361,35 @@ const listaCategorias = [
   line-height: 1.4;
 }
 
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.acoes button {
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.acoes .excluir {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.mensagem {
+  margin: 12px 0;
+  color: #047857;
+}
+
+.mensagem.erro {
+  color: #b91c1c;
+}
+
 .areaBotao {
   margin-top: 28px;
   text-align: center;
@@ -198,5 +404,18 @@ const listaCategorias = [
   color: #1d4ed8;
   font-weight: 600;
   text-decoration: none;
+}
+
+button.botao {
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .controles {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

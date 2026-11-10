@@ -1,0 +1,124 @@
+{
+  "categorias": [
+    {
+      "id": "desenvolvimento",
+      "nome": "Desenvolvimento",
+      "descricao": "Sites, aplicativos e sistemas",
+      "ativo": true
+    },
+    {
+      "id": "design",
+      "nome": "Design",
+      "descricao": "Logotipos e identidade visual",
+      "ativo": true
+    },
+    {
+      "id": "eletrica",
+      "nome": "Elétrica",
+      "descricao": "Instalações e reparos",
+      "ativo": true
+    },
+    {
+      "id": "informatica",
+      "nome": "Informática",
+      "descricao": "Suporte técnico e redes",
+      "ativo": true
+    },
+    {
+      "id": "jardinagem",
+      "nome": "Jardinagem",
+      "descricao": "Paisagismo e manutenção",
+      "ativo": true
+    },
+    {
+      "id": "fotografia",
+      "nome": "Fotografia",
+      "descricao": "Eventos e produtos",
+      "ativo": true
+    },
+    {
+      "id": "aulas",
+      "nome": "Aulas",
+      "descricao": "Particulares e reforço escolar",
+      "ativo": true
+    },
+    {
+      "id": "pintura",
+      "nome": "Pintura",
+      "descricao": "Residencial e comercial",
+      "ativo": true
+    },
+    {
+      "id": "mecanica",
+      "nome": "Mecânica",
+      "descricao": "Automotiva e geral",
+      "ativo": true
+    },
+    {
+      "id": "hidraulica",
+      "nome": "Hidráulica",
+      "descricao": "Encanamento e desentupimento",
+      "ativo": true
+    },
+    {
+      "id": "estetica-beleza",
+      "nome": "Estética & Beleza",
+      "descricao": "Maquiagem, cabelo e unhas",
+      "ativo": true
+    },
+    {
+      "id": "seguranca",
+      "nome": "Segurança",
+      "descricao": "Câmeras e alarmes",
+      "ativo": true
+    },
+    {
+      "id": "financas-contabilidade",
+      "nome": "Finanças & Contabilidade",
+      "descricao": "Imposto de renda e consultoria",
+      "ativo": true
+    },
+    {
+      "id": "reformas-construcao",
+      "nome": "Reformas & Construção",
+      "descricao": "Pedreiros, azulejistas e gesso",
+      "ativo": true
+    },
+    {
+      "id": "gastronomia-eventos",
+      "nome": "Gastronomia & Eventos",
+      "descricao": "Buffet, bolos e confeitaria",
+      "ativo": true
+    },
+    {
+      "id": "marketing-redes-sociais",
+      "nome": "Marketing & Redes Sociais",
+      "descricao": "Gestão de tráfego e conteúdo",
+      "ativo": true
+    },
+    {
+      "id": "servicos-juridicos",
+      "nome": "Serviços Jurídicos",
+      "descricao": "Advocacia e contratos",
+      "ativo": true
+    },
+    {
+      "id": "traducao-idiomas",
+      "nome": "Tradução & Idiomas",
+      "descricao": "Tradução juramentada e revisão",
+      "ativo": true
+    },
+    {
+      "id": "edicao-de-video",
+      "nome": "Edição de Vídeo",
+      "descricao": "Edição de vídeos",
+      "ativo": true
+    },
+    {
+      "nome": "nixolAS",
+      "descricao": "J9ICSNI",
+      "id": "p0cymUGOysg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
