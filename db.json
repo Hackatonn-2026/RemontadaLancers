@@ -1,5 +1,16 @@
 {
-    "profissionais": [
-        
-    ]
+  "profissionais": [
+    {
+      "nome": "carlos",
+      "profissao": "dev",
+      "categoria": "Pintura",
+      "descricao": "67",
+      "precoHora": 6767,
+      "rating": 0,
+      "reviewsCount": 0,
+      "reviews": [],
+      "id": "PHl5YBHgNGs"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
