@@ -8,7 +8,7 @@
     },
     {
       "id": "design",
-      "nome": "Design",
+      "nome": "Designss",
       "descricao": "Logotipos e identidade visual",
       "ativo": true
     },
@@ -118,6 +118,16 @@
       "nome": "nixolAS",
       "descricao": "J9ICSNI",
       "id": "p0cymUGOysg"
+    },
+    {
+      "nome": "COSTURTEIRA",
+      "descricao": "KARINY",
+      "id": "JzgtG-5qKIo"
+    },
+    {
+      "nome": "pintosw",
+      "descricao": "elo-",
+      "id": "vk3--BiEFb0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

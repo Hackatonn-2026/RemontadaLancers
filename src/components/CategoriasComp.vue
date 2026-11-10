@@ -14,14 +14,13 @@
       <label for="descricao-categoria">Descrição</label>
       <input id="descricao-categoria" v-model="formulario.descricao" />
 
-      <button type="submit" class="botao" :disabled="salvando">
-        {{ salvando ? 'Salvando...' : 'Salvar' }}
+      <button type="submit" class="botao">
+        Salvar
       </button>
     </form>
 
     <p v-if="carregando" class="mensagem">Carregando categorias...</p>
-    <p v-if="erro" class="mensagem erro" role="alert">{{ erro }}</p>
-    <p v-if="mensagem" class="mensagem" role="status">{{ mensagem }}</p>
+        <p v-if="mensagem" class="mensagem" role="status">{{ mensagem }}</p>
 
     <div class="lista">
       <article v-for="categoria in categorias" :key="categoria.id" class="card">
@@ -31,8 +30,8 @@
           <p>{{ categoria.descricao }}</p>
         </RouterLink>
         <div class="acoes">
-          <button type="button" :disabled="salvando" @click="editarCategoria(categoria)">Editar</button>
-          <button type="button" class="excluir" :disabled="salvando" @click="excluirCategoria(categoria)">
+          <button type="button" @click="editarCategoria(categoria)">Editar</button>
+          <button type="button" class="excluir" @click="excluirCategoria(categoria)">
             Excluir
           </button>
         </div>
@@ -42,17 +41,28 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
-const API_URL = 'http://localhost:3000'
-const categorias = ref([])
-const formulario = ref({ nome: '', descricao: '' })
-const editandoId = ref(null)
-const mostrandoFormulario = ref(false)
-const carregando = ref(true)
-const salvando = ref(false)
-const erro = ref('')
-const mensagem = ref('')
+const API_URL = 'http://localhost:3000';
+
+const categorias = ref([]);
+
+const formulario = ref({
+  nome: '',
+  descricao: '',
+});
+
+const editandoId = ref(null);
+
+// controlando a exibição do formulário
+const mostrandoFormulario = ref(false);
+
+// mensagens da página
+const carregando = ref(true);
+const salvando = ref(false);
+const erro = ref('');
+const mensagem = ref('');
 
 const listaInicial = [
   {
@@ -147,107 +157,108 @@ const listaInicial = [
   },
 ]
 
-onMounted(async () => {
-  try {
-    await carregarCategorias()
-  } catch (falha) {
-    categorias.value = listaInicial.map((categoria, id) => ({ ...categoria, id }))
-    erro.value = 'API desligada. As categorias salvas não podem ser alteradas.'
-  } finally {
-    carregando.value = false
-  }
-})
-
 async function carregarCategorias() {
-  const resposta = await fetch(`${API_URL}/categorias`)
-  if (!resposta.ok) throw new Error('Erro ao carregar categorias.')
-  categorias.value = await resposta.json()
+  const resposta = await fetch(`${API_URL}/categorias`);
+  categorias.value = await resposta.json();
 }
 
 function iconeCategoria(nome) {
-  const categoria = listaInicial.find((item) => item.nome === nome)
-  return categoria ? categoria.icone : listaInicial[0].icone
+  const categoria = listaInicial.find((item) => item.nome === nome);
+
+  if (categoria) {
+    return categoria.icone;
+  }
+
+  return listaInicial[0].icone;
 }
 
 function abrirFormulario() {
-  mostrandoFormulario.value = !mostrandoFormulario.value
-  editandoId.value = null
-  formulario.value = { nome: '', descricao: '' }
-  erro.value = ''
-  mensagem.value = ''
+  mostrandoFormulario.value = !mostrandoFormulario.value;
+  editandoId.value = null;
+
+  formulario.value = {
+    nome: '',
+    descricao: '',
+  };
+
+  erro.value = '';
+  mensagem.value = '';
 }
 
 function editarCategoria(categoria) {
-  editandoId.value = categoria.id
-  formulario.value = { nome: categoria.nome, descricao: categoria.descricao }
-  mostrandoFormulario.value = true
-  erro.value = ''
-  mensagem.value = ''
+  editandoId.value = categoria.id;
+
+  formulario.value = {
+    nome: categoria.nome,
+    descricao: categoria.descricao,
+  };
+
+  mostrandoFormulario.value = true;
+  erro.value = '';
+  mensagem.value = '';
 }
 
 async function salvarCategoria() {
-  erro.value = ''
-  mensagem.value = ''
+  erro.value = '';
+  mensagem.value = '';
+  salvando.value = true;
 
-  const nome = formulario.value.nome.trim()
-  if (!nome) {
-    erro.value = 'Informe o nome da categoria.'
-    return
-  }
-
-  const nomeRepetido = categorias.value.some(
-    (categoria) =>
-      String(categoria.id) !== String(editandoId.value) &&
-      categoria.nome.toLowerCase() === nome.toLowerCase(),
-  )
-  if (nomeRepetido) {
-    erro.value = 'Já existe uma categoria com esse nome.'
-    return
-  }
-
-  salvando.value = true
-  try {
-    const resposta = await fetch(
-      editandoId.value === null
-        ? `${API_URL}/categorias`
-        : `${API_URL}/categorias/${editandoId.value}`,
-      {
-        method: editandoId.value === null ? 'POST' : 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, descricao: formulario.value.descricao.trim() }),
+  if (editandoId.value) {
+    // atualizando uma categoria
+    await fetch(`${API_URL}/categorias/${editandoId.value}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    )
-    if (!resposta.ok) throw new Error('Erro ao salvar categoria.')
+      body: JSON.stringify(formulario.value),
+    });
 
-    await carregarCategorias()
-    mensagem.value = editandoId.value === null ? 'Categoria adicionada.' : 'Categoria atualizada.'
-    mostrandoFormulario.value = false
-    formulario.value = { nome: '', descricao: '' }
-    editandoId.value = null
-  } catch (falha) {
-    erro.value = falha.message
-  } finally {
-    salvando.value = false
+    mensagem.value = 'Categoria atualizada.';
+  } else {
+
+    await fetch(`${API_URL}/categorias`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formulario.value),
+    });
+
+    mensagem.value = 'Categoria adicionada.';
   }
+
+  await carregarCategorias();
+
+  // limpando os campos
+  formulario.value = {
+    nome: '',
+    descricao: '',
+  };
+
+  editandoId.value = null;
+  mostrandoFormulario.value = false;
+  salvando.value = false;
 }
 
 async function excluirCategoria(categoria) {
-  if (!window.confirm(`Deseja excluir a categoria "${categoria.nome}"?`)) return
+  const confirmarExclusao = window.confirm(
+    'Tem certeza que deseja excluir esta categoria?'
+  );
 
-  erro.value = ''
-  mensagem.value = ''
-  try {
-    const resposta = await fetch(`${API_URL}/categorias/${categoria.id}`, {
+  if (confirmarExclusao) {
+    await fetch(`${API_URL}/categorias/${categoria.id}`, {
       method: 'DELETE',
-    })
-    if (!resposta.ok) throw new Error('Erro ao excluir categoria.')
+    });
 
-    await carregarCategorias()
-    mensagem.value = 'Categoria excluída.'
-  } catch (falha) {
-    erro.value = falha.message
+    await carregarCategorias();
+    mensagem.value = 'Categoria excluída.';
   }
 }
+
+onMounted(async () => {
+  await carregarCategorias();
+  carregando.value = false;
+});
 </script>
 
 <style scoped>
