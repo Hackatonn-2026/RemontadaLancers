@@ -1,10 +1,23 @@
 <template>
   <div class="busca-page">
     <div class="container">
-      <header class="busca-header">
-        <h1>Profissionais</h1>
-        <p>{{ profissionaisFiltrados.length }} profissionais encontrados para <strong>{{ categoriaSelecionada }}</strong></p>
-      </header>
+      
+<header class="busca-header">
+  <div class="busca-titulo">
+    <div>
+      <h1>Profissionais</h1>
+      <p>
+        {{ profissionaisFiltrados.length }} profissionais encontrados para
+        <strong>{{ categoriaSelecionada }}</strong>
+      </p>
+    </div>
+
+    <router-link to="/freelancers-crud" class="btn-ir-crud">
+      Gerenciar freelancers
+    </router-link>
+  </div>
+</header>
+
 
       <div class="conteudo">
         <FiltroSidebar @filtrar="aplicarFiltrosSidebar" />
@@ -189,4 +202,32 @@ function irParaPerfil({ id }) {
 .btn-ver-perfil:hover {
   background: #1d4ed8;
 }
+
+.busca-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-ir-crud {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 9px;
+  background: #059669;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-ir-crud:hover {
+  background: #047857;
+}
+
 </style>
