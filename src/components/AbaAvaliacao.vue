@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="resumo">
-      <h2 class="nota-media">{{ profissional.rating.toFixed(1) }}</h2>
+      <h2 class="nota-media">{{ mediaAvaliacao.toFixed(1) }}</h2>
       <p class="estrelas">{{ estrelas }}</p>
       <p class="total">
         Baseado em {{ reviews.length }}
@@ -68,7 +68,11 @@
           <button type="button" class="btn btn-link" @click="editarAvaliacao(avaliacao)">
             Editar
           </button>
-          <button type="button" class="btn btn-link btn-danger" @click="excluirAvaliacao(avaliacao.id)">
+          <button
+            type="button"
+            class="btn btn-link btn-danger"
+            @click="excluirAvaliacao(avaliacao.id)"
+          >
             Excluir
           </button>
         </div>
@@ -78,7 +82,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   profissional: { type: Object, required: true },
@@ -94,7 +98,20 @@ const modoEdicao = ref(false)
 const avaliacaoEditandoId = ref(null)
 const API_URL = 'http://localhost:3000'
 
-const reviews = ref(Array.isArray(props.profissional?.reviews) ? [...props.profissional.reviews] : [])
+const reviews = ref(
+  Array.isArray(props.profissional?.reviews) ? [...props.profissional.reviews] : [],
+)
+
+const mediaAvaliacao = computed(() => {
+  if (!reviews.value.length) return 0
+
+  const soma = reviews.value.reduce(
+    (totalParcial, avaliacao) => totalParcial + Number(avaliacao.rating || 0),
+    0,
+  )
+
+  return Number((soma / reviews.value.length).toFixed(1))
+})
 
 watch(
   () => props.profissional?.reviews,
@@ -107,10 +124,18 @@ watch(
 async function carregarAvaliacoes() {
   try {
     const resposta = await fetch(`${API_URL}/avaliacoes`)
-    reviews.value = await resposta.json()
+
+    if (!resposta.ok) {
+      throw new Error('Erro ao buscar avaliações do servidor')
+    }
+
+    const dados = await resposta.json()
+    reviews.value = Array.isArray(dados) ? dados : []
     atualizarResumo()
   } catch (error) {
     console.error('Erro ao carregar avaliações:', error)
+    reviews.value = Array.isArray(props.profissional?.reviews) ? [...props.profissional.reviews] : []
+    atualizarResumo()
   }
 }
 
@@ -156,13 +181,20 @@ function atualizarResumo() {
     return
   }
 
-  const soma = reviews.value.reduce((totalParcial, avaliacao) => totalParcial + Number(avaliacao.rating || 0), 0)
+  const soma = reviews.value.reduce(
+    (totalParcial, avaliacao) => totalParcial + Number(avaliacao.rating || 0),
+    0,
+  )
   const media = soma / total
 
   props.profissional.reviews = [...reviews.value]
   props.profissional.reviewsCount = total
   props.profissional.rating = Number(media.toFixed(1))
 }
+
+onMounted(() => {
+  carregarAvaliacoes()
+})
 
 function estrelasTexto(nota = 0) {
   const cheias = Math.round(nota)
@@ -190,6 +222,7 @@ async function salvarAvaliacao() {
   }
 
   const dados = {
+    profissionalId: props.profissional.id,
     author: autor,
     rating: Number(form.value.nota),
     comment: comentario,

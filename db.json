@@ -1,0 +1,29 @@
+{
+  "avaliacoes": [
+    {
+      "profissionalId": 18,
+      "author": "João Pinto",
+      "rating": 3,
+      "comment": "oi",
+      "date": "2026-11-10",
+      "id": "YDWEtxIh5rQ"
+    },
+    {
+      "profissionalId": 18,
+      "author": "joao frango",
+      "rating": 5,
+      "comment": "67",
+      "date": "2026-11-10",
+      "id": "_XJb2EtrYEE"
+    },
+    {
+      "profissionalId": 18,
+      "author": "carlos migli",
+      "rating": 1,
+      "comment": "67",
+      "date": "2026-11-10",
+      "id": "hoeHXSZGPaM"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
