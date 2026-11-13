@@ -40,8 +40,8 @@
       "categoria": "Design",
       "descricao": "Designer apaixonada por transformar ideias em identidades visuais marcantes",
       "precoHora": 90,
-      "rating": 2.5,
-      "reviewsCount": 2,
+      "rating": 2.7,
+      "reviewsCount": 3,
       "reviews": [
         {
           "id": 1,
@@ -56,6 +56,13 @@
           "date": "2025-05-14",
           "rating": 2,
           "comment": "Não gostei muito do resultado final, tive que pedir vários ajustes."
+        },
+        {
+          "id": 1794584823957,
+          "author": "guilherme",
+          "rating": 3,
+          "comment": "oi",
+          "date": "2026-11-13"
         }
       ]
     },
@@ -465,24 +472,9 @@
       "categoria": "Desenvolvimento",
       "descricao": "Focado em interfaces web modernas e performáticas",
       "precoHora": 160,
-      "rating": 2.5,
-      "reviewsCount": 2,
-      "reviews": [
-        {
-          "id": 1,
-          "author": "Wesley P.",
-          "date": "2025-08-06",
-          "rating": 3,
-          "comment": "Site funcional, mas o design final ficou bem genérico."
-        },
-        {
-          "id": 2,
-          "author": "Larissa M.",
-          "date": "2025-06-09",
-          "rating": 2,
-          "comment": "Prazo estourou bastante em relação ao combinado."
-        }
-      ]
+      "rating": 0,
+      "reviewsCount": 0,
+      "reviews": []
     },
     {
       "id": "18",
