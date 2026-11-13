@@ -4,17 +4,27 @@ import { profissionais } from '@/data/profissionais.js'
 import AbasPerfil from '../components/AbasPerfil.vue'
 import AbaAvaliacao from '@/components/AbaAvaliacao.vue'
 import RedesSociais from '@/components/RedesSociais.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
 const abaAtiva = ref('Sobre')
 
-const profissional = profissionais.find(item => item.id === Number(route.params.id))
+const profissional = ref(profissionais.find((item) => item.id === Number(route.params.id)) || null)
 const usuarioAtual = JSON.parse(localStorage.getItem('usuario')) || {}
 
-// Usa as redes salvas pelo freelancer quando este é o perfil aberto.
-const redesDoProfissional = usuarioAtual.id === profissional?.id ? usuarioAtual : profissional
+const redesDoProfissional = computed(() => {
+  if (!profissional.value) return null
+  return usuarioAtual.id === profissional.value.id ? usuarioAtual : profissional.value
+})
+
+function atualizarResumoProfissional({ reviews, rating, reviewsCount }) {
+  if (!profissional.value) return
+
+  profissional.value.reviews = [...reviews]
+  profissional.value.rating = Number(rating)
+  profissional.value.reviewsCount = Number(reviewsCount)
+}
 
 function estrelasTexto(nota = 0) {
   const cheias = Math.round(nota)
@@ -33,14 +43,13 @@ function solicitarOrcamento() {
     return
   }
 
-  if (usuarioAtual.id === profissional.id) {
+  if (usuarioAtual.id === profissional.value?.id) {
     alert('Você não pode solicitar orçamento para o seu próprio perfil.')
     return
   }
 
-  router.push(`/solicitar-orcamento?profissional=${profissional.id}`)
+  router.push(`/solicitar-orcamento?profissional=${profissional.value?.id}`)
 }
-
 </script>
 
 <template>
@@ -93,6 +102,7 @@ function solicitarOrcamento() {
             <AbaAvaliacao
               v-else-if="abaAtiva === 'Avaliações'"
               :profissional="profissional"
+              @avaliacao-atualizada="atualizarResumoProfissional"
             />
           </div>
         </div>

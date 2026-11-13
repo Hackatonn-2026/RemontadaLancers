@@ -84,6 +84,8 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 
+const emit = defineEmits(['avaliacao-atualizada'])
+
 const props = defineProps({
   profissional: { type: Object, required: true },
 })
@@ -113,12 +115,38 @@ const mediaAvaliacao = computed(() => {
   return Number((soma / reviews.value.length).toFixed(1))
 })
 
+function emitirResumo() {
+  const total = reviews.value.length
+  const media = total
+    ? Number(
+        (
+          reviews.value.reduce((soma, avaliacao) => soma + Number(avaliacao.rating || 0), 0) / total
+        ).toFixed(1),
+      )
+    : 0
+
+  emit('avaliacao-atualizada', {
+    reviews: [...reviews.value],
+    rating: media,
+    reviewsCount: total,
+  })
+}
+
 watch(
   () => props.profissional?.reviews,
   (novasAvaliacoes) => {
     reviews.value = Array.isArray(novasAvaliacoes) ? [...novasAvaliacoes] : []
+    emitirResumo()
   },
   { immediate: true },
+)
+
+watch(
+  reviews,
+  () => {
+    emitirResumo()
+  },
+  { deep: true },
 )
 
 async function carregarAvaliacoes() {
@@ -131,13 +159,11 @@ async function carregarAvaliacoes() {
 
     const dados = await resposta.json()
     reviews.value = Array.isArray(dados) ? dados : []
-    atualizarResumo()
   } catch (error) {
     console.error('Erro ao carregar avaliações:', error)
     reviews.value = Array.isArray(props.profissional?.reviews)
       ? [...props.profissional.reviews]
       : []
-    atualizarResumo()
   }
 }
 
@@ -173,27 +199,6 @@ async function excluirAvaliacaoPorId(id) {
   return resposta
 }
 
-function atualizarResumo() {
-  const total = reviews.value.length
-
-  if (!total) {
-    props.profissional.reviews = []
-    props.profissional.reviewsCount = 0
-    props.profissional.rating = 0
-    return
-  }
-
-  const soma = reviews.value.reduce(
-    (totalParcial, avaliacao) => totalParcial + Number(avaliacao.rating || 0),
-    0,
-  )
-  const media = soma / total
-
-  props.profissional.reviews = [...reviews.value]
-  props.profissional.reviewsCount = total
-  props.profissional.rating = Number(media.toFixed(1))
-}
-
 onMounted(() => {
   carregarAvaliacoes()
 })
@@ -203,7 +208,7 @@ function estrelasTexto(nota = 0) {
   return '★'.repeat(cheias) + '☆'.repeat(5 - cheias)
 }
 
-const estrelas = computed(() => estrelasTexto(Number(props.profissional.rating || 0)))
+const estrelas = computed(() => estrelasTexto(mediaAvaliacao.value))
 
 function resetForm() {
   form.value = {
@@ -239,6 +244,7 @@ async function salvarAvaliacao() {
     }
 
     await carregarAvaliacoes()
+    emitirResumo()
     resetForm()
   } catch (error) {
     console.error('Erro ao salvar avaliação:', error)
@@ -269,6 +275,7 @@ async function excluirAvaliacao(id) {
   try {
     await excluirAvaliacaoPorId(id)
     await carregarAvaliacoes()
+    emitirResumo()
 
     if (modoEdicao.value && avaliacaoEditandoId.value === id) {
       resetForm()
