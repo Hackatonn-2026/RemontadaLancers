@@ -134,7 +134,9 @@ async function carregarAvaliacoes() {
     atualizarResumo()
   } catch (error) {
     console.error('Erro ao carregar avaliações:', error)
-    reviews.value = Array.isArray(props.profissional?.reviews) ? [...props.profissional.reviews] : []
+    reviews.value = Array.isArray(props.profissional?.reviews)
+      ? [...props.profissional.reviews]
+      : []
     atualizarResumo()
   }
 }
