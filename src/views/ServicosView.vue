@@ -1,53 +1,55 @@
-
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import FiltroSidebar from '@/components/FiltroSidebar.vue'
 import BaseButton from '@/components/Button.vue'
 import { obterServicos } from '@/data/servicos'
 import { obterUsuarios } from '@/data/usuarios'
 import { criarSolicitacao } from '@/data/solicitacoes'
 
-// escolha de filtros do usuario 
 const filtrosAtuais = ref({ precos: [], regioes: [] })
+const carregando = ref(true)
+const erro = ref('')
+const servicos = ref([])
 
-// pega o usuario que ta logado
 const usuarioAtual = JSON.parse(localStorage.getItem('usuario'))
-
-// pega os usuarios que tao no local storaged
 const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
-
-// ocultar o botao de solicitar servico se nao for freelancer
-const usuarioEhFreelancer = usuarioAtual &&
-  (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
-
-// Sem login, o cadastro de serviço leva para a tela de login.
+const usuarioEhFreelancer =
+  usuarioAtual && (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
 const destinoCadastroServico = usuarioAtual ? '/cadastro-servico' : '/login'
 
-// soma os usuarios fixos com os novos 
-const usuarios = obterUsuarios(usuariosCadastrados)
+async function carregarServicos() {
+  carregando.value = true
+  erro.value = ''
 
-// adicona na lista, se ainda nao tiver, o novo usuario
-if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
-  usuarios.push(usuarioAtual)
+  try {
+    const dados = await obterServicos()
+    const usuarios = obterUsuarios(usuariosCadastrados)
+
+    if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
+      usuarios.push(usuarioAtual)
+    }
+
+    servicos.value = dados.map((servico) => ({
+      ...servico,
+      usuario:
+        usuarios.find((usuario) => usuario.id === servico.usuarioId) ||
+        (usuarios.length === 1 ? usuarios[0] : null),
+    }))
+  } catch (err) {
+    erro.value = 'Não foi possível carregar os serviços.'
+    console.error(err)
+  } finally {
+    carregando.value = false
+  }
 }
 
-// relaciona o serviço cadastrado aos dados do usuario
-const servicosComUsuarios = obterServicos().map((servico) => ({
-  ...servico,
-  usuario: usuarios.find((usuario) => usuario.id === servico.usuarioId) ||
-    (usuarios.length === 1 ? usuarios[0] : null),
-}))
-
-// filtrar 
 const servicosFiltrados = computed(() => {
-  return servicosComUsuarios.filter((servico) => {
+  return servicos.value.filter((servico) => {
     const filtroDePreco = filtrosAtuais.value.precos
     const filtroDeRegiao = filtrosAtuais.value.regioes
     const passouNoPreco =
       filtroDePreco.length === 0 ||
-      filtroDePreco.some(
-        (opcao) => servico.preco >= opcao.min && servico.preco <= opcao.max
-      )
+      filtroDePreco.some((opcao) => servico.preco >= opcao.min && servico.preco <= opcao.max)
     const passouNaRegiao =
       filtroDeRegiao.length === 0 || filtroDeRegiao.includes(servico.localizacao)
 
@@ -55,12 +57,10 @@ const servicosFiltrados = computed(() => {
   })
 })
 
-// ligar oq o usuario escolheu pra filtrar 
 function atualizarFiltros(novosFiltros) {
   filtrosAtuais.value = novosFiltros
 }
 
-// solicitar o servico 
 function solicitarServico(servico) {
   const cliente = servico.usuario || {
     id: servico.usuarioId,
@@ -73,7 +73,6 @@ function solicitarServico(servico) {
     freelancer: usuarioEhFreelancer ? usuarioAtual : cliente,
   })
 
-  // impede solicitar duas vezes
   if (!solicitacao) {
     alert('Você já solicitou este serviço.')
     return
@@ -85,19 +84,22 @@ function solicitarServico(servico) {
 
   alert(mensagem)
 }
+
+onMounted(() => {
+  carregarServicos()
+})
 </script>
 
 <template>
   <main class="servicos-page">
     <section class="cabecalho">
-
       <p class="destaque">serviços disponíveis</p>
 
       <h1>Pedidos de serviço</h1>
 
       <p>
-        Confira os pedidos feitos pelos nossos usuários e encontre um serviço
-        que combine com suas habilidades.
+        Confira os pedidos feitos pelos nossos usuários e encontre um serviço que combine com suas
+        habilidades.
       </p>
     </section>
 
@@ -105,11 +107,15 @@ function solicitarServico(servico) {
       <FiltroSidebar @filtrar="atualizarFiltros" />
 
       <section class="lista-servicos">
-        <div
-          v-for="servico in servicosFiltrados"
-          :key="servico.id"
-          class="servico-card"
-        >
+        <p v-if="carregando" class="estado-servicos">Carregando serviços...</p>
+
+        <p v-else-if="erro" class="estado-servicos erro">{{ erro }}</p>
+
+        <div v-else-if="servicosFiltrados.length === 0" class="estado-servicos">
+          Nenhum serviço encontrado com esses filtros.
+        </div>
+
+        <div v-for="servico in servicosFiltrados" :key="servico.id" class="servico-card">
           <span class="categoria cat">
             {{ servico.categoria }}
           </span>
@@ -138,11 +144,7 @@ function solicitarServico(servico) {
           </div>
 
           <!-- direcionar ao login (usuario cliene) -->bot
-          <BaseButton
-            v-if="!usuarioAtual"
-            to="/login"
-            class="botao-solicitar"
-          >
+          <BaseButton v-if="!usuarioAtual" to="/login" class="botao-solicitar">
             Solicitar serviço
           </BaseButton>
 
@@ -154,24 +156,14 @@ function solicitarServico(servico) {
             Solicitar serviço
           </BaseButton>
         </div>
-
-        <p v-if="servicosFiltrados.length === 0" class="sem-resultados">
-          Nenhum serviço encontrado com esses filtros.
-        </p>
       </section>
     </section>
 
-   <BaseButton
-      v-if="!usuarioEhFreelancer"
-      :to="destinoCadastroServico"
-      class="botao-flutuante"
-    >
+    <BaseButton v-if="!usuarioEhFreelancer" :to="destinoCadastroServico" class="botao-flutuante">
       + Cadastrar Serviço
     </BaseButton>
-
   </main>
 </template>
-
 
 <style scoped>
 .servicos-page {
@@ -184,7 +176,6 @@ function solicitarServico(servico) {
   margin-bottom: 35px;
   text-align: center;
 }
-
 
 .destaque {
   margin: 0 0 8px;
@@ -225,9 +216,14 @@ function solicitarServico(servico) {
   gap: 25px;
 }
 
-.sem-resultados {
+.estado-servicos {
   grid-column: 1 / -1;
   color: #555;
+  font-weight: 600;
+}
+
+.estado-servicos.erro {
+  color: #b91c1c;
 }
 
 .servico-card {
@@ -251,7 +247,6 @@ function solicitarServico(servico) {
   margin: 10px 0;
   color: black;
   font-size: 21px;
-
 }
 
 .descricao {
