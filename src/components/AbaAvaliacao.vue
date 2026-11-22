@@ -12,6 +12,8 @@
     <form class="form-avaliacao" @submit.prevent="salvarAvaliacao">
       <h3>{{ modoEdicao ? 'Editar avaliação' : 'Deixar uma avaliação' }}</h3>
 
+      <p v-if="erroAvaliacao" class="erro-avaliacao" role="alert">{{ erroAvaliacao }}</p>
+
       <div class="campo">
         <label for="autor">Nome</label>
         <input id="autor" v-model="form.autor" type="text" placeholder="Seu nome" required />
@@ -82,7 +84,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const emit = defineEmits(['avaliacao-atualizada'])
 
@@ -98,6 +100,7 @@ const form = ref({
 
 const modoEdicao = ref(false)
 const avaliacaoEditandoId = ref(null)
+const erroAvaliacao = ref('')
 const API_URL = 'http://localhost:3000'
 
 const reviews = ref(
@@ -132,26 +135,11 @@ function emitirResumo() {
   })
 }
 
-watch(
-  () => props.profissional?.reviews,
-  (novasAvaliacoes) => {
-    reviews.value = Array.isArray(novasAvaliacoes) ? [...novasAvaliacoes] : []
-    emitirResumo()
-  },
-  { immediate: true },
-)
-
-watch(
-  reviews,
-  () => {
-    emitirResumo()
-  },
-  { deep: true },
-)
-
 async function carregarAvaliacoes() {
   try {
-    const resposta = await fetch(`${API_URL}/avaliacoes`)
+    const resposta = await fetch(
+      `${API_URL}/avaliacoes?profissionalId=${encodeURIComponent(props.profissional.id)}`,
+    )
 
     if (!resposta.ok) {
       throw new Error('Erro ao buscar avaliações do servidor')
@@ -159,11 +147,15 @@ async function carregarAvaliacoes() {
 
     const dados = await resposta.json()
     reviews.value = Array.isArray(dados) ? dados : []
+    erroAvaliacao.value = ''
+    emitirResumo()
   } catch (error) {
     console.error('Erro ao carregar avaliações:', error)
     reviews.value = Array.isArray(props.profissional?.reviews)
       ? [...props.profissional.reviews]
       : []
+    erroAvaliacao.value = 'Não foi possível conectar ao servidor de avaliações. Tente novamente.'
+    emitirResumo()
   }
 }
 
@@ -175,6 +167,10 @@ async function criarAvaliacao(dados) {
     },
     body: JSON.stringify(dados),
   })
+
+  if (!resposta.ok) {
+    throw new Error('Erro ao criar avaliação')
+  }
 
   return await resposta.json()
 }
@@ -188,6 +184,10 @@ async function atualizarAvaliacao(id, dadosAtualizados) {
     body: JSON.stringify(dadosAtualizados),
   })
 
+  if (!resposta.ok) {
+    throw new Error('Erro ao atualizar avaliação')
+  }
+
   return await resposta.json()
 }
 
@@ -195,6 +195,10 @@ async function excluirAvaliacaoPorId(id) {
   const resposta = await fetch(`${API_URL}/avaliacoes/${id}`, {
     method: 'DELETE',
   })
+
+  if (!resposta.ok) {
+    throw new Error('Erro ao excluir avaliação')
+  }
 
   return resposta
 }
@@ -221,6 +225,7 @@ function resetForm() {
 }
 
 async function salvarAvaliacao() {
+  erroAvaliacao.value = ''
   const autor = form.value.autor.trim()
   const comentario = form.value.comentario.trim()
 
@@ -237,21 +242,33 @@ async function salvarAvaliacao() {
   }
 
   try {
+    let avaliacaoSalva
+
     if (modoEdicao.value && avaliacaoEditandoId.value !== null) {
-      await atualizarAvaliacao(avaliacaoEditandoId.value, dados)
+      avaliacaoSalva = await atualizarAvaliacao(avaliacaoEditandoId.value, dados)
     } else {
-      await criarAvaliacao(dados)
+      avaliacaoSalva = await criarAvaliacao(dados)
     }
 
-    await carregarAvaliacoes()
+    const indice = reviews.value.findIndex((avaliacao) => avaliacao.id === avaliacaoSalva.id)
+    if (indice === -1) {
+      reviews.value = [...reviews.value, avaliacaoSalva]
+    } else {
+      reviews.value = reviews.value.map((avaliacao) =>
+        avaliacao.id === avaliacaoSalva.id ? avaliacaoSalva : avaliacao,
+      )
+    }
+
     emitirResumo()
     resetForm()
   } catch (error) {
     console.error('Erro ao salvar avaliação:', error)
+    erroAvaliacao.value = 'Não foi possível salvar a avaliação. Tente novamente.'
   }
 }
 
 function editarAvaliacao(avaliacao) {
+  erroAvaliacao.value = ''
   modoEdicao.value = true
   avaliacaoEditandoId.value = avaliacao.id
   form.value = {
@@ -272,9 +289,11 @@ async function excluirAvaliacao(id) {
     return
   }
 
+  erroAvaliacao.value = ''
+
   try {
     await excluirAvaliacaoPorId(id)
-    await carregarAvaliacoes()
+    reviews.value = reviews.value.filter((avaliacao) => avaliacao.id !== id)
     emitirResumo()
 
     if (modoEdicao.value && avaliacaoEditandoId.value === id) {
@@ -282,6 +301,7 @@ async function excluirAvaliacao(id) {
     }
   } catch (error) {
     console.error('Erro ao excluir avaliação:', error)
+    erroAvaliacao.value = 'Não foi possível excluir a avaliação. Tente novamente.'
   }
 }
 </script>
@@ -388,6 +408,11 @@ async function excluirAvaliacao(id) {
   padding: 24px 0;
   text-align: center;
   color: #9ca3af;
+}
+
+.erro-avaliacao {
+  color: #b91c1c;
+  margin: 0 0 16px;
 }
 
 .avaliacao {

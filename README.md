@@ -31,6 +31,8 @@ npm install
 npm run dev
 ```
 
+Esse comando inicia o frontend e a API de avaliações (JSON Server) juntos.
+
 ### Compile and Minify for Production
 
 ```sh
