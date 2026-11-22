@@ -139,6 +139,7 @@ async function carregarAvaliacoes() {
   try {
     const resposta = await fetch(
       `${API_URL}/avaliacoes?profissionalId=${encodeURIComponent(props.profissional.id)}`,
+      { method: 'GET' },
     )
 
     if (!resposta.ok) {
