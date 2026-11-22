@@ -1,45 +1,310 @@
 <template>
   <div>
     <div class="resumo">
-      <h2 class="nota-media">{{ profissional.rating }}</h2>
+      <h2 class="nota-media">{{ mediaAvaliacao.toFixed(1) }}</h2>
       <p class="estrelas">{{ estrelas }}</p>
       <p class="total">
-        Baseado em {{ profissional.reviewsCount }}
-        {{ profissional.reviewsCount === 1 ? 'avaliação' : 'avaliações' }}
+        Baseado em {{ reviews.length }}
+        {{ reviews.length === 1 ? 'avaliação' : 'avaliações' }}
       </p>
     </div>
 
+    <form class="form-avaliacao" @submit.prevent="salvarAvaliacao">
+      <h3>{{ modoEdicao ? 'Editar avaliação' : 'Deixar uma avaliação' }}</h3>
+
+      <p v-if="erroAvaliacao" class="erro-avaliacao" role="alert">{{ erroAvaliacao }}</p>
+
+      <div class="campo">
+        <label for="autor">Nome</label>
+        <input id="autor" v-model="form.autor" type="text" placeholder="Seu nome" required />
+      </div>
+
+      <div class="campo">
+        <label for="nota">Nota</label>
+        <select id="nota" v-model.number="form.nota" required>
+          <option value="5">5 - Excelente</option>
+          <option value="4">4 - Muito bom</option>
+          <option value="3">3 - Regular</option>
+          <option value="2">2 - Ruim</option>
+          <option value="1">1 - Péssimo</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="comentario">Comentário</label>
+        <textarea
+          id="comentario"
+          v-model="form.comentario"
+          rows="4"
+          placeholder="Conte sua experiência com este profissional"
+          required
+        />
+      </div>
+
+      <div class="acoes-form">
+        <button type="submit" class="btn btn-primary">
+          {{ modoEdicao ? 'Salvar alterações' : 'Enviar avaliação' }}
+        </button>
+
+        <button v-if="modoEdicao" type="button" class="btn btn-secondary" @click="cancelarEdicao">
+          Cancelar
+        </button>
+      </div>
+    </form>
+
     <div class="lista">
-      <p v-if="!profissional.reviews?.length" class="sem-avaliacoes">
+      <p v-if="!reviews.length" class="sem-avaliacoes">
         Ainda não há avaliações para este profissional.
       </p>
 
-      <div v-for="avaliacao in profissional.reviews" :key="avaliacao.id" class="avaliacao">
+      <div v-for="avaliacao in reviews" :key="avaliacao.id" class="avaliacao">
         <div class="topo">
           <strong>{{ avaliacao.author }}</strong>
           <span class="data">{{ avaliacao.date }}</span>
         </div>
+
         <p class="estrelas">{{ estrelasTexto(avaliacao.rating) }}</p>
         <p class="comentario">{{ avaliacao.comment }}</p>
+
+        <div class="acoes-avaliacao">
+          <button type="button" class="btn btn-link" @click="editarAvaliacao(avaliacao)">
+            Editar
+          </button>
+          <button
+            type="button"
+            class="btn btn-link btn-danger"
+            @click="excluirAvaliacao(avaliacao.id)"
+          >
+            Excluir
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+
+const emit = defineEmits(['avaliacao-atualizada'])
 
 const props = defineProps({
   profissional: { type: Object, required: true },
 })
 
-// Transforma notas em estrelas
+const form = ref({
+  autor: '',
+  nota: 5,
+  comentario: '',
+})
+
+const modoEdicao = ref(false)
+const avaliacaoEditandoId = ref(null)
+const erroAvaliacao = ref('')
+const API_URL = 'http://localhost:3000'
+
+const reviews = ref(
+  Array.isArray(props.profissional?.reviews) ? [...props.profissional.reviews] : [],
+)
+
+const mediaAvaliacao = computed(() => {
+  if (!reviews.value.length) return 0
+
+  const soma = reviews.value.reduce(
+    (totalParcial, avaliacao) => totalParcial + Number(avaliacao.rating || 0),
+    0,
+  )
+
+  return Number((soma / reviews.value.length).toFixed(1))
+})
+
+function emitirResumo() {
+  const total = reviews.value.length
+  const media = total
+    ? Number(
+        (
+          reviews.value.reduce((soma, avaliacao) => soma + Number(avaliacao.rating || 0), 0) / total
+        ).toFixed(1),
+      )
+    : 0
+
+  emit('avaliacao-atualizada', {
+    reviews: [...reviews.value],
+    rating: media,
+    reviewsCount: total,
+  })
+}
+
+async function carregarAvaliacoes() {
+  try {
+    const resposta = await fetch(
+      `${API_URL}/avaliacoes?profissionalId=${encodeURIComponent(props.profissional.id)}`,
+      { method: 'GET' },
+    )
+
+    if (!resposta.ok) {
+      throw new Error('Erro ao buscar avaliações do servidor')
+    }
+
+    const dados = await resposta.json()
+    reviews.value = Array.isArray(dados) ? dados : []
+    erroAvaliacao.value = ''
+    emitirResumo()
+  } catch (error) {
+    console.error('Erro ao carregar avaliações:', error)
+    reviews.value = Array.isArray(props.profissional?.reviews)
+      ? [...props.profissional.reviews]
+      : []
+    erroAvaliacao.value = 'Não foi possível conectar ao servidor de avaliações. Tente novamente.'
+    emitirResumo()
+  }
+}
+
+async function criarAvaliacao(dados) {
+  const resposta = await fetch(`${API_URL}/avaliacoes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dados),
+  })
+
+  if (!resposta.ok) {
+    throw new Error('Erro ao criar avaliação')
+  }
+
+  return await resposta.json()
+}
+
+async function atualizarAvaliacao(id, dadosAtualizados) {
+  const resposta = await fetch(`${API_URL}/avaliacoes/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dadosAtualizados),
+  })
+
+  if (!resposta.ok) {
+    throw new Error('Erro ao atualizar avaliação')
+  }
+
+  return await resposta.json()
+}
+
+async function excluirAvaliacaoPorId(id) {
+  const resposta = await fetch(`${API_URL}/avaliacoes/${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!resposta.ok) {
+    throw new Error('Erro ao excluir avaliação')
+  }
+
+  return resposta
+}
+
+onMounted(() => {
+  carregarAvaliacoes()
+})
+
 function estrelasTexto(nota = 0) {
   const cheias = Math.round(nota)
   return '★'.repeat(cheias) + '☆'.repeat(5 - cheias)
 }
 
-const estrelas = computed(() => estrelasTexto(props.profissional.rating))
+const estrelas = computed(() => estrelasTexto(mediaAvaliacao.value))
+
+function resetForm() {
+  form.value = {
+    autor: '',
+    nota: 5,
+    comentario: '',
+  }
+  modoEdicao.value = false
+  avaliacaoEditandoId.value = null
+}
+
+async function salvarAvaliacao() {
+  erroAvaliacao.value = ''
+  const autor = form.value.autor.trim()
+  const comentario = form.value.comentario.trim()
+
+  if (!autor || !comentario) {
+    return
+  }
+
+  const dados = {
+    profissionalId: props.profissional.id,
+    author: autor,
+    rating: Number(form.value.nota),
+    comment: comentario,
+    date: new Date().toISOString().slice(0, 10),
+  }
+
+  try {
+    let avaliacaoSalva
+
+    if (modoEdicao.value && avaliacaoEditandoId.value !== null) {
+      avaliacaoSalva = await atualizarAvaliacao(avaliacaoEditandoId.value, dados)
+    } else {
+      avaliacaoSalva = await criarAvaliacao(dados)
+    }
+
+    const indice = reviews.value.findIndex((avaliacao) => avaliacao.id === avaliacaoSalva.id)
+    if (indice === -1) {
+      reviews.value = [...reviews.value, avaliacaoSalva]
+    } else {
+      reviews.value = reviews.value.map((avaliacao) =>
+        avaliacao.id === avaliacaoSalva.id ? avaliacaoSalva : avaliacao,
+      )
+    }
+
+    emitirResumo()
+    resetForm()
+  } catch (error) {
+    console.error('Erro ao salvar avaliação:', error)
+    erroAvaliacao.value = 'Não foi possível salvar a avaliação. Tente novamente.'
+  }
+}
+
+function editarAvaliacao(avaliacao) {
+  erroAvaliacao.value = ''
+  modoEdicao.value = true
+  avaliacaoEditandoId.value = avaliacao.id
+  form.value = {
+    autor: avaliacao.author,
+    nota: Number(avaliacao.rating),
+    comentario: avaliacao.comment,
+  }
+}
+
+function cancelarEdicao() {
+  resetForm()
+}
+
+async function excluirAvaliacao(id) {
+  const confirmarExclusao = window.confirm('Tem certeza que deseja excluir esta avaliação?')
+
+  if (!confirmarExclusao) {
+    return
+  }
+
+  erroAvaliacao.value = ''
+
+  try {
+    await excluirAvaliacaoPorId(id)
+    reviews.value = reviews.value.filter((avaliacao) => avaliacao.id !== id)
+    emitirResumo()
+
+    if (modoEdicao.value && avaliacaoEditandoId.value === id) {
+      resetForm()
+    }
+  } catch (error) {
+    console.error('Erro ao excluir avaliação:', error)
+    erroAvaliacao.value = 'Não foi possível excluir a avaliação. Tente novamente.'
+  }
+}
 </script>
 
 <style scoped>
@@ -66,6 +331,76 @@ const estrelas = computed(() => estrelasTexto(props.profissional.rating))
   color: #585d64;
 }
 
+.form-avaliacao {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+}
+
+.form-avaliacao h3 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  color: #111827;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.campo label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.acoes-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-link {
+  background: transparent;
+  color: #2563eb;
+  padding: 0;
+}
+
+.btn-danger {
+  color: #dc2626;
+}
+
 .lista {
   margin-top: 20px;
 }
@@ -76,6 +411,11 @@ const estrelas = computed(() => estrelasTexto(props.profissional.rating))
   color: #9ca3af;
 }
 
+.erro-avaliacao {
+  color: #b91c1c;
+  margin: 0 0 16px;
+}
+
 .avaliacao {
   border-bottom: 1px solid #eee;
   padding: 16px 0;
@@ -84,6 +424,7 @@ const estrelas = computed(() => estrelasTexto(props.profissional.rating))
 .topo {
   display: flex;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .data {
@@ -92,5 +433,12 @@ const estrelas = computed(() => estrelasTexto(props.profissional.rating))
 
 .comentario {
   color: #374151;
+  margin: 10px 0;
+}
+
+.acoes-avaliacao {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
 }
 </style>
