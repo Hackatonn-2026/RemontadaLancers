@@ -15,6 +15,7 @@ import UsuarioFreelancerView from '@/views/UsuarioFreelancerView.vue'
 import EditarPerfilView from '../views/EditarPerfilView.vue'
 import EditarPerfilFreelancerView from '@/views/EditarPerfilFreelancer.vue'
 import SolicitarOrcamentoView from '@/views/SolicitarOrcamentoView.vue'
+import FreelancersCrudView from '@/views/FreelancersCrudView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -96,7 +97,12 @@ const router = createRouter({
       beforeEnter: () => {
         return localStorage.getItem('usuario') ? true : { name: 'login' }
       },
-    }
+    },
+    {
+      path: '/freelancers-crud',
+      name: 'freelancers-crud',
+      component: FreelancersCrudView,
+    },
   ],
 })
 
