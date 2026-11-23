@@ -2,7 +2,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from '@/components/Button.vue'
-import { cadastrarServico } from '@/data/servicos'
+
+const API_URL = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : 'https://remontadalancers.onrender.com'
 
 const listaCategorias = [
   'Desenvolvimento',
@@ -41,7 +44,7 @@ const novoServico = ref({
   descricao: '',
   localizacao: 'Zona Sul',
   preco: 0,
-  orcamento: ''
+  orcamento: '',
 })
 
 const avancarParaResumo = () => {
@@ -54,14 +57,40 @@ const voltarParaFormulario = () => {
 }
 
 // adiciona o novo serviço a lista de serviços e volta pra a pagina serviços
-const publicarServico = () => {
+const publicarServico = async () => {
   if (!usuarioAtual) {
     router.push('/login')
     return
   }
 
-  cadastrarServico({ ...novoServico.value })
-  router.push('/servicos')
+  if (!novoServico.value.titulo.trim() || !novoServico.value.descricao.trim()) {
+    alert('Preencha o título e a descrição do serviço.')
+    return
+  }
+
+  if (!Number.isFinite(Number(novoServico.value.preco)) || Number(novoServico.value.preco) < 0) {
+    alert('Informe um orçamento válido.')
+    return
+  }
+
+  try {
+    const resposta = await fetch(`${API_URL}/servicos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...novoServico.value }),
+    })
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível cadastrar o serviço.')
+    }
+
+    router.push('/servicos')
+  } catch (error) {
+    console.error(error)
+    alert('Não foi possível cadastrar o serviço. Tente novamente.')
+  }
 }
 </script>
 
@@ -73,7 +102,8 @@ const publicarServico = () => {
     </section>
 
     <div v-if="etapa === 1">
-      <form @submit.prevent="avancarParaResumo"> <!--impede a pagina de ser recarregada, vai pro resumo-->
+      <form @submit.prevent="avancarParaResumo">
+        <!--impede a pagina de ser recarregada, vai pro resumo-->
         <fieldset>
           <legend>1. Sobre o serviço</legend>
 
@@ -85,17 +115,10 @@ const publicarServico = () => {
           </select>
 
           <label>Título do serviço</label>
-          <input
-            v-model="novoServico.titulo"
-            type="text"
-            required
-          />
+          <input v-model="novoServico.titulo" type="text" required />
 
           <label>Descrição detalhada</label>
-          <textarea
-            v-model="novoServico.descricao"
-            required
-          ></textarea>
+          <textarea v-model="novoServico.descricao" required></textarea>
         </fieldset>
 
         <fieldset>
@@ -111,11 +134,7 @@ const publicarServico = () => {
           </select>
 
           <label>Dia do serviço</label>
-          <input
-            v-model="dataFormatada"
-            type="date"
-            required
-          />
+          <input v-model="dataFormatada" type="date" required />
 
           <label>Turno</label>
           <select v-model="turnoSelecionado">
@@ -130,23 +149,16 @@ const publicarServico = () => {
           <legend>3. Orçamento</legend>
 
           <label>Orçamento estimado (R$)</label>
-          <input
-            v-model.number="novoServico.preco"
-            type="number"
-            required
-          />
+          <input v-model.number="novoServico.preco" type="number" required />
         </fieldset>
 
-        <BaseButton type="submit">
-          Revisar solicitação
-        </BaseButton>
+        <BaseButton type="submit"> Revisar solicitação </BaseButton>
       </form>
     </div>
 
     <div v-else>
       <div class="resumo-card">
         <h2>Resumo da solicitação</h2>
-
 
         <p><strong>Categoria:</strong> {{ novoServico.categoria }}</p>
         <p><strong>Título:</strong> {{ novoServico.titulo }}</p>
@@ -156,13 +168,9 @@ const publicarServico = () => {
         <p><strong>Orçamento:</strong> {{ novoServico.orcamento }}</p>
 
         <div class="resumo-acoes">
-          <BaseButton variant="secondary" @click="voltarParaFormulario">
-            Voltar
-          </BaseButton>
+          <BaseButton variant="secondary" @click="voltarParaFormulario"> Voltar </BaseButton>
 
-          <BaseButton @click="publicarServico">
-            Publicar serviço
-          </BaseButton>
+          <BaseButton @click="publicarServico"> Publicar serviço </BaseButton>
         </div>
       </div>
     </div>
@@ -239,8 +247,7 @@ textarea {
   margin-top: 20px;
 }
 
-strong{
+strong {
   font-weight: bold;
 }
-
 </style>
