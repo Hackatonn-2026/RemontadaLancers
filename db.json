@@ -109,8 +109,6 @@
       "ativo": true
     }
   ],
-  "$schema": "./node_modules/json-server/schema.json"
-}
   "avaliacoes": [
     {
       "profissionalId": 1,
