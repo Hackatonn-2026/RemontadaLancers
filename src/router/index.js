@@ -16,6 +16,7 @@ import EditarPerfilView from '../views/EditarPerfilView.vue'
 import EditarPerfilFreelancerView from '@/views/EditarPerfilFreelancer.vue'
 import SolicitarOrcamentoView from '@/views/SolicitarOrcamentoView.vue'
 import DetalhesServicoView from '@/views/DetalhesServicoView.vue'
+import FreelancersCrudView from '../views/FreelancersCrudView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

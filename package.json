@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "run-p dev:web api",
+    "dev": "vite",
     "dev:web": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -12,8 +12,7 @@
     "lint": "run-s \"lint:*\"",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/",
-    "api": "json-server db.json"
+    "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
     "json-server": "^1.0.0-beta.15",

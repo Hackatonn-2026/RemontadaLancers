@@ -30,8 +30,7 @@
       "preco": 220,
       "orcamento": "R$ 220,00"
     }
-  ]
-}
+  ],
   "profissionais": [
     {
       "id": "1",
@@ -908,8 +907,6 @@
       ]
     }
   ],
-  "$schema": "./node_modules/json-server/schema.json"
-}
   "categorias": [
     {
       "id": "desenvolvimento",
