@@ -561,5 +561,43 @@
       "id": "seed-32-2"
     }
   ],
-  "$schema": "./node_modules/json-server/schema.json"
+  "$schema": "./node_modules/json-server/schema.json",
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Lucas Almeida",
+      "email": "lucas.almeida@email.com",
+      "senha": "Lucas123",
+      "telefone": "(47) 99999-1111",
+      "tipoUsuario": "freelancer",
+      "profissao": "Desenvolvedor Full Stack",
+      "anosExperiencia": "3-5",
+      "descricao": "Desenvolvedor de aplicações web",
+      "categorias": [
+        "desenvolvimento"
+      ],
+      "servicos": [],
+      "instagram": "",
+      "facebook": "",
+      "linkedin": "",
+      "whatsapp": ""
+    },
+    {
+      "id": "2",
+      "nome": "Mariana Souza",
+      "email": "mariana.souza@email.com",
+      "senha": "Mariana123",
+      "telefone": "(47) 98888-2222",
+      "tipoUsuario": "cliente",
+      "profissao": "",
+      "anosExperiencia": "",
+      "descricao": "",
+      "categorias": [],
+      "servicos": [],
+      "instagram": "",
+      "facebook": "",
+      "linkedin": "",
+      "whatsapp": ""
+    }
+  ]
 }

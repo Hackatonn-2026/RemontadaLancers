@@ -11,7 +11,9 @@
 
         <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
 
-        <button type="submit" class="botao-entrar">Entrar</button>
+<button type="submit" class="botao-entrar" :disabled="carregando">
+  {{ carregando ? 'Entrando...' : 'Entrar' }}
+</button>
         <div class="link-cadastro">
           <p>Ainda não tem conta?</p>
           <RouterLink to="/cadastro" class="botao-cadastro"> Criar conta </RouterLink>
@@ -21,35 +23,59 @@
   </main>
 </template>
 
+
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
-import { buscarUsuarioPorCredenciais, salvarUsuarioAtual } from '@/data/usuarios'
+import {
+  buscarUsuarioPorCredenciais,
+  salvarUsuarioAtual,
+} from '@/data/usuarios'
 
 const router = useRouter()
 const email = ref('')
 const senha = ref('')
+const carregando = ref(false)
 
-function entrar() {
-  const usuario = buscarUsuarioPorCredenciais(email.value, senha.value)
+async function entrar() {
+  if (carregando.value) return
 
-  if (!usuario) {
-    alert('E-mail ou senha incorretos!')
-    return
+  carregando.value = true
+
+  try {
+    const usuario = await buscarUsuarioPorCredenciais(
+      email.value,
+      senha.value,
+    )
+
+    if (!usuario) {
+      alert('E-mail ou senha incorretos!')
+      return
+    }
+
+    salvarUsuarioAtual(usuario)
+    window.dispatchEvent(new Event('auth-change'))
+
+    alert('Login realizado com sucesso!')
+
+    const tipoUsuario = usuario.tipoUsuario || usuario.tipo
+
+    const rota =
+      tipoUsuario === 'freelancer'
+        ? `/usuario-freelancer/${usuario.id || 'perfil'}`
+        : '/perfil'
+
+    await router.push(rota)
+  } catch (erro) {
+    console.error('Erro ao realizar login:', erro)
+    alert('Não foi possível conectar ao servidor. Tente novamente.')
+  } finally {
+    carregando.value = false
   }
-
-  salvarUsuarioAtual(usuario)
-  window.dispatchEvent(new Event('auth-change'))
-  alert('Login realizado com sucesso!')
-
-  const tipoUsuario = usuario.tipoUsuario || usuario.tipo
-  const rota =
-    tipoUsuario === 'freelancer' ? `/usuario-freelancer/${usuario.id || 'perfil'}` : '/perfil'
-
-  router.push(rota)
 }
 </script>
+
 
 <style scoped>
 .pagina-login {
