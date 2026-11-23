@@ -877,3 +877,677 @@
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }
+  "categorias": [
+    {
+      "id": "desenvolvimento",
+      "nome": "Desenvolvimento",
+      "descricao": "Sites, aplicativos e sistemas",
+      "ativo": true
+    },
+    {
+      "id": "eletrica",
+      "nome": "Elétrica",
+      "descricao": "Instalações e reparos",
+      "ativo": true
+    },
+    {
+      "id": "informatica",
+      "nome": "Informática",
+      "descricao": "Suporte técnico e redes",
+      "ativo": true
+    },
+    {
+      "id": "jardinagem",
+      "nome": "Jardinagem",
+      "descricao": "Paisagismo e manutenção",
+      "ativo": true
+    },
+    {
+      "id": "fotografia",
+      "nome": "Fotografia",
+      "descricao": "Eventos e produtos",
+      "ativo": true
+    },
+    {
+      "id": "aulas",
+      "nome": "Aulas",
+      "descricao": "Particulares e reforço escolar",
+      "ativo": true
+    },
+    {
+      "id": "pintura",
+      "nome": "Pintura",
+      "descricao": "Residencial e comercial",
+      "ativo": true
+    },
+    {
+      "id": "mecanica",
+      "nome": "Mecânica",
+      "descricao": "Automotiva e geral",
+      "ativo": true
+    },
+    {
+      "id": "hidraulica",
+      "nome": "Hidráulica",
+      "descricao": "Encanamento e desentupimento",
+      "ativo": true
+    },
+    {
+      "id": "estetica-beleza",
+      "nome": "Estética & Beleza",
+      "descricao": "Maquiagem, cabelo e unhas",
+      "ativo": true
+    },
+    {
+      "id": "seguranca",
+      "nome": "Segurança",
+      "descricao": "Câmeras e alarmes",
+      "ativo": true
+    },
+    {
+      "id": "financas-contabilidade",
+      "nome": "Finanças & Contabilidade",
+      "descricao": "Imposto de renda e consultoria",
+      "ativo": true
+    },
+    {
+      "id": "reformas-construcao",
+      "nome": "Reformas & Construção",
+      "descricao": "Pedreiros, azulejistas e gesso",
+      "ativo": true
+    },
+    {
+      "id": "gastronomia-eventos",
+      "nome": "Gastronomia & Eventos",
+      "descricao": "Buffet, bolos e confeitaria",
+      "ativo": true
+    },
+    {
+      "id": "marketing-redes-sociais",
+      "nome": "Marketing & Redes Sociais",
+      "descricao": "Gestão de tráfego e conteúdo",
+      "ativo": true
+    },
+    {
+      "id": "servicos-juridicos",
+      "nome": "Serviços Jurídicos",
+      "descricao": "Advocacia e contratos",
+      "ativo": true
+    },
+    {
+      "id": "traducao-idiomas",
+      "nome": "Tradução & Idiomas",
+      "descricao": "Tradução juramentada e revisão",
+      "ativo": true
+    },
+    {
+      "id": "edicao-de-video",
+      "nome": "Edição de Vídeo",
+      "descricao": "Edição de vídeos",
+      "ativo": true
+    }
+  ],
+  "avaliacoes": [
+    {
+      "profissionalId": 1,
+      "author": "Marina T.",
+      "rating": 5,
+      "comment": "Excelente profissional, entregou o sistema antes do prazo e com ótima comunicação.",
+      "date": "2025-08-12",
+      "id": "seed-1-1"
+    },
+    {
+      "profissionalId": 1,
+      "author": "João P.",
+      "rating": 5,
+      "comment": "Muito atencioso e resolveu um bug complexo que outros desenvolvedores não conseguiram.",
+      "date": "2025-07-30",
+      "id": "seed-1-2"
+    },
+    {
+      "profissionalId": 1,
+      "author": "Renata A.",
+      "rating": 4,
+      "comment": "Bom trabalho, só demorou um pouco mais que o combinado.",
+      "date": "2025-06-18",
+      "id": "seed-1-3"
+    },
+    {
+      "profissionalId": 2,
+      "author": "Paulo H.",
+      "rating": 3,
+      "comment": "Trabalho razoável, mas demorou mais do que o combinado para entregar.",
+      "date": "2025-08-02",
+      "id": "seed-2-1"
+    },
+    {
+      "profissionalId": 2,
+      "author": "Camila S.",
+      "rating": 2,
+      "comment": "Não gostei muito do resultado final, tive que pedir vários ajustes.",
+      "date": "2025-05-14",
+      "id": "seed-2-2"
+    },
+    {
+      "profissionalId": 3,
+      "author": "Sandra M.",
+      "rating": 5,
+      "comment": "Muito profissional, identificou o problema rápido e resolveu com segurança.",
+      "date": "2025-08-20",
+      "id": "seed-3-1"
+    },
+    {
+      "profissionalId": 3,
+      "author": "Eduardo R.",
+      "rating": 5,
+      "comment": "Serviço impecável, deixou tudo organizado depois da instalação.",
+      "date": "2025-07-05",
+      "id": "seed-3-2"
+    },
+    {
+      "profissionalId": 3,
+      "author": "Lucas F.",
+      "rating": 4,
+      "comment": "Bom atendimento, preço justo pelo serviço prestado.",
+      "date": "2025-04-22",
+      "id": "seed-3-3"
+    },
+    {
+      "profissionalId": 4,
+      "author": "Bruno C.",
+      "rating": 3,
+      "comment": "Resolveu o problema, mas demorou bem mais do que o esperado.",
+      "date": "2025-07-11",
+      "id": "seed-4-1"
+    },
+    {
+      "profissionalId": 4,
+      "author": "Aline V.",
+      "rating": 2,
+      "comment": "Atendimento confuso, não perguntou direito o que eu precisava.",
+      "date": "2025-03-09",
+      "id": "seed-4-2"
+    },
+    {
+      "profissionalId": 5,
+      "author": "Cristina O.",
+      "rating": 5,
+      "comment": "Meu jardim nunca esteve tão bonito, muito cuidadoso com as plantas.",
+      "date": "2025-08-15",
+      "id": "seed-5-1"
+    },
+    {
+      "profissionalId": 5,
+      "author": "Marcos D.",
+      "rating": 5,
+      "comment": "Pontual e caprichoso, recomendo demais.",
+      "date": "2025-06-30",
+      "id": "seed-5-2"
+    },
+    {
+      "profissionalId": 5,
+      "author": "Fabiana L.",
+      "rating": 5,
+      "comment": "Excelente serviço, superou minhas expectativas.",
+      "date": "2025-05-02",
+      "id": "seed-5-3"
+    },
+    {
+      "profissionalId": 6,
+      "author": "Tatiana R.",
+      "rating": 2,
+      "comment": "Fotos ficaram genéricas, esperava mais criatividade.",
+      "date": "2025-08-08",
+      "id": "seed-6-1"
+    },
+    {
+      "profissionalId": 6,
+      "author": "Diego M.",
+      "rating": 3,
+      "comment": "Atendimento ok, mas atrasou bastante a entrega das fotos editadas.",
+      "date": "2025-06-14",
+      "id": "seed-6-2"
+    },
+    {
+      "profissionalId": 7,
+      "author": "Helena B.",
+      "rating": 5,
+      "comment": "Meu filho melhorou muito as notas depois das aulas com ele.",
+      "date": "2025-08-01",
+      "id": "seed-7-1"
+    },
+    {
+      "profissionalId": 7,
+      "author": "Rodrigo S.",
+      "rating": 5,
+      "comment": "Muito paciente e explica de um jeito fácil de entender.",
+      "date": "2025-06-20",
+      "id": "seed-7-2"
+    },
+    {
+      "profissionalId": 7,
+      "author": "Patrícia N.",
+      "rating": 5,
+      "comment": "Excelente professor, super didático.",
+      "date": "2025-04-10",
+      "id": "seed-7-3"
+    },
+    {
+      "profissionalId": 8,
+      "author": "Vinícius A.",
+      "rating": 3,
+      "comment": "Serviço razoável, mas deixou respingos de tinta no chão.",
+      "date": "2025-07-25",
+      "id": "seed-8-1"
+    },
+    {
+      "profissionalId": 8,
+      "author": "Simone F.",
+      "rating": 2,
+      "comment": "Acabamento ficou desigual em algumas paredes.",
+      "date": "2025-05-19",
+      "id": "seed-8-2"
+    },
+    {
+      "profissionalId": 9,
+      "author": "Felipe T.",
+      "rating": 5,
+      "comment": "Muito honesto, não tentou vender serviço que eu não precisava.",
+      "date": "2025-08-05",
+      "id": "seed-9-1"
+    },
+    {
+      "profissionalId": 9,
+      "author": "Adriana C.",
+      "rating": 5,
+      "comment": "Resolveu o problema do meu carro rapidinho.",
+      "date": "2025-06-28",
+      "id": "seed-9-2"
+    },
+    {
+      "profissionalId": 9,
+      "author": "Marcelo G.",
+      "rating": 4,
+      "comment": "Bom mecânico, preço justo.",
+      "date": "2025-05-11",
+      "id": "seed-9-3"
+    },
+    {
+      "profissionalId": 10,
+      "author": "Otávio R.",
+      "rating": 2,
+      "comment": "Não vi resultado nenhum depois de um mês de estratégia.",
+      "date": "2025-07-19",
+      "id": "seed-10-1"
+    },
+    {
+      "profissionalId": 10,
+      "author": "Beatriz L.",
+      "rating": 3,
+      "comment": "Comunicação falha, demorava pra responder as mensagens.",
+      "date": "2025-05-03",
+      "id": "seed-10-2"
+    },
+    {
+      "profissionalId": 11,
+      "author": "Isabela F.",
+      "rating": 5,
+      "comment": "Tradução perfeita, manteve o sentido técnico do texto original.",
+      "date": "2025-08-09",
+      "id": "seed-11-1"
+    },
+    {
+      "profissionalId": 11,
+      "author": "Gabriel M.",
+      "rating": 5,
+      "comment": "Muito atento ao contexto, entrega de qualidade.",
+      "date": "2025-06-01",
+      "id": "seed-11-2"
+    },
+    {
+      "profissionalId": 12,
+      "author": "Natália P.",
+      "rating": 3,
+      "comment": "Edição ficou ok, mas o ritmo do vídeo não era o que eu esperava.",
+      "date": "2025-07-14",
+      "id": "seed-12-1"
+    },
+    {
+      "profissionalId": 12,
+      "author": "Henrique S.",
+      "rating": 2,
+      "comment": "Entrega atrasou bastante e sem aviso prévio.",
+      "date": "2025-04-27",
+      "id": "seed-12-2"
+    },
+    {
+      "profissionalId": 13,
+      "author": "Caio V.",
+      "rating": 5,
+      "comment": "Textos muito claros e persuasivos, ajudou bastante nas conversões.",
+      "date": "2025-08-03",
+      "id": "seed-13-1"
+    },
+    {
+      "profissionalId": 13,
+      "author": "Débora M.",
+      "rating": 4,
+      "comment": "Boa redatora, entende bem o que o cliente precisa.",
+      "date": "2025-05-22",
+      "id": "seed-13-2"
+    },
+    {
+      "profissionalId": 14,
+      "author": "Roberta A.",
+      "rating": 2,
+      "comment": "Consultoria muito genérica, esperava algo mais personalizado pro meu negócio.",
+      "date": "2025-07-28",
+      "id": "seed-14-1"
+    },
+    {
+      "profissionalId": 14,
+      "author": "Leandro B.",
+      "rating": 3,
+      "comment": "Bom conhecimento técnico, mas quase nenhum acompanhamento depois.",
+      "date": "2025-04-15",
+      "id": "seed-14-2"
+    },
+    {
+      "profissionalId": 15,
+      "author": "Silvia T.",
+      "rating": 5,
+      "comment": "Minha casa ficou impecável, muito caprichosa em tudo.",
+      "date": "2025-08-11",
+      "id": "seed-15-1"
+    },
+    {
+      "profissionalId": 15,
+      "author": "Antônio F.",
+      "rating": 5,
+      "comment": "Pontual e cuidadosa, recomendo bastante.",
+      "date": "2025-06-24",
+      "id": "seed-15-2"
+    },
+    {
+      "profissionalId": 15,
+      "author": "Juliana R.",
+      "rating": 4,
+      "comment": "Bom serviço, atenciosa com os pedidos.",
+      "date": "2025-05-06",
+      "id": "seed-15-3"
+    },
+    {
+      "profissionalId": 16,
+      "author": "Mariano C.",
+      "rating": 3,
+      "comment": "Produção ficou boa, mas não capturou bem a sonoridade que eu queria.",
+      "date": "2025-07-17",
+      "id": "seed-16-1"
+    },
+    {
+      "profissionalId": 16,
+      "author": "Yasmin D.",
+      "rating": 2,
+      "comment": "Demorou demais pra entregar a faixa finalizada.",
+      "date": "2025-05-29",
+      "id": "seed-16-2"
+    },
+    {
+      "profissionalId": 17,
+      "author": "Wesley P.",
+      "rating": 3,
+      "comment": "Site funcional, mas o design final ficou bem genérico.",
+      "date": "2025-08-06",
+      "id": "seed-17-1"
+    },
+    {
+      "profissionalId": 17,
+      "author": "Larissa M.",
+      "rating": 2,
+      "comment": "Prazo estourou bastante em relação ao combinado.",
+      "date": "2025-06-09",
+      "id": "seed-17-2"
+    },
+    {
+      "profissionalId": 18,
+      "author": "Ricardo N.",
+      "rating": 5,
+      "comment": "Branding ficou com muita personalidade, exatamente o que eu queria.",
+      "date": "2025-07-21",
+      "id": "seed-18-1"
+    },
+    {
+      "profissionalId": 18,
+      "author": "Fernanda G.",
+      "rating": 5,
+      "comment": "Super criativa e atenciosa com o briefing.",
+      "date": "2025-05-16",
+      "id": "seed-18-2"
+    },
+    {
+      "profissionalId": 19,
+      "author": "Cláudia R.",
+      "rating": 2,
+      "comment": "Serviço deixou fiação exposta, tive que chamar outro eletricista.",
+      "date": "2025-07-02",
+      "id": "seed-19-1"
+    },
+    {
+      "profissionalId": 19,
+      "author": "Igor L.",
+      "rating": 2,
+      "comment": "Atendimento apressado, não explicou direito o que estava fazendo.",
+      "date": "2025-04-18",
+      "id": "seed-19-2"
+    },
+    {
+      "profissionalId": 20,
+      "author": "Priscila A.",
+      "rating": 5,
+      "comment": "Consertou meu notebook rapidinho, muito ágil.",
+      "date": "2025-08-13",
+      "id": "seed-20-1"
+    },
+    {
+      "profissionalId": 20,
+      "author": "Danilo F.",
+      "rating": 4,
+      "comment": "Bom técnico, resolveu o problema sem complicação.",
+      "date": "2025-05-25",
+      "id": "seed-20-2"
+    },
+    {
+      "profissionalId": 21,
+      "author": "Sônia B.",
+      "rating": 1,
+      "comment": "Projeto não ficou nada parecido com o que combinamos, decepcionante.",
+      "date": "2025-07-09",
+      "id": "seed-21-1"
+    },
+    {
+      "profissionalId": 21,
+      "author": "Mateus V.",
+      "rating": 3,
+      "comment": "Bom conhecimento de plantas, mas a execução deixou a desejar.",
+      "date": "2025-04-30",
+      "id": "seed-21-2"
+    },
+    {
+      "profissionalId": 22,
+      "author": "Gustavo M.",
+      "rating": 5,
+      "comment": "Fotos muito naturais, capturou a essência do evento.",
+      "date": "2025-08-17",
+      "id": "seed-22-1"
+    },
+    {
+      "profissionalId": 22,
+      "author": "Carla S.",
+      "rating": 5,
+      "comment": "Entregou no prazo e com edição impecável.",
+      "date": "2025-06-05",
+      "id": "seed-22-2"
+    },
+    {
+      "profissionalId": 23,
+      "author": "Vitor H.",
+      "rating": 2,
+      "comment": "Aulas muito repetitivas, senti que não evoluí muito.",
+      "date": "2025-07-23",
+      "id": "seed-23-1"
+    },
+    {
+      "profissionalId": 23,
+      "author": "Amanda P.",
+      "rating": 2,
+      "comment": "Cancelou algumas aulas sem muito aviso.",
+      "date": "2025-05-08",
+      "id": "seed-23-2"
+    },
+    {
+      "profissionalId": 24,
+      "author": "Elisa T.",
+      "rating": 5,
+      "comment": "Acabamento muito uniforme, ficou perfeito.",
+      "date": "2025-07-06",
+      "id": "seed-24-1"
+    },
+    {
+      "profissionalId": 24,
+      "author": "Rafael N.",
+      "rating": 4,
+      "comment": "Bom pintor, cuidadoso com o preparo da parede.",
+      "date": "2025-04-12",
+      "id": "seed-24-2"
+    },
+    {
+      "profissionalId": 25,
+      "author": "Fábio D.",
+      "rating": 1,
+      "comment": "Trocou uma peça que não precisava e cobrou sem avisar antes.",
+      "date": "2025-08-04",
+      "id": "seed-25-1"
+    },
+    {
+      "profissionalId": 25,
+      "author": "Luciana C.",
+      "rating": 3,
+      "comment": "Diagnóstico correto, mas atendimento meio grosseiro.",
+      "date": "2025-05-20",
+      "id": "seed-25-2"
+    },
+    {
+      "profissionalId": 26,
+      "author": "Thales R.",
+      "rating": 5,
+      "comment": "Meu engajamento aumentou muito com o planejamento dela.",
+      "date": "2025-07-15",
+      "id": "seed-26-1"
+    },
+    {
+      "profissionalId": 26,
+      "author": "Vanessa L.",
+      "rating": 4,
+      "comment": "Muito criativa e organizada com o calendário de posts.",
+      "date": "2025-05-01",
+      "id": "seed-26-2"
+    },
+    {
+      "profissionalId": 27,
+      "author": "Guilherme A.",
+      "rating": 2,
+      "comment": "Tradução saiu com vários erros de contexto, tive que revisar tudo.",
+      "date": "2025-08-10",
+      "id": "seed-27-1"
+    },
+    {
+      "profissionalId": 27,
+      "author": "Raquel M.",
+      "rating": 2,
+      "comment": "Entrega atrasou e a comunicação foi bem falha.",
+      "date": "2025-06-02",
+      "id": "seed-27-2"
+    },
+    {
+      "profissionalId": 28,
+      "author": "Bianca F.",
+      "rating": 5,
+      "comment": "Ritmo dos vídeos ficou perfeito pras redes sociais.",
+      "date": "2025-07-27",
+      "id": "seed-28-1"
+    },
+    {
+      "profissionalId": 28,
+      "author": "Nicolas T.",
+      "rating": 4,
+      "comment": "Bom trabalho de motion, entrega rápida.",
+      "date": "2025-05-13",
+      "id": "seed-28-2"
+    },
+    {
+      "profissionalId": 29,
+      "author": "Alexandre P.",
+      "rating": 1,
+      "comment": "Texto entregue não tinha nada a ver com o que pedi no briefing.",
+      "date": "2025-08-14",
+      "id": "seed-29-1"
+    },
+    {
+      "profissionalId": 29,
+      "author": "Karina S.",
+      "rating": 3,
+      "comment": "Escrita ok, mas o SEO não trouxe resultado nenhum.",
+      "date": "2025-06-07",
+      "id": "seed-29-2"
+    },
+    {
+      "profissionalId": 30,
+      "author": "Eliane V.",
+      "rating": 5,
+      "comment": "Soluções muito práticas, entendeu bem a realidade do meu negócio.",
+      "date": "2025-07-31",
+      "id": "seed-30-1"
+    },
+    {
+      "profissionalId": 30,
+      "author": "Sérgio M.",
+      "rating": 5,
+      "comment": "Consultoria excelente, valeu cada centavo.",
+      "date": "2025-05-17",
+      "id": "seed-30-2"
+    },
+    {
+      "profissionalId": 31,
+      "author": "Douglas R.",
+      "rating": 2,
+      "comment": "Deixou vários cantos sem limpar direito, tive que refazer.",
+      "date": "2025-08-19",
+      "id": "seed-31-1"
+    },
+    {
+      "profissionalId": 31,
+      "author": "Michele A.",
+      "rating": 2,
+      "comment": "Atrasou bastante o horário combinado sem avisar.",
+      "date": "2025-06-11",
+      "id": "seed-31-2"
+    },
+    {
+      "profissionalId": 32,
+      "author": "Jéssica N.",
+      "rating": 5,
+      "comment": "Adaptou as aulas ao meu ritmo, aprendi muito rápido.",
+      "date": "2025-07-24",
+      "id": "seed-32-1"
+    },
+    {
+      "profissionalId": 32,
+      "author": "Alan C.",
+      "rating": 5,
+      "comment": "Excelente professor, muito paciente.",
+      "date": "2025-05-09",
+      "id": "seed-32-2"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
