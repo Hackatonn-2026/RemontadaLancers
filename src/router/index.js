@@ -102,7 +102,12 @@ const router = createRouter({
       beforeEnter: () => {
         return localStorage.getItem('usuario') ? true : { name: 'login' }
       },
-    }
+    },
+    {
+      path: '/freelancers-crud',
+      name: 'freelancers-crud',
+      component: FreelancersCrudView,
+    },
   ],
 })
 
