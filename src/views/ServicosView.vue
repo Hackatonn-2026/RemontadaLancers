@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import FiltroSidebar from '@/components/FiltroSidebar.vue'
 import BaseButton from '@/components/Button.vue'
-import { obterServicos } from '@/data/servicos'
+import { obterServicos, atualizarServico, excluirServico } from '@/data/servicos'
 import { obterUsuarios } from '@/data/usuarios'
 import { criarSolicitacao } from '@/data/solicitacoes'
 
@@ -10,6 +10,7 @@ const filtrosAtuais = ref({ precos: [], regioes: [] })
 const carregando = ref(true)
 const erro = ref('')
 const servicos = ref([])
+const servicoEmEdicao = ref(null)
 
 const usuarioAtual = JSON.parse(localStorage.getItem('usuario'))
 const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
@@ -59,6 +60,44 @@ const servicosFiltrados = computed(() => {
 
 function atualizarFiltros(novosFiltros) {
   filtrosAtuais.value = novosFiltros
+}
+
+function editarServico(servico) {
+  servicoEmEdicao.value = { ...servico }
+}
+
+async function salvarEdicao() {
+  try {
+    const dadosServico = { ...servicoEmEdicao.value }
+    delete dadosServico.usuario
+    dadosServico.orcamento = `R$ ${Number(dadosServico.preco).toFixed(2).replace('.', ',')}`
+    await atualizarServico(dadosServico.id, dadosServico)
+    servicoEmEdicao.value = null
+    await carregarServicos()
+    alert('Serviço atualizado com sucesso.')
+  } catch (err) {
+    console.error(err)
+    alert('Não foi possível atualizar o serviço. Tente novamente.')
+  }
+}
+
+async function removerServico(servico) {
+  if (!confirm('Tem certeza que deseja excluir este serviço?')) {
+    return
+  }
+
+  try {
+    await excluirServico(servico.id)
+    await carregarServicos()
+    alert('Serviço excluído com sucesso.')
+  } catch (err) {
+    console.error(err)
+    alert('Não foi possível excluir o serviço. Tente novamente.')
+  }
+}
+
+function servicoEhDoUsuario(servico) {
+  return usuarioAtual && String(servico.usuarioId) === String(usuarioAtual.id)
 }
 
 function solicitarServico(servico) {
@@ -116,45 +155,82 @@ onMounted(() => {
         </div>
 
         <div v-for="servico in servicosFiltrados" :key="servico.id" class="servico-card">
-          <span class="categoria cat">
-            {{ servico.categoria }}
-          </span>
-
-          <h2>{{ servico.titulo }}</h2>
-
-          <p class="descricao">
-            {{ servico.descricao }}
-          </p>
-
-          <p>
-            <strong class="loc">Localização:</strong>
-            {{ servico.localizacao }}
-          </p>
-
-          <p>
-            <strong class="orc">Orçamento:</strong>
-            {{ servico.orcamento }}
-          </p>
-
-          <div class="publicado-por">
-            <span class="circulo-foto">
-              {{ servico.usuario?.nome?.charAt(0) || '?' }}
-            </span>
-            <span>Publicado por {{ servico.usuario?.nome || 'Usuário da plataforma' }}</span>
-          </div>
-
-          <!-- direcionar ao login (usuario cliene) -->bot
-          <BaseButton v-if="!usuarioAtual" to="/login" class="botao-solicitar">
-            Solicitar serviço
-          </BaseButton>
-
-          <BaseButton
-            v-else-if="usuarioEhFreelancer"
-            class="botao-solicitar"
-            @click="solicitarServico(servico)"
+          <form
+            v-if="servicoEmEdicao?.id === servico.id"
+            class="form-edicao"
+            @submit.prevent="salvarEdicao"
           >
-            Solicitar serviço
-          </BaseButton>
+            <label>Título</label>
+            <input v-model="servicoEmEdicao.titulo" class="campo-edicao" required />
+
+            <label>Categoria</label>
+            <input v-model="servicoEmEdicao.categoria" class="campo-edicao" required />
+
+            <label>Descrição</label>
+            <textarea v-model="servicoEmEdicao.descricao" class="campo-edicao" required></textarea>
+
+            <label>Localização</label>
+            <input v-model="servicoEmEdicao.localizacao" class="campo-edicao" required />
+
+            <label>Orçamento (R$)</label>
+            <input
+              v-model.number="servicoEmEdicao.preco"
+              class="campo-edicao"
+              type="number"
+              min="0"
+              required
+            />
+
+            <div class="acoes-servico">
+              <BaseButton type="submit">Salvar</BaseButton>
+              <BaseButton variant="secondary" @click="servicoEmEdicao = null">Cancelar</BaseButton>
+            </div>
+          </form>
+
+          <template v-else>
+            <span class="categoria cat">
+              {{ servico.categoria }}
+            </span>
+
+            <h2>{{ servico.titulo }}</h2>
+
+            <p class="descricao">
+              {{ servico.descricao }}
+            </p>
+
+            <p>
+              <strong class="loc">Localização:</strong>
+              {{ servico.localizacao }}
+            </p>
+
+            <p>
+              <strong class="orc">Orçamento:</strong>
+              {{ servico.orcamento }}
+            </p>
+
+            <div class="publicado-por">
+              <span class="circulo-foto">
+                {{ servico.usuario?.nome?.charAt(0) || '?' }}
+              </span>
+              <span>Publicado por {{ servico.usuario?.nome || 'Usuário da plataforma' }}</span>
+            </div>
+
+            <BaseButton v-if="!usuarioAtual" to="/login" class="botao-solicitar">
+              Solicitar serviço
+            </BaseButton>
+
+            <BaseButton
+              v-else-if="usuarioEhFreelancer"
+              class="botao-solicitar"
+              @click="solicitarServico(servico)"
+            >
+              Solicitar serviço
+            </BaseButton>
+            <div v-if="servicoEhDoUsuario(servico)" class="acoes-servico">
+              <BaseButton variant="secondary" @click="editarServico(servico)">Editar</BaseButton>
+              <BaseButton variant="secondary" @click="removerServico(servico)">Excluir</BaseButton>
+            </div>
+          </template>
         </div>
       </section>
     </section>
@@ -235,6 +311,33 @@ onMounted(() => {
   border-radius: 12px;
   background: white;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-edicao {
+  display: grid;
+  width: 100%;
+  gap: 8px;
+}
+
+.campo-edicao {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.form-edicao textarea {
+  min-height: 90px;
+}
+
+.acoes-servico {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .categoria {
