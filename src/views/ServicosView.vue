@@ -2,9 +2,12 @@
 import { computed, onMounted, ref } from 'vue'
 import FiltroSidebar from '@/components/FiltroSidebar.vue'
 import BaseButton from '@/components/Button.vue'
-import { obterServicos, atualizarServico, excluirServico } from '@/data/servicos'
 import { obterUsuarios } from '@/data/usuarios'
-import { criarSolicitacao } from '@/data/solicitacoes'
+import { criarSolicitacao, obterSolicitacoes } from '@/data/solicitacoes'
+
+const API_URL = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : 'https://remontadalancers.onrender.com'
 
 const filtrosAtuais = ref({ precos: [], regioes: [] })
 const carregando = ref(true)
@@ -23,7 +26,13 @@ async function carregarServicos() {
   erro.value = ''
 
   try {
-    const dados = await obterServicos()
+    const resposta = await fetch(`${API_URL}/servicos`)
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível carregar os serviços.')
+    }
+
+    const dados = await resposta.json()
     const usuarios = obterUsuarios(usuariosCadastrados)
 
     if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
@@ -67,11 +76,38 @@ function editarServico(servico) {
 }
 
 async function salvarEdicao() {
+  if (!servicoEmEdicao.value.titulo.trim() || !servicoEmEdicao.value.descricao.trim()) {
+    alert('Preencha o título e a descrição do serviço.')
+    return
+  }
+
+  if (!Number.isFinite(Number(servicoEmEdicao.value.preco)) || servicoEmEdicao.value.preco < 0) {
+    alert('Informe um orçamento válido.')
+    return
+  }
+
   try {
     const dadosServico = { ...servicoEmEdicao.value }
-    delete dadosServico.usuario
     dadosServico.orcamento = `R$ ${Number(dadosServico.preco).toFixed(2).replace('.', ',')}`
-    await atualizarServico(dadosServico.id, dadosServico)
+    const resposta = await fetch(`${API_URL}/servicos/${dadosServico.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        titulo: dadosServico.titulo,
+        categoria: dadosServico.categoria,
+        descricao: dadosServico.descricao,
+        localizacao: dadosServico.localizacao,
+        preco: dadosServico.preco,
+        orcamento: dadosServico.orcamento,
+      }),
+    })
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível atualizar o serviço.')
+    }
+
     servicoEmEdicao.value = null
     await carregarServicos()
     alert('Serviço atualizado com sucesso.')
@@ -82,12 +118,29 @@ async function salvarEdicao() {
 }
 
 async function removerServico(servico) {
+  const solicitacoes = obterSolicitacoes()
+  const temSolicitacoes = solicitacoes.some(
+    (solicitacao) => String(solicitacao.servicoId) === String(servico.id),
+  )
+
+  if (temSolicitacoes) {
+    alert('Este serviço tem solicitações vinculadas e não pode ser excluído.')
+    return
+  }
+
   if (!confirm('Tem certeza que deseja excluir este serviço?')) {
     return
   }
 
   try {
-    await excluirServico(servico.id)
+    const resposta = await fetch(`${API_URL}/servicos/${servico.id}`, {
+      method: 'DELETE',
+    })
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível excluir o serviço.')
+    }
+
     await carregarServicos()
     alert('Serviço excluído com sucesso.')
   } catch (err) {
@@ -124,9 +177,7 @@ function solicitarServico(servico) {
   alert(mensagem)
 }
 
-onMounted(() => {
-  carregarServicos()
-})
+onMounted(carregarServicos)
 </script>
 
 <template>
@@ -193,6 +244,10 @@ onMounted(() => {
             </span>
 
             <h2>{{ servico.titulo }}</h2>
+
+            <BaseButton :to="`/servicos/${servico.id}`" variant="secondary">
+              Ver detalhes
+            </BaseButton>
 
             <p class="descricao">
               {{ servico.descricao }}

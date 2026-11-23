@@ -2,7 +2,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from '@/components/Button.vue'
-import { cadastrarServico } from '@/data/servicos'
+
+const API_URL = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : 'https://remontadalancers.onrender.com'
 
 const listaCategorias = [
   'Desenvolvimento',
@@ -60,8 +63,29 @@ const publicarServico = async () => {
     return
   }
 
+  if (!novoServico.value.titulo.trim() || !novoServico.value.descricao.trim()) {
+    alert('Preencha o título e a descrição do serviço.')
+    return
+  }
+
+  if (!Number.isFinite(Number(novoServico.value.preco)) || Number(novoServico.value.preco) < 0) {
+    alert('Informe um orçamento válido.')
+    return
+  }
+
   try {
-    await cadastrarServico({ ...novoServico.value })
+    const resposta = await fetch(`${API_URL}/servicos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...novoServico.value }),
+    })
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível cadastrar o serviço.')
+    }
+
     router.push('/servicos')
   } catch (error) {
     console.error(error)
