@@ -57,23 +57,41 @@
 
         </div>
         <div class="acoes">
-          <button type="submit" class="botao">Salvar alterações</button>
+          <button type="submit" class="botao" :disabled="carregando">
+  {{ carregando ? 'Salvando...' : 'Salvar alterações' }}
+</button>
         </div>
       </div>
     </form>
   </main>
 </template>
 
+
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+import {
+  atualizarUsuario,
+  buscarUsuarioPorId,
+} from '@/data/usuarios'
 
 const router = useRouter()
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario')) || {}
+  } catch {
+    return {}
+  }
+}
+
 const usuario = carregarUsuario()
-const rotaPerfil = usuario.tipoUsuario === 'freelancer'
-  ? `/usuario-freelancer/${usuario.id || 'perfil'}`
-  : '/perfil'
+
+const rotaPerfil =
+  usuario.tipoUsuario === 'freelancer' || usuario.tipo === 'freelancer'
+    ? `/usuario-freelancer/${usuario.id || 'perfil'}`
+    : '/perfil'
 
 const nome = ref(usuario.nome || '')
 const email = ref(usuario.email || '')
@@ -82,11 +100,19 @@ const telefone = ref(usuario.telefone || '')
 const profissao = ref(usuario.profissao || '')
 const anosExperiencia = ref(usuario.anosExperiencia || '')
 const descricao = ref(usuario.descricao || '')
-const categorias = ref(Array.isArray(usuario.categorias) ? [...usuario.categorias] : [])
+
+const categorias = ref(
+  Array.isArray(usuario.categorias)
+    ? [...usuario.categorias]
+    : [],
+)
+
 const instagram = ref(usuario.instagram || '')
 const facebook = ref(usuario.facebook || '')
 const linkedin = ref(usuario.linkedin || '')
 const whatsapp = ref(usuario.whatsapp || '')
+
+const carregando = ref(false)
 
 const opcoesCategorias = [
   { valor: 'marketing', nome: 'Marketing' },
@@ -97,45 +123,61 @@ const opcoesCategorias = [
   { valor: 'traducao', nome: 'Tradução' },
 ]
 
-function carregarUsuario() {
+async function salvarAlteracoes() {
+  if (carregando.value) return
+
+  if (!usuario.id) {
+    alert('Não foi possível identificar seu usuário. Faça login novamente.')
+    return
+  }
+
+  carregando.value = true
+
   try {
-    return JSON.parse(localStorage.getItem('usuario')) || {}
-  } catch {
-    return {}
+    // GET por ID
+    const dadosAtuais = await buscarUsuarioPorId(usuario.id)
+
+    const usuarioAtualizado = {
+      ...dadosAtuais,
+      nome: nome.value,
+      email: email.value,
+      senha: senha.value,
+      telefone: telefone.value,
+      tipo: 'freelancer',
+      tipoUsuario: 'freelancer',
+      profissao: profissao.value,
+      anosExperiencia: anosExperiencia.value,
+      descricao: descricao.value,
+      categorias: categorias.value,
+      instagram: instagram.value,
+      facebook: facebook.value,
+      linkedin: linkedin.value,
+      whatsapp: whatsapp.value,
+    }
+
+    // PUT
+    const resultado = await atualizarUsuario(
+      usuario.id,
+      usuarioAtualizado,
+    )
+
+    localStorage.setItem('usuario', JSON.stringify(resultado))
+    localStorage.setItem('contaSalva', JSON.stringify(resultado))
+
+    window.dispatchEvent(new Event('auth-change'))
+
+    alert('Perfil profissional atualizado com sucesso!')
+
+    await router.push(rotaPerfil)
+  } catch (erro) {
+    console.error('Erro ao atualizar perfil:', erro)
+    alert('Não foi possível salvar as alterações. Tente novamente.')
+  } finally {
+    carregando.value = false
   }
-}
-
-function salvarAlteracoes() {
-  const usuarioAtualizado = {
-    ...usuario,
-    nome: nome.value,
-    email: email.value,
-    senha: senha.value,
-    telefone: telefone.value,
-    profissao: profissao.value,
-    anosExperiencia: anosExperiencia.value,
-    descricao: descricao.value,
-    categorias: categorias.value,
-    instagram: instagram.value,
-    facebook: facebook.value,
-    linkedin: linkedin.value,
-    whatsapp: whatsapp.value,
-  }
-
-  localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
-
-  // Atualiza os dados também na lista usada pelo login.
-  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
-  const indice = usuarios.findIndex((item) => item.email === usuario.email)
-
-  if (indice !== -1) {
-    usuarios[indice] = usuarioAtualizado
-    localStorage.setItem('usuarios', JSON.stringify(usuarios))
-  }
-
-  router.push(rotaPerfil)
 }
 </script>
+
 <style scoped>
 .pagina-edicao {
   width: min(100% - 32px, 900px);

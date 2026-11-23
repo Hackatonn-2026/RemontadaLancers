@@ -16,43 +16,30 @@ const servicos = ref([])
 const servicoEmEdicao = ref(null)
 
 const usuarioAtual = JSON.parse(localStorage.getItem('usuario'))
-const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
-const usuarioEhFreelancer =
-  usuarioAtual && (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
+
+// pega os usuarios que tao no local storaged
+// ocultar o botao de solicitar servico se nao for freelancer
+const usuarioEhFreelancer = usuarioAtual &&
+  (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
+
+// Sem login, o cadastro de serviço leva para a tela de login.
 const destinoCadastroServico = usuarioAtual ? '/cadastro-servico' : '/login'
 
-async function carregarServicos() {
-  carregando.value = true
-  erro.value = ''
+// soma os usuarios fixos com os novos 
+const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
+const usuarios = obterUsuarios(usuariosCadastrados)
 
-  try {
-    const resposta = await fetch(`${API_URL}/servicos`)
-
-    if (!resposta.ok) {
-      throw new Error('Não foi possível carregar os serviços.')
-    }
-
-    const dados = await resposta.json()
-    const usuarios = obterUsuarios(usuariosCadastrados)
-
-    if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
-      usuarios.push(usuarioAtual)
-    }
-
-    servicos.value = dados.map((servico) => ({
-      ...servico,
-      usuario:
-        usuarios.find((usuario) => usuario.id === servico.usuarioId) ||
-        (usuarios.length === 1 ? usuarios[0] : null),
-    }))
-  } catch (err) {
-    erro.value = 'Não foi possível carregar os serviços.'
-    console.error(err)
-  } finally {
-    carregando.value = false
-  }
+if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
+  usuarios.push(usuarioAtual)
 }
 
+const servicosComUsuarios = obterServicos().map((servico) => ({
+  ...servico,
+  usuario: usuarios.find((usuario) => usuario.id === servico.usuarioId) ||
+    (usuarios.length === 1 ? usuarios[0] : null),
+}))
+
+// filtrar 
 const servicosFiltrados = computed(() => {
   return servicos.value.filter((servico) => {
     const filtroDePreco = filtrosAtuais.value.precos

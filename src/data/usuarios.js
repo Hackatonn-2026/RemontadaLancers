@@ -1,67 +1,122 @@
-export const usuarios = [
-  {
-    id: 1,
-    nome: 'Lucas Almeida',
-    email: 'lucas.almeida@email.com',
-    senha: 'Lucas123',
-    telefone: '(47) 99999-1111',
-    tipo: 'freelancer',
-  },
-  {
-    id: 2,
-    nome: 'Mariana Souza',
-    email: 'mariana.souza@email.com',
-    senha: 'Mariana123',
-    telefone: '(47) 98888-2222',
-    tipo: 'cliente',
-  },
-]
 
-export function obterUsuariosCadastrados() {
-  try {
-    const usuariosSalvos = JSON.parse(localStorage.getItem('usuarios') || '[]')
-    return Array.isArray(usuariosSalvos) ? usuariosSalvos : []
-  } catch {
-    return []
+const API_URL = 'http://localhost:3000/usuarios'
+
+// Padroniza os dados recebidos da API para manter compatibilidade com o projeto
+function padronizarUsuario(usuario) {
+  return {
+    ...usuario,
+    tipo: usuario.tipo || usuario.tipoUsuario || '',
+    tipoUsuario: usuario.tipoUsuario || usuario.tipo || '',
   }
 }
 
+// GET: buscar todos os usuários
+export async function obterUsuariosCadastrados() {
+  const resposta = await fetch(API_URL)
+
+  if (!resposta.ok) {
+    throw new Error('Não foi possível carregar os usuários.')
+  }
+
+  const dados = await resposta.json()
+  return dados.map(padronizarUsuario)
+}
+
+// GET: buscar um usuário pelo ID
+export async function buscarUsuarioPorId(id) {
+  const resposta = await fetch(`${API_URL}/${id}`)
+
+  if (!resposta.ok) {
+    throw new Error('Usuário não encontrado.')
+  }
+
+  return padronizarUsuario(await resposta.json())
+}
+
+// GET: buscar usuário por email e senha
+export async function buscarUsuarioPorCredenciais(email, senha) {
+  const emailNormalizado = String(email || '').trim().toLowerCase()
+
+  const usuariosLista = await obterUsuariosCadastrados()
+
+  return (
+    usuariosLista.find((usuario) => {
+      const emailUsuario = String(usuario.email || '').trim().toLowerCase()
+      const senhaUsuario = String(usuario.senha || '')
+
+      return (
+        emailUsuario === emailNormalizado &&
+        senhaUsuario === String(senha || '')
+      )
+    }) || null
+  )
+}
+
+// POST: cadastrar um novo usuário
+export async function cadastrarUsuario(usuario) {
+  const dados = {
+    ...usuario,
+    tipoUsuario: usuario.tipoUsuario || usuario.tipo || '',
+  }
+
+  const resposta = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dados),
+  })
+
+  if (!resposta.ok) {
+    throw new Error('Não foi possível cadastrar o usuário.')
+  }
+
+  return padronizarUsuario(await resposta.json())
+}
+
+// PUT: atualizar um usuário
+export async function atualizarUsuario(id, usuario) {
+  const dados = {
+    ...usuario,
+    id,
+    tipoUsuario: usuario.tipoUsuario || usuario.tipo || '',
+  }
+
+  const resposta = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dados),
+  })
+
+  if (!resposta.ok) {
+    throw new Error('Não foi possível atualizar o usuário.')
+  }
+
+  return padronizarUsuario(await resposta.json())
+}
+
+// DELETE: excluir um usuário
+export async function excluirUsuario(id) {
+  const resposta = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!resposta.ok) {
+    throw new Error('Não foi possível excluir o usuário.')
+  }
+
+  return true
+}
+
+// Mantém os dados da sessão atual no localStorage
 export function salvarUsuarioAtual(usuario) {
   localStorage.setItem('usuario', JSON.stringify(usuario))
   localStorage.setItem('contaSalva', JSON.stringify(usuario))
 }
 
-export function buscarUsuarioPorCredenciais(email, senha) {
-  const emailNormalizado = String(email || '')
-    .trim()
-    .toLowerCase()
-  const usuariosLista = obterUsuarios(obterUsuariosCadastrados())
-
-  return (
-    usuariosLista.find((usuario) => {
-      const emailUsuario = String(usuario.email || '')
-        .trim()
-        .toLowerCase()
-      const senhaUsuario = String(usuario.senha || '')
-
-      return emailUsuario === emailNormalizado && senhaUsuario === String(senha || '')
-    }) || null
-  )
-}
-
-// coloca os dois usuarios fixos junto com os novos cadastrados sem dar conflito de email
-export function obterUsuarios(usuariosCadastrados = obterUsuariosCadastrados()) {
-  const usuariosSalvos = Array.isArray(usuariosCadastrados)
-    ? usuariosCadastrados
-    : obterUsuariosCadastrados()
-
-  return [
-    ...usuarios,
-    ...usuariosSalvos.filter(
-      (usuario) =>
-        !usuarios.some(
-          (usuarioFixo) => usuarioFixo.email?.toLowerCase() === usuario.email?.toLowerCase(),
-        ),
-    ),
-  ]
+// Compatibilidade com chamadas antigas que utilizavam obterUsuarios
+export async function obterUsuarios() {
+  return await obterUsuariosCadastrados()
 }

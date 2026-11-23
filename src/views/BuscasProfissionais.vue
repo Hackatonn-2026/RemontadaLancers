@@ -57,7 +57,6 @@ const router = useRouter()
 const categoriaSelecionada = computed(() => route.query.busca || 'Todas as categorias')
 
 const filtrosSidebar = ref(null)
-
 function aplicarFiltrosSidebar(filtros) {
   filtrosSidebar.value = filtros
 }
