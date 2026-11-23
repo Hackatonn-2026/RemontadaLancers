@@ -15,7 +15,7 @@ import UsuarioFreelancerView from '@/views/UsuarioFreelancerView.vue'
 import EditarPerfilView from '../views/EditarPerfilView.vue'
 import EditarPerfilFreelancerView from '@/views/EditarPerfilFreelancer.vue'
 import SolicitarOrcamentoView from '@/views/SolicitarOrcamentoView.vue'
-import FreelancersCrudView from '@/views/FreelancersCrudView.vue'
+import DetalhesServicoView from '@/views/DetalhesServicoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +64,11 @@ const router = createRouter({
       path: '/servicos',
       name: 'servicos',
       component: ServicosView,
+    },
+    {
+      path: '/servicos/:id',
+      name: 'detalhes-servico',
+      component: DetalhesServicoView,
     },
     {
       path: '/cadastro-servico',
