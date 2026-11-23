@@ -35,7 +35,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
-import { atualizarUsuario } from '@/data/usuarios'
+import {
+  atualizarUsuario,
+  buscarUsuarioPorId,
+} from '@/data/usuarios'
 
 const router = useRouter()
 
@@ -66,18 +69,23 @@ async function salvarAlteracoes() {
   carregando.value = true
 
   try {
+    // GET por ID
+    const dadosAtuais = await buscarUsuarioPorId(usuario.id)
+
     const usuarioAtualizado = {
-      ...usuario,
+      ...dadosAtuais,
       nome: nome.value,
       email: email.value,
       senha: senha.value,
       telefone: telefone.value,
     }
 
-    // PUT: atualiza o usuário na API
-    const resultado = await atualizarUsuario(usuario.id, usuarioAtualizado)
+    // PUT
+    const resultado = await atualizarUsuario(
+      usuario.id,
+      usuarioAtualizado,
+    )
 
-    // Atualiza os dados da sessão
     localStorage.setItem('usuario', JSON.stringify(resultado))
     localStorage.setItem('contaSalva', JSON.stringify(resultado))
 

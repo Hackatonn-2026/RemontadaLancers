@@ -71,7 +71,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
-import { atualizarUsuario } from '@/data/usuarios'
+import {
+  atualizarUsuario,
+  buscarUsuarioPorId,
+} from '@/data/usuarios'
 
 const router = useRouter()
 
@@ -85,9 +88,10 @@ function carregarUsuario() {
 
 const usuario = carregarUsuario()
 
-const rotaPerfil = usuario.tipoUsuario === 'freelancer' || usuario.tipo === 'freelancer'
-  ? `/usuario-freelancer/${usuario.id || 'perfil'}`
-  : '/perfil'
+const rotaPerfil =
+  usuario.tipoUsuario === 'freelancer' || usuario.tipo === 'freelancer'
+    ? `/usuario-freelancer/${usuario.id || 'perfil'}`
+    : '/perfil'
 
 const nome = ref(usuario.nome || '')
 const email = ref(usuario.email || '')
@@ -96,9 +100,13 @@ const telefone = ref(usuario.telefone || '')
 const profissao = ref(usuario.profissao || '')
 const anosExperiencia = ref(usuario.anosExperiencia || '')
 const descricao = ref(usuario.descricao || '')
+
 const categorias = ref(
-  Array.isArray(usuario.categorias) ? [...usuario.categorias] : [],
+  Array.isArray(usuario.categorias)
+    ? [...usuario.categorias]
+    : [],
 )
+
 const instagram = ref(usuario.instagram || '')
 const facebook = ref(usuario.facebook || '')
 const linkedin = ref(usuario.linkedin || '')
@@ -126,8 +134,11 @@ async function salvarAlteracoes() {
   carregando.value = true
 
   try {
+    // GET por ID
+    const dadosAtuais = await buscarUsuarioPorId(usuario.id)
+
     const usuarioAtualizado = {
-      ...usuario,
+      ...dadosAtuais,
       nome: nome.value,
       email: email.value,
       senha: senha.value,
@@ -144,10 +155,12 @@ async function salvarAlteracoes() {
       whatsapp: whatsapp.value,
     }
 
-    // PUT: atualiza os dados do freelancer na API
-    const resultado = await atualizarUsuario(usuario.id, usuarioAtualizado)
+    // PUT
+    const resultado = await atualizarUsuario(
+      usuario.id,
+      usuarioAtualizado,
+    )
 
-    // Atualiza os dados da sessão
     localStorage.setItem('usuario', JSON.stringify(resultado))
     localStorage.setItem('contaSalva', JSON.stringify(resultado))
 

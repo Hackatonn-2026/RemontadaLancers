@@ -14,8 +14,6 @@ const filtrosAtuais = ref({ precos: [], regioes: [] })
 const usuarioAtual = JSON.parse(localStorage.getItem('usuario'))
 
 // pega os usuarios que tao no local storaged
-const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
-
 // ocultar o botao de solicitar servico se nao for freelancer
 const usuarioEhFreelancer = usuarioAtual &&
   (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
@@ -24,14 +22,13 @@ const usuarioEhFreelancer = usuarioAtual &&
 const destinoCadastroServico = usuarioAtual ? '/cadastro-servico' : '/login'
 
 // soma os usuarios fixos com os novos 
+const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
 const usuarios = obterUsuarios(usuariosCadastrados)
 
-// adicona na lista, se ainda nao tiver, o novo usuario
 if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
   usuarios.push(usuarioAtual)
 }
 
-// relaciona o serviço cadastrado aos dados do usuario
 const servicosComUsuarios = obterServicos().map((servico) => ({
   ...servico,
   usuario: usuarios.find((usuario) => usuario.id === servico.usuarioId) ||

@@ -7,7 +7,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const termoBuscaHero = ref('')
-
 function buscarHero() {
   if (termoBuscaHero.value.trim() !== '') {
     router.push({ path: '/buscar', query: { busca: termoBuscaHero.value } })
