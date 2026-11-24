@@ -58,6 +58,10 @@ const router = createRouter({
       component: SobreView,
     },
     {
+      path: '/como-funciona',
+      redirect: { name: 'sobre', hash: '#como-funciona' },
+    },
+    {
       path: '/suporte',
       name: 'suporte',
       component: SuporteView,

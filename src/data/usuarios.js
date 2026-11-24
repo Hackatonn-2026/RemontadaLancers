@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:3000/usuarios'
+const API_URL = '/api/usuarios'
 
 // Padroniza os dados recebidos da API para manter compatibilidade com o projeto
 function padronizarUsuario(usuario) {
@@ -97,17 +97,40 @@ export async function atualizarUsuario(id, usuario) {
   return padronizarUsuario(await resposta.json())
 }
 
-// DELETE: excluir um usuário
-export async function excluirUsuario(id) {
-  const resposta = await fetch(`${API_URL}/${id}`, {
+// DELETE: excluir um usuário sem permitir apagar outra conta por um ID antigo
+export async function excluirUsuario(id, email) {
+  const url = `${API_URL}/${encodeURIComponent(id)}`
+  const consulta = await fetch(url)
+
+  if (consulta.status === 404) {
+    return { status: 'nao-encontrado' }
+  }
+
+  if (!consulta.ok) {
+    throw new Error('Não foi possível verificar a conta antes da exclusão.')
+  }
+
+  const usuarioNaApi = await consulta.json()
+  const emailNaApi = String(usuarioNaApi.email || '').trim().toLowerCase()
+  const emailInformado = String(email || '').trim().toLowerCase()
+
+  if (!emailInformado || emailNaApi !== emailInformado) {
+    return { status: 'conta-diferente' }
+  }
+
+  const resposta = await fetch(url, {
     method: 'DELETE',
   })
+
+  if (resposta.status === 404) {
+    return { status: 'nao-encontrado' }
+  }
 
   if (!resposta.ok) {
     throw new Error('Não foi possível excluir o usuário.')
   }
 
-  return true
+  return { status: 'excluido' }
 }
 
 // Mantém os dados da sessão atual no localStorage

@@ -165,14 +165,21 @@ async function excluirConta() {
   if (!confirmou) return
 
   try {
-    await excluirUsuario(usuario.id)
+    const resultado = await excluirUsuario(usuario.id, usuario.email)
 
     localStorage.removeItem('usuario')
     localStorage.removeItem('contaSalva')
 
     window.dispatchEvent(new Event('auth-change'))
 
-    alert('Sua conta foi excluída com sucesso!')
+    if (resultado.status === 'excluido') {
+      alert('Sua conta foi excluída com sucesso!')
+    } else {
+      alert(
+        'Sua sessão foi encerrada, mas não havia uma conta correspondente na API. Nenhuma outra conta foi excluída.',
+      )
+    }
+
     await router.push('/login')
   } catch (erro) {
     console.error('Erro ao excluir conta:', erro)

@@ -73,7 +73,7 @@ import ouvidoriaIcon from '../assets/icons/ouvidoria.png';
     </section>
 
     <!-- como funciona -->
-    <section class="como-funciona">
+    <section id="como-funciona" class="como-funciona">
       <h2>Como Funciona</h2>
       <p class="subtitulo claro">Dois perfis, uma mesma plataforma</p>
       <div class="colunas">

@@ -1606,6 +1606,24 @@
       "facebook": "",
       "linkedin": "",
       "whatsapp": ""
+    },
+    {
+      "nome": "Eloisa Muller Oliveira",
+      "email": "eloisaoliveiramuller@gmail.com",
+      "senha": "1234567890",
+      "telefone": "1234567890-=",
+      "tipo": "cliente",
+      "tipoUsuario": "cliente",
+      "profissao": "",
+      "anosExperiencia": "",
+      "descricao": "",
+      "categorias": [],
+      "servicos": [],
+      "instagram": "",
+      "facebook": "",
+      "linkedin": "",
+      "whatsapp": "",
+      "id": "yUVEjqG"
     }
   ]
 }
