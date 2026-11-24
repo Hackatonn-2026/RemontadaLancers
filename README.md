@@ -25,13 +25,21 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Desenvolvimento
+
+Em um terminal, inicie a API:
+
+```sh
+npm run api
+```
+
+Em outro terminal, inicie o frontend:
 
 ```sh
 npm run dev
 ```
 
-Esse comando inicia o frontend e a API de avaliações (JSON Server) juntos.
+A API fica em `http://localhost:3000` e o frontend em `http://localhost:5173`.
 
 ### Compile and Minify for Production
 
