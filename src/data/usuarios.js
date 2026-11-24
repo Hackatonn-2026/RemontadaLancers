@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:3000/usuarios'
+const API_URL = '/api/usuarios'
 
 // Padroniza os dados recebidos da API para manter compatibilidade com o projeto
 function padronizarUsuario(usuario) {

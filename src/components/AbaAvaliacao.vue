@@ -101,7 +101,7 @@ const form = ref({
 const modoEdicao = ref(false)
 const avaliacaoEditandoId = ref(null)
 const erroAvaliacao = ref('')
-const API_URL = 'http://localhost:3000'
+const API_URL = '/api'
 
 const reviews = ref(
   Array.isArray(props.profissional?.reviews) ? [...props.profissional.reviews] : [],
