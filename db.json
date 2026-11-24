@@ -19,16 +19,6 @@
       "localizacao": "Zona Sul",
       "preco": 300,
       "orcamento": "R$ 300,00"
-    },
-    {
-      "id": 3,
-      "usuarioId": 3,
-      "titulo": "Manutenção de computadores",
-      "categoria": "Informática",
-      "descricao": "Preciso formatar e otimizar um computador antigo.",
-      "localizacao": "Centro",
-      "preco": 220,
-      "orcamento": "R$ 220,00"
     }
   ],
   "profissionais": [
