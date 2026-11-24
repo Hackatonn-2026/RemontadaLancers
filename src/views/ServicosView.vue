@@ -16,43 +16,48 @@ const servicos = ref([])
 const servicoEmEdicao = ref(null)
 
 const usuarioAtual = JSON.parse(localStorage.getItem('usuario'))
-
-// pega os usuarios que tao no local storaged
-// ocultar o botao de solicitar servico se nao for freelancer
-const usuarioEhFreelancer = usuarioAtual &&
-  (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
-
-// Sem login, o cadastro de serviço leva para a tela de login.
+const usuarioEhFreelancer =
+  usuarioAtual && (usuarioAtual.tipoUsuario || usuarioAtual.tipo) === 'freelancer'
 const destinoCadastroServico = usuarioAtual ? '/cadastro-servico' : '/login'
 
-// soma os usuarios fixos com os novos 
-const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || []
-const usuarios = obterUsuarios(usuariosCadastrados)
-
-if (usuarioAtual && !usuarios.some((usuario) => usuario.email === usuarioAtual.email)) {
-  usuarios.push(usuarioAtual)
+async function requisitar(endpoint, opcoes) {
+  const resposta = await fetch(`${API_URL}/servicos${endpoint || ''}`, opcoes)
+  if (!resposta.ok) throw new Error('Não foi possível acessar os serviços.')
+  return opcoes?.method === 'DELETE' ? null : resposta.json()
 }
 
-const servicosComUsuarios = obterServicos().map((servico) => ({
-  ...servico,
-  usuario: usuarios.find((usuario) => usuario.id === servico.usuarioId) ||
-    (usuarios.length === 1 ? usuarios[0] : null),
-}))
+async function carregarServicos() {
+  carregando.value = true
+  erro.value = ''
 
-// filtrar 
-const servicosFiltrados = computed(() => {
-  return servicos.value.filter((servico) => {
-    const filtroDePreco = filtrosAtuais.value.precos
-    const filtroDeRegiao = filtrosAtuais.value.regioes
-    const passouNoPreco =
-      filtroDePreco.length === 0 ||
-      filtroDePreco.some((opcao) => servico.preco >= opcao.min && servico.preco <= opcao.max)
-    const passouNaRegiao =
-      filtroDeRegiao.length === 0 || filtroDeRegiao.includes(servico.localizacao)
+  try {
+    const dados = await requisitar()
+    const usuarios = await obterUsuarios()
 
-    return passouNoPreco && passouNaRegiao
-  })
-})
+    servicos.value = dados.map((servico) => ({
+      ...servico,
+      usuario: usuarios.find((usuario) => String(usuario.id) === String(servico.usuarioId)),
+    }))
+  } catch (error) {
+    console.error(error)
+    erro.value = 'Não foi possível carregar os serviços. Verifique se a API está disponível.'
+  } finally {
+    carregando.value = false
+  }
+}
+
+const servicosFiltrados = computed(() =>
+  servicos.value.filter((servico) => {
+    const precos = filtrosAtuais.value.precos
+    const regioes = filtrosAtuais.value.regioes
+
+    return (
+      (!precos.length ||
+        precos.some(({ min, max }) => servico.preco >= min && servico.preco <= max)) &&
+      (!regioes.length || regioes.includes(servico.localizacao))
+    )
+  }),
+)
 
 function atualizarFiltros(novosFiltros) {
   filtrosAtuais.value = novosFiltros
@@ -74,26 +79,16 @@ async function salvarEdicao() {
   }
 
   try {
-    const dadosServico = { ...servicoEmEdicao.value }
-    dadosServico.orcamento = `R$ ${Number(dadosServico.preco).toFixed(2).replace('.', ',')}`
-    const resposta = await fetch(`${API_URL}/servicos/${dadosServico.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        titulo: dadosServico.titulo,
-        categoria: dadosServico.categoria,
-        descricao: dadosServico.descricao,
-        localizacao: dadosServico.localizacao,
-        preco: dadosServico.preco,
-        orcamento: dadosServico.orcamento,
-      }),
-    })
-
-    if (!resposta.ok) {
-      throw new Error('Não foi possível atualizar o serviço.')
+    const dadosServico = {
+      ...servicoEmEdicao.value,
+      orcamento: `R$ ${Number(servicoEmEdicao.value.preco).toFixed(2).replace('.', ',')}`,
     }
+
+    await requisitar(`/${dadosServico.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dadosServico),
+    })
 
     servicoEmEdicao.value = null
     await carregarServicos()
@@ -105,34 +100,21 @@ async function salvarEdicao() {
 }
 
 async function removerServico(servico) {
-  const solicitacoes = obterSolicitacoes()
-  const temSolicitacoes = solicitacoes.some(
+  const temSolicitacoes = obterSolicitacoes().some(
     (solicitacao) => String(solicitacao.servicoId) === String(servico.id),
   )
 
   if (temSolicitacoes) {
     alert('Este serviço tem solicitações vinculadas e não pode ser excluído.')
-    return
-  }
-
-  if (!confirm('Tem certeza que deseja excluir este serviço?')) {
-    return
-  }
-
-  try {
-    const resposta = await fetch(`${API_URL}/servicos/${servico.id}`, {
-      method: 'DELETE',
-    })
-
-    if (!resposta.ok) {
-      throw new Error('Não foi possível excluir o serviço.')
+  } else if (confirm('Tem certeza que deseja excluir este serviço?')) {
+    try {
+      await requisitar(`/${servico.id}`, { method: 'DELETE' })
+      await carregarServicos()
+      alert('Serviço excluído com sucesso.')
+    } catch (err) {
+      console.error(err)
+      alert('Não foi possível excluir o serviço. Tente novamente.')
     }
-
-    await carregarServicos()
-    alert('Serviço excluído com sucesso.')
-  } catch (err) {
-    console.error(err)
-    alert('Não foi possível excluir o serviço. Tente novamente.')
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "servicos": [
     {
-      "id": 1,
+      "id": "1",
       "usuarioId": 1,
       "titulo": "Instalação de tomadas",
       "categoria": "Elétrica",
@@ -11,7 +11,7 @@
       "orcamento": "R$ 150,00"
     },
     {
-      "id": 2,
+      "id": "2",
       "usuarioId": 2,
       "titulo": "Criação de identidade visual",
       "categoria": "Design",
@@ -1074,18 +1074,10 @@
     },
     {
       "profissionalId": 4,
-      "author": "Bruno C.",
-      "rating": 3,
-      "comment": "Resolveu o problema, mas demorou bem mais do que o esperado.",
-      "date": "2025-07-11",
-      "id": "seed-4-1"
-    },
-    {
-      "profissionalId": 4,
       "author": "Aline V.",
       "rating": 2,
-      "comment": "Atendimento confuso, não perguntou direito o que eu precisava.",
-      "date": "2025-03-09",
+      "comment": "Atendimento confuso, não perguntou direito o que eu precisava",
+      "date": "2026-11-24",
       "id": "seed-4-2"
     },
     {
@@ -1569,7 +1561,6 @@
       "id": "seed-32-2"
     }
   ],
-  "$schema": "./node_modules/json-server/schema.json",
   "usuarios": [
     {
       "id": "1",
@@ -1624,6 +1615,25 @@
       "linkedin": "",
       "whatsapp": "",
       "id": "yUVEjqG"
+    },
+    {
+      "nome": "guilherme",
+      "email": "guilhermebloemers2@gmail.com",
+      "senha": "12345",
+      "telefone": "12345",
+      "tipo": "cliente",
+      "tipoUsuario": "cliente",
+      "profissao": "",
+      "anosExperiencia": "",
+      "descricao": "",
+      "categorias": [],
+      "servicos": [],
+      "instagram": "",
+      "facebook": "",
+      "linkedin": "",
+      "whatsapp": "",
+      "id": "ET8FqiFkKQM"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
