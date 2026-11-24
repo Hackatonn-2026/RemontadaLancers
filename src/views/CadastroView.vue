@@ -91,19 +91,27 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="botao-criar">Criar conta</button>
+     <button type="submit" class="botao-criar" :disabled="carregando">
+  {{ carregando ? 'Criando conta...' : 'Criar conta' }}
+</button>
       <p class="tem-conta">Já tem uma conta?</p>
       <RouterLink to="/login" class="botao-login"> Faça login </RouterLink>
     </form>
   </div>
 </template>
+
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { obterUsuariosCadastrados, salvarUsuarioAtual } from '@/data/usuarios'
+import {
+  obterUsuariosCadastrados,
+  cadastrarUsuario,
+  salvarUsuarioAtual,
+} from '@/data/usuarios'
 import Inputs from '../components/Inputs.vue'
 
 const router = useRouter()
+
 const tipoUsuario = ref('cliente')
 const nome = ref('')
 const email = ref('')
@@ -113,47 +121,82 @@ const profissao = ref('')
 const AnosDeExperiencia = ref('')
 const descricao = ref('')
 const categorias = ref([])
+const carregando = ref(false)
 
-function CriaConta() {
-  const usuariosCadastrados = obterUsuariosCadastrados()
-  const emailJaExiste = usuariosCadastrados.some(
-    (usuario) =>
-      String(usuario.email || '')
-        .trim()
-        .toLowerCase() ===
-      String(email.value || '')
-        .trim()
-        .toLowerCase(),
-  )
+async function CriaConta() {
+  if (carregando.value) return
 
-  if (emailJaExiste) {
-    alert('Este e-mail já está cadastrado. Faça login ou use outro e-mail.')
+  if (
+    !nome.value.trim() ||
+    !email.value.trim() ||
+    !senha.value.trim() ||
+    !telefone.value.trim()
+  ) {
+    alert('Preencha todos os campos obrigatórios.')
     return
   }
 
-  const usuario = {
-    id: Date.now().toString(),
-    nome: nome.value,
-    email: email.value,
-    senha: senha.value,
-    telefone: telefone.value,
-    tipoUsuario: tipoUsuario.value,
-    profissao: profissao.value,
-    anosExperiencia: AnosDeExperiencia.value,
-    descricao: descricao.value,
-    categorias: categorias.value,
-    servicos: [],
+  carregando.value = true
+
+  try {
+    // Verifica se o e-mail já existe na API
+    const usuariosCadastrados = await obterUsuariosCadastrados()
+
+    const emailJaExiste = usuariosCadastrados.some(
+      (usuario) =>
+        String(usuario.email || '').trim().toLowerCase() ===
+        String(email.value || '').trim().toLowerCase(),
+    )
+
+    if (emailJaExiste) {
+      alert('Este e-mail já está cadastrado. Faça login ou use outro e-mail.')
+      return
+    }
+
+    // Prepara os dados do novo usuário
+    const usuario = {
+      nome: nome.value.trim(),
+      email: email.value.trim(),
+      senha: senha.value,
+      telefone: telefone.value,
+      tipo: tipoUsuario.value,
+      tipoUsuario: tipoUsuario.value,
+      profissao: profissao.value,
+      anosExperiencia: AnosDeExperiencia.value,
+      descricao: descricao.value,
+      categorias: categorias.value,
+      servicos: [],
+      instagram: '',
+      facebook: '',
+      linkedin: '',
+      whatsapp: '',
+    }
+
+    // POST: salva o usuário na API
+    const usuarioCriado = await cadastrarUsuario(usuario)
+
+    // Salva somente o usuário conectado na sessão
+    salvarUsuarioAtual(usuarioCriado)
+
+    window.dispatchEvent(new Event('auth-change'))
+
+    alert('Conta criada com sucesso!')
+
+    const rota =
+      tipoUsuario.value === 'freelancer'
+        ? `/usuario-freelancer/${usuarioCriado.id}`
+        : '/perfil'
+
+    await router.push(rota)
+  } catch (erro) {
+    console.error('Erro ao criar conta:', erro)
+    alert('Não foi possível criar sua conta. Verifique se a API está funcionando.')
+  } finally {
+    carregando.value = false
   }
-
-  usuariosCadastrados.push(usuario)
-  localStorage.setItem('usuarios', JSON.stringify(usuariosCadastrados))
-  salvarUsuarioAtual(usuario)
-
-  const rota = tipoUsuario.value === 'freelancer' ? `/usuario-freelancer/${usuario.id}` : '/perfil'
-
-  router.push(rota)
 }
 </script>
+
 
 <style scoped>
 h1 {

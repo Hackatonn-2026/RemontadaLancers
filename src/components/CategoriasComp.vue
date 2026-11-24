@@ -1,22 +1,71 @@
 <template>
   <section class="bloco">
+    <div class="controles">
+      <h2>Categorias</h2>
+      <button type="button" class="botao" @click="abrirFormulario">
+        {{ mostrandoFormulario ? 'Cancelar' : 'Adicionar categoria' }}
+      </button>
+    </div>
+
+    <form v-if="mostrandoFormulario" class="formulario" @submit.prevent="salvarCategoria">
+      <label for="nome-categoria">Nome</label>
+      <input id="nome-categoria" v-model="formulario.nome" required maxlength="100" />
+
+      <label for="descricao-categoria">Descrição</label>
+      <input id="descricao-categoria" v-model="formulario.descricao" />
+
+      <button type="submit" class="botao" :disabled="salvando">
+        {{ salvando ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </form>
+
+    <p v-if="carregando" class="mensagem">Carregando categorias...</p>
+    <p v-if="erro" class="mensagem erro">{{ erro }}</p>
+    <p v-if="mensagem" class="mensagem" role="status">{{ mensagem }}</p>
+
     <div class="lista">
-      <RouterLink
-        v-for="categoria in listaCategorias"
-        :key="categoria.nome"
-        :to="{ path: '/buscar', query: { busca: categoria.nome } }"
-        class="card"
-      >
-        <div class="icone" v-html="categoria.icone"></div>
-        <h3>{{ categoria.nome }}</h3>
-        <p>{{ categoria.descricao }}</p>
-      </RouterLink>
+      <article v-for="categoria in categorias" :key="categoria.id" class="card">
+        <RouterLink :to="{ path: '/buscar', query: { busca: categoria.nome } }" class="card-link">
+          <div class="icone" v-html="iconeCategoria(categoria.nome)"></div>
+          <h3>{{ categoria.nome }}</h3>
+          <p>{{ categoria.descricao }}</p>
+        </RouterLink>
+        <div class="acoes">
+          <button type="button" @click="editarCategoria(categoria.id)">Editar</button>
+          <button type="button" class="excluir" @click="excluirCategoria(categoria)">
+            Excluir
+          </button>
+        </div>
+      </article>
     </div>
   </section>
 </template>
 
 <script setup>
-const listaCategorias = [
+import { onMounted, ref } from 'vue';
+import { RouterLink } from 'vue-router';
+
+const API_URL = 'http://localhost:3000';
+
+const categorias = ref([]);
+
+const formulario = ref({
+  nome: '',
+  descricao: '',
+});
+
+const editandoId = ref(null);
+
+// controlando a exibição do formulário
+const mostrandoFormulario = ref(false);
+
+// mensagens da página
+const carregando = ref(true);
+const salvando = ref(false);
+const erro = ref('');
+const mensagem = ref('');
+
+const listaInicial = [
   {
     icone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
     nome: 'Desenvolvimento',
@@ -108,6 +157,147 @@ const listaCategorias = [
     descricao: 'Tradução juramentada e revisão',
   },
 ]
+
+async function carregarCategorias() {
+  const resposta = await fetch(`${API_URL}/categorias`);
+
+  if (!resposta.ok) {
+    throw new Error('Não foi possível carregar as categorias.');
+  }
+
+  categorias.value = await resposta.json();
+}
+
+function iconeCategoria(nome) {
+  const categoria = listaInicial.find((item) => item.nome === nome);
+
+  if (categoria) {
+    return categoria.icone;
+  }
+
+  return listaInicial[0].icone;
+}
+
+function limparFormulario() {
+  formulario.value = {
+    nome: '',
+    descricao: '',
+  };
+}
+
+function abrirFormulario() {
+  mostrandoFormulario.value = !mostrandoFormulario.value;
+  editandoId.value = null;
+  limparFormulario();
+  erro.value = '';
+  mensagem.value = '';
+}
+
+async function editarCategoria(id) {
+  try {
+    erro.value = '';
+    mensagem.value = '';
+
+    const resposta = await fetch(`${API_URL}/categorias/${id}`);
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível buscar essa categoria.');
+    }
+
+    const categoria = await resposta.json();
+
+    editandoId.value = categoria.id;
+
+    formulario.value = {
+      nome: categoria.nome,
+      descricao: categoria.descricao,
+    };
+
+    mostrandoFormulario.value = true;
+  } catch (error) {
+    erro.value = error.message;
+  }
+}
+
+async function salvarCategoria() {
+  erro.value = '';
+  mensagem.value = '';
+
+  if (!formulario.value.nome.trim()) {
+    erro.value = 'Informe o nome da categoria.';
+    return;
+  }
+
+  salvando.value = true;
+
+  try {
+    const dados = {
+      nome: formulario.value.nome.trim(),
+      descricao: formulario.value.descricao.trim(),
+    };
+    const editando = editandoId.value !== null;
+    const url = editando
+      ? `${API_URL}/categorias/${editandoId.value}`
+      : `${API_URL}/categorias`;
+    const resposta = await fetch(url, {
+      method: editando ? 'PUT' : 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dados),
+    });
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível salvar a categoria.');
+    }
+
+    await carregarCategorias();
+
+    limparFormulario();
+    editandoId.value = null;
+    mostrandoFormulario.value = false;
+    mensagem.value = editando ? 'Categoria atualizada.' : 'Categoria adicionada.';
+  } catch (error) {
+    erro.value = error.message;
+    mensagem.value = '';
+  } finally {
+    salvando.value = false;
+  }
+}
+
+async function excluirCategoria(categoria) {
+  const confirmarExclusao = window.confirm('Tem certeza que deseja excluir esta categoria?');
+
+  if (!confirmarExclusao) return;
+
+  try {
+    erro.value = '';
+    mensagem.value = '';
+
+    const resposta = await fetch(`${API_URL}/categorias/${categoria.id}`, {
+      method: 'DELETE',
+    });
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível excluir a categoria.');
+    }
+
+    await carregarCategorias();
+    mensagem.value = 'Categoria excluída.';
+  } catch (error) {
+    erro.value = error.message;
+  }
+}
+
+onMounted(async () => {
+  try {
+    await carregarCategorias();
+  } catch (error) {
+    erro.value = error.message;
+  } finally {
+    carregando.value = false;
+  }
+});
 </script>
 
 <style scoped>
@@ -115,6 +305,39 @@ const listaCategorias = [
   max-width: 1200px;
   margin: 0 auto;
   padding: 50px 20px 60px;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.controles h2 {
+  margin: 0;
+  color: #111827;
+}
+
+.formulario {
+  display: grid;
+  gap: 10px;
+  max-width: 520px;
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.formulario input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
 }
 
 .topo {
@@ -146,6 +369,10 @@ const listaCategorias = [
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   background: #fff;
+}
+
+.card-link {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -184,6 +411,35 @@ const listaCategorias = [
   line-height: 1.4;
 }
 
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.acoes button {
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.acoes .excluir {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.mensagem {
+  margin: 12px 0;
+  color: #047857;
+}
+
+.mensagem.erro {
+  color: #b91c1c;
+}
+
 .areaBotao {
   margin-top: 28px;
   text-align: center;
@@ -198,5 +454,23 @@ const listaCategorias = [
   color: #1d4ed8;
   font-weight: 600;
   text-decoration: none;
+}
+
+button.botao {
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+button.botao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .controles {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

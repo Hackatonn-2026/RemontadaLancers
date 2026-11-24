@@ -1,3 +1,4 @@
+
 <template>
   <main>
     <div class="header">
@@ -7,25 +8,39 @@
       <h1>Editar perfil</h1>
       <p>Atualize seus dados pessoais.</p>
     </div>
+
     <div class="informacao">
       <h3 class="informacao-titulo">
         Informações pessoais
       </h3>
-      <form class="form">
-      <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
-      <Inputs v-model="email" label="E-mail" type="email" placeholder="seuemail@exemplo.com" />
-      <Inputs v-model="senha" label="Senha" type="text" placeholder="Digite sua senha" />
-      <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
-      <RouterLink to="/perfil" class="botao" @click="salvarAlteracoes">
-        Salvar alterações
-      </RouterLink>
+
+      <form class="form" @submit.prevent="salvarAlteracoes">
+        <Inputs v-model="nome" label="Nome" type="text" placeholder="Seu nome completo" />
+
+        <Inputs v-model="email" label="E-mail" type="email" placeholder="Seu email" />
+
+        <Inputs v-model="senha" label="Senha" type="password" placeholder="Digite sua senha" />
+
+        <Inputs v-model="telefone" label="Telefone" type="tel" placeholder="Seu telefone" />
+
+        <button type="submit" class="botao" :disabled="carregando">
+          {{ carregando ? 'Salvando...' : 'Salvar alterações' }}
+        </button>
       </form>
     </div>
   </main>
 </template>
+
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Inputs from '../components/Inputs.vue'
+import {
+  atualizarUsuario,
+  buscarUsuarioPorId,
+} from '@/data/usuarios'
+
+const router = useRouter()
 
 function carregarUsuario() {
   try {
@@ -36,24 +51,58 @@ function carregarUsuario() {
 }
 
 const usuario = carregarUsuario()
+
 const nome = ref(usuario.nome || '')
 const email = ref(usuario.email || '')
 const senha = ref(usuario.senha || '')
 const telefone = ref(usuario.telefone || '')
+const carregando = ref(false)
 
-function salvarAlteracoes() {
-  const usuarioAtualizado = {
-    ...usuario,
-    nome: nome.value,
-    email: email.value,
-    senha: senha.value,
-    telefone: telefone.value
+async function salvarAlteracoes() {
+  if (carregando.value) return
+
+  if (!usuario.id) {
+    alert('Não foi possível identificar o usuário. Faça login novamente.')
+    return
   }
 
-  localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
-  localStorage.setItem('contaSalva', JSON.stringify(usuarioAtualizado))
+  carregando.value = true
+
+  try {
+    // GET por ID
+    const dadosAtuais = await buscarUsuarioPorId(usuario.id)
+
+    const usuarioAtualizado = {
+      ...dadosAtuais,
+      nome: nome.value,
+      email: email.value,
+      senha: senha.value,
+      telefone: telefone.value,
+    }
+
+    // PUT
+    const resultado = await atualizarUsuario(
+      usuario.id,
+      usuarioAtualizado,
+    )
+
+    localStorage.setItem('usuario', JSON.stringify(resultado))
+    localStorage.setItem('contaSalva', JSON.stringify(resultado))
+
+    window.dispatchEvent(new Event('auth-change'))
+
+    alert('Perfil atualizado com sucesso!')
+
+    await router.push('/perfil')
+  } catch (erro) {
+    console.error('Erro ao atualizar perfil:', erro)
+    alert('Não foi possível salvar as alterações. Tente novamente.')
+  } finally {
+    carregando.value = false
+  }
 }
 </script>
+
 <style scoped>
 main {
   width: min(100% - 32px, 900px);
@@ -130,6 +179,11 @@ main {
 
 .botao:hover {
   background-color: #1d4ed8;
+}
+
+.botao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 @media (max-width: 640px) {

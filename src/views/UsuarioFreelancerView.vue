@@ -9,10 +9,17 @@
         <h1>{{ usuario.nome }}</h1>
         <p>{{ usuario.email }}</p>
 
-        <div class="acoes-perfil">
-          <RouterLink to="/editar-perfil-freelancer" class="botao"> Editar perfil </RouterLink>
-          <button class="botao" @click="sair">Sair</button>
-        </div>
+<div class="acoes-perfil">
+  <RouterLink to="/editar-perfil-freelancer" class="botao">
+    Editar perfil
+  </RouterLink>
+
+  <button class="botao" @click="sair">Sair</button>
+
+  <button class="botao botao-excluir" @click="excluirConta">
+    Excluir conta
+  </button>
+</div>
       </div>
     </section>
 
@@ -87,9 +94,19 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import RedesSociais from '@/components/RedesSociais.vue'
 import { obterSolicitacoesPorFreelancer } from '@/data/solicitacoes'
+import { excluirUsuario } from '@/data/usuarios'
 
 const router = useRouter()
-const usuario = JSON.parse(localStorage.getItem('usuario')) || {}
+
+function carregarUsuario() {
+  try {
+    return JSON.parse(localStorage.getItem('usuario') || '{}')
+  } catch {
+    return {}
+  }
+}
+
+const usuario = carregarUsuario()
 const servicosSolicitados = ref([])
 
 function carregarSolicitacoes() {
@@ -126,11 +143,40 @@ function statusClass(status) {
 function sair() {
   localStorage.setItem('contaSalva', JSON.stringify(usuario))
   localStorage.removeItem('usuario')
+
   window.dispatchEvent(new Event('auth-change'))
   router.push('/login')
 }
-</script>
 
+async function excluirConta() {
+  if (!usuario.id) {
+    alert('Não foi possível identificar sua conta. Faça login novamente.')
+    return
+  }
+
+  const confirmou = window.confirm(
+    'Tem certeza de que deseja excluir sua conta? Essa ação não poderá ser desfeita.'
+  )
+
+  if (!confirmou) return
+
+  try {
+    await excluirUsuario(usuario.id)
+
+    localStorage.removeItem('usuario')
+    localStorage.removeItem('contaSalva')
+
+    window.dispatchEvent(new Event('auth-change'))
+
+    alert('Sua conta foi excluída com sucesso!')
+
+    await router.push('/login')
+  } catch (erro) {
+    console.error('Erro ao excluir conta:', erro)
+    alert('Não foi possível excluir sua conta. Verifique se a API está funcionando.')
+  }
+}
+</script>
 <style scoped>
 .perfil {
   width: min(100% - 32px, 960px);
@@ -317,6 +363,13 @@ function sair() {
 
 .botao:active {
   transform: translateY(1px);
+}
+.botao-excluir {
+  background-color: #dc2626;
+}
+
+.botao-excluir:hover {
+  background-color: #b91c1c;
 }
 
 @media (max-width: 640px) {
